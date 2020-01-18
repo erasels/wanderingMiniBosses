@@ -2,12 +2,12 @@ package wanderingMiniBosses.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.actions.common.SpawnMonsterAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 @SpirePatch(
@@ -42,7 +42,7 @@ public class MaybeSpawnDudePatch {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
 
-                AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(WanderingBossHelper.getMonster(), false));
+                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
             }
         }
     }

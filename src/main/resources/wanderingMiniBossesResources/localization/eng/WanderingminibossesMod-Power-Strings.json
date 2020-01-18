@@ -1,10 +1,17 @@
 {
-"wanderingMiniBosses:CommonPower": {
-        "NAME": "Placeholder Power",
-        "DESCRIPTIONS": ["You applied #b", " keyword.", " keywords."]
-},
-"wanderingMiniBosses:RarePower": {
-        "NAME": "Placeholder Power",
-        "DESCRIPTIONS": ["At the start of your turn, TOUCH #b", " enemy." , " enemies."]
-}
+  "wanderingMiniBosses:Blazing": {
+    "NAME": "Blazing",
+    "DESCRIPTIONS": [
+      "Once per turn when you deal unblocked attack damage to this enemy, add #b",
+      " #yBurn to your discard pile."
+    ]
+  },
+  "wanderingMiniBosses:InnerFlame": {
+    "NAME": "Inner Flame",
+    "DESCRIPTIONS": [
+      "At the end of its turn, loses #b",
+      " HP and gains #b",
+      " #yStrength."
+    ]
+  }
 }
