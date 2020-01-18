@@ -13,12 +13,10 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
-import com.megacrit.cardcrawl.relics.BurningBlood;
 import com.megacrit.cardcrawl.relics.RunicDome;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -28,6 +26,7 @@ import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.BlazingPower;
 import wanderingMiniBosses.powers.InnerFlamePower;
+import wanderingMiniBosses.relics.CarrionFlame;
 import wanderingMiniBosses.vfx.general.CalmFireEffect;
 import wanderingMiniBosses.vfx.general.CasualFlameParticleEffect;
 
@@ -77,7 +76,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
 
     public ImmortalFlame(String name, String id, int maxHealth) {
         super(name, id, maxHealth, MathUtils.random(MIN_X, MAX_X), MathUtils.random(MIN_Y, MAX_Y), HB_WIDTH, HB_HEIGHT, "");
-        rewards.add(new RewardItem(RelicLibrary.getRelic(BurningBlood.ID).makeCopy()));
+        rewards.add(new RewardItem(new CarrionFlame()));
     }
 
     @Override

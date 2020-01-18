@@ -22,20 +22,15 @@ import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.MonsterGroup;
-import com.megacrit.cardcrawl.monsters.exordium.Cultist;
-import com.megacrit.cardcrawl.monsters.exordium.Lagavulin;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.Blackblade;
-import wanderingMiniBosses.relics.PlaceholderRelic2;
+import wanderingMiniBosses.relics.CarrionFlame;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
@@ -258,7 +253,7 @@ public class WanderingminibossesMod implements
     
     @Override
     public void receiveEditRelics() {
-        BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
+        BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
     }
