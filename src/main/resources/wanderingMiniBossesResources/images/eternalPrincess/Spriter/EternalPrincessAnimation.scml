@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0" name="Idle">
+        <file id="0" name="Idle/0.png" width="308" height="250" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="Idle/1.png" width="320" height="244" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="Idle/2.png" width="346" height="220" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="Idle/3.png" width="300" height="220" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="Idle/4.png" width="308" height="254" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="Idle/5.png" width="316" height="266" pivot_x="0" pivot_y="1"/>
+        <file id="6" name="Idle/6.png" width="308" height="266" pivot_x="0" pivot_y="1"/>
+        <file id="7" name="Idle/7.png" width="302" height="216" pivot_x="0" pivot_y="1"/>
+        <file id="8" name="Idle/8.png" width="322" height="212" pivot_x="0" pivot_y="1"/>
+        <file id="9" name="Idle/9.png" width="320" height="248" pivot_x="0" pivot_y="1"/>
+        <file id="10" name="Idle/10.png" width="310" height="256" pivot_x="0" pivot_y="1"/>
+        <file id="11" name="Idle/11.png" width="312" height="258" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="EternalPrincess">
+        <animation id="0" name="Idle" length="1150" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="98">
+                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                </key>
+                <key id="2" time="200">
+                    <object_ref id="0" timeline="2" key="0" z_index="0"/>
+                </key>
+                <key id="3" time="300">
+                    <object_ref id="0" timeline="3" key="0" z_index="0"/>
+                </key>
+                <key id="4" time="399">
+                    <object_ref id="0" timeline="4" key="0" z_index="0"/>
+                </key>
+                <key id="5" time="501">
+                    <object_ref id="0" timeline="5" key="0" z_index="0"/>
+                </key>
+                <key id="6" time="600">
+                    <object_ref id="0" timeline="6" key="0" z_index="0"/>
+                </key>
+                <key id="7" time="700">
+                    <object_ref id="0" timeline="7" key="0" z_index="0"/>
+                </key>
+                <key id="8" time="800">
+                    <object_ref id="0" timeline="8" key="0" z_index="0"/>
+                </key>
+                <key id="9" time="900">
+                    <object_ref id="0" timeline="9" key="0" z_index="0"/>
+                </key>
+                <key id="10" time="1001">
+                    <object_ref id="0" timeline="10" key="0" z_index="0"/>
+                </key>
+                <key id="11" time="1101">
+                    <object_ref id="0" timeline="11" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="0">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-119" y="406"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="1">
+                <key id="0" time="98" spin="0">
+                    <object folder="0" file="1" x="-122" y="395"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="2">
+                <key id="0" time="200" spin="0">
+                    <object folder="0" file="2" x="-136" y="370"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="3">
+                <key id="0" time="300" spin="0">
+                    <object folder="0" file="3" x="-104" y="370"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="4">
+                <key id="0" time="399" spin="0">
+                    <object folder="0" file="4" x="-104" y="371"/>
+                </key>
+            </timeline>
+            <timeline id="5" name="5">
+                <key id="0" time="501" spin="0">
+                    <object folder="0" file="5" x="-104" y="371"/>
+                </key>
+            </timeline>
+            <timeline id="6" name="6">
+                <key id="0" time="600" spin="0">
+                    <object folder="0" file="6" x="-104" y="371"/>
+                </key>
+            </timeline>
+            <timeline id="7" name="7">
+                <key id="0" time="700" spin="0">
+                    <object folder="0" file="7" x="-104" y="371"/>
+                </key>
+            </timeline>
+            <timeline id="8" name="8">
+                <key id="0" time="800" spin="0">
+                    <object folder="0" file="8" x="-122" y="370"/>
+                </key>
+            </timeline>
+            <timeline id="9" name="9">
+                <key id="0" time="900" spin="0">
+                    <object folder="0" file="9" x="-116" y="406"/>
+                </key>
+            </timeline>
+            <timeline id="10" name="10">
+                <key id="0" time="1001" spin="0">
+                    <object folder="0" file="10" x="-114" y="414"/>
+                </key>
+            </timeline>
+            <timeline id="11" name="11">
+                <key id="0" time="1101" spin="0">
+                    <object folder="0" file="11" x="-111" y="416"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

@@ -1,8 +1,10 @@
 package wanderingMiniBosses.monsters.eternalPrincess;
 
+import basemod.animations.SpriterAnimation;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -21,10 +23,9 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static final String NAME = monsterStrings.NAME;
     public static final String[] MOVES = monsterStrings.MOVES;
-    public static final String[] DIALOG = monsterStrings.DIALOG;
 
-    protected static final float HB_WIDTH = 140.0F; //scale is all multiplied in abstract monster class
-    protected static final float HB_HEIGHT = 140.0F;
+    protected static final float HB_WIDTH = 280.0F; //scale is all multiplied in abstract monster class
+    protected static final float HB_HEIGHT = 220.0F;
 
     private static final byte FINALE_OF_GLORY = 0; //give strength to everyone
     private static final byte FINALE_OF_DEVASTATION = 1; //apply 2 Vulnerable to everyone
@@ -49,24 +50,30 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private int moveCounter = 0;
 
     public EternalPrincess() {
-        this(NAME, ID, MAX_HEALTH);
+        this(0.0F, 0.0F);
     }
 
-    public EternalPrincess(String name, String id, int maxHealth) {
-        super(name, id, maxHealth, 0, 0, HB_WIDTH, HB_HEIGHT, "");
+    public EternalPrincess(final float x, final float y) {
+        super(NAME, ID, MAX_HEALTH, 0.0F, 100.0F, HB_WIDTH, HB_HEIGHT, null, x, y);
+        this.animation = new SpriterAnimation("wanderingMiniBossesResources/images/eternalPrincess/Spriter/EternalPrincessAnimation.scml");
+        initializeMoves();
     }
 
     @Override
     public void usePreBattleAction() {
+        initializeMoves();
+    }
+
+    private void initializeMoves() {
         this.strength = STRENGTH + (STRENGTH_ACT_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityDamage = ETERNITY_DAMAGE + (ETERNITY_ACT_DAMAGE_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityHits = ETERNITY_MAX_HITS;
+        this.moves.clear();
         this.moves.put(FINALE_OF_GLORY, new EnemyMoveInfo(FINALE_OF_GLORY, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_DEVASTATION, new EnemyMoveInfo(FINALE_OF_DEVASTATION, Intent.STRONG_DEBUFF, -1, 0, false));
         this.moves.put(FINALE_OF_PROMISE, new EnemyMoveInfo(FINALE_OF_PROMISE, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_ETERNITY, new EnemyMoveInfo(FINALE_OF_ETERNITY, Intent.ATTACK, eternityDamage, eternityHits, true));
         this.damage.add(new DamageInfo(this, this.eternityDamage));
-        setMoveShortcut(FINALE_OF_GLORY);
     }
 
     @Override
@@ -108,22 +115,26 @@ public class EternalPrincess extends AbstractWanderingBoss {
                     addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.FIRE));
                 }
                 break;
+            case RUN:
+                onEscape();
+                AbstractDungeon.actionManager.addToBottom(new EscapeAction(this));
+                break;
         }
     }
 
     @Override
     protected void getMove(int i) {
         if (isOnlyMonsterAlive()) {
-            setMoveShortcut(FINALE_OF_ETERNITY);
+            setMoveShortcut(FINALE_OF_ETERNITY, MOVES[FINALE_OF_ETERNITY]);
         } else {
             if (moveCounter == FINALE_OF_GLORY) {
-                setMoveShortcut(FINALE_OF_GLORY);
+                setMoveShortcut(FINALE_OF_GLORY, MOVES[FINALE_OF_GLORY]);
             } else if (moveCounter == FINALE_OF_DEVASTATION) {
-                setMoveShortcut(FINALE_OF_DEVASTATION);
+                setMoveShortcut(FINALE_OF_DEVASTATION, MOVES[FINALE_OF_DEVASTATION]);
             } else if (moveCounter == FINALE_OF_PROMISE) {
-                setMoveShortcut(FINALE_OF_PROMISE);
+                setMoveShortcut(FINALE_OF_PROMISE, MOVES[FINALE_OF_PROMISE]);
             } else {
-                setMoveShortcut(FINALE_OF_ETERNITY);
+                setMoveShortcut(FINALE_OF_ETERNITY, MOVES[FINALE_OF_ETERNITY]);
             }
         }
     }
@@ -131,9 +142,9 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private boolean isOnlyMonsterAlive() {
         for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
             if(!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

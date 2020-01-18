@@ -22,6 +22,10 @@ import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.monsters.exordium.Cultist;
+import com.megacrit.cardcrawl.monsters.exordium.Lagavulin;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -234,7 +238,12 @@ public class WanderingminibossesMod implements
         WanderingBossHelper.populateMonsterMap();
 
         //Here for testing purposes
-        BaseMod.addMonster(EternalPrincess.ID, (BaseMod.GetMonster)EternalPrincess::new);
+        //BaseMod.addMonster(EternalPrincess.ID, (BaseMod.GetMonster)EternalPrincess::new);
+        BaseMod.addMonster(EternalPrincess.ID, "Eternal Princess", () -> new MonsterGroup(
+                new AbstractMonster[] {
+                        new Cultist( -150.0F, 0.0F),
+                        new EternalPrincess(-450.0F, 0.0F)
+                }));
     }
 
     @Override
