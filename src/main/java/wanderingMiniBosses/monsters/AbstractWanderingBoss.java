@@ -16,4 +16,6 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
         this.type = EnemyType.BOSS;
         this.moves = new HashMap<>();
     }
+
+    //TODO: Add automated running here since every monster should have this.
 }
