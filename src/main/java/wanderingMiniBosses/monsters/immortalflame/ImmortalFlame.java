@@ -13,11 +13,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.relics.BurningBlood;
 import com.megacrit.cardcrawl.relics.RunicDome;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.combat.ScreenOnFireEffect;
 import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect;
@@ -40,11 +43,11 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     protected static final float HB_WIDTH = 140.0F; //scale is all multiplied in abstract monster class
     protected static final float HB_HEIGHT = 140.0F;
 
-    protected static final float MAX_OFFSET = 20.0F * Settings.scale;
-    protected static final float FLAME_CHANCE = 0.3f;
+    protected static final float MAX_OFFSET = 30.0F * Settings.scale;
+    protected static final float FLAME_CHANCE = 0.45f;
 
     protected float fireTimer = 0.0F;
-    protected static final float FIRE_TIME = 0.025F;
+    protected static final float FIRE_TIME = 0.01F;
 
     private int turnCounter = 0;
 
@@ -60,7 +63,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final int FW_DMG = 2;
     private static final int FW_MULTI = 6;
 
-    private static final int IF_HPL = 5;
+    private static final int IF_HPL = 4;
     private static final int IF_SG = 1;
 
     private static final float MAX_Y = 250.0F;
@@ -74,6 +77,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
 
     public ImmortalFlame(String name, String id, int maxHealth) {
         super(name, id, maxHealth, MathUtils.random(MIN_X, MAX_X), MathUtils.random(MIN_Y, MAX_Y), HB_WIDTH, HB_HEIGHT, "");
+        rewards.add(new RewardItem(RelicLibrary.getRelic(BurningBlood.ID).makeCopy()));
     }
 
     @Override
