@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
         method = "getNextAction"
 )
 public class MaybeSpawnDudePatch {
-    private static final Logger logger = LogManager.getLogger(DefaultInsertPatch.class.getName());
+    private static final Logger logger = LogManager.getLogger(MaybeSpawnDudePatch.class.getName());
     private static final int MIN_TURNS = 1;
     private static final int MAX_TURNS = 4;
 

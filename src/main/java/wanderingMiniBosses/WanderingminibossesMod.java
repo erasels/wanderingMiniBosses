@@ -23,12 +23,8 @@ import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wanderingMiniBosses.cards.*;
-import wanderingMiniBosses.characters.Wanderingminibosses;
-import wanderingMiniBosses.events.IdentityCrisisEvent;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
@@ -46,6 +42,7 @@ public class WanderingminibossesMod implements
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
         OnStartBattleSubscriber,
+        StartGameSubscriber,
         PostInitializeSubscriber {
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
