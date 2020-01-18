@@ -7,7 +7,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
-import wanderingMiniBosses.powers.CommonPower;
 
 import static wanderingMiniBosses.WanderingminibossesMod.makeCardPath;
 
