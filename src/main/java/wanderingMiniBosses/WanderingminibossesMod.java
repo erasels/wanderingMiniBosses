@@ -209,7 +209,7 @@ OnStartBattleSubscriber{
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
-        BaseMod.addSaveField("WBMonsterUID", new CustomSavable<String>() {
+        BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
             @Override
             public String onSave() {
                 return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).name;
