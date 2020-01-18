@@ -16,7 +16,6 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import wanderingMiniBosses.WanderingminibossesMod;
-import wanderingMiniBosses.patches.relics.BottledPlaceholderField;
 import wanderingMiniBosses.util.TextureLoader;
 
 import java.util.Iterator;
