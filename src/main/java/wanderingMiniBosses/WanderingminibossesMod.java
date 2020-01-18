@@ -25,6 +25,7 @@ import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
@@ -231,6 +232,9 @@ public class WanderingminibossesMod implements
         });
 
         WanderingBossHelper.populateMonsterMap();
+
+        //Here for testing purposes
+        BaseMod.addMonster(EternalPrincess.ID, (BaseMod.GetMonster)EternalPrincess::new);
     }
 
     @Override
