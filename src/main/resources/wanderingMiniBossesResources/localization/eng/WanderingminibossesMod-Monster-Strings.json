@@ -9,5 +9,17 @@
     "DIALOG": [
       ""
     ]
+  },
+  "wanderingMiniBosses:EternalPrincess": {
+    "MOVES": [
+      "Finale of Glory",
+      "Finale of Devastation",
+      "Finale of Promise",
+      "Finale of Eternity"
+    ],
+    "NAME": "Eternal Princess",
+    "DIALOG": [
+      ""
+    ]
   }
 }
