@@ -17,6 +17,8 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.relics.RunicDome;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.combat.ScreenOnFireEffect;
 import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
@@ -66,11 +68,12 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     }
 
     public ImmortalFlame(String name, String id, int maxHealth) {
-        super(name, id, maxHealth, Settings.WIDTH/2f, Settings.HEIGHT/2f, HB_WIDTH, HB_HEIGHT, "");
+        super(name, id, maxHealth, -100f, 400f, HB_WIDTH, HB_HEIGHT, "");
 
         this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
         this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK_DEBUFF, EXPLOSION_DMG * actNum, 0, false));
         this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG, FW_MULTI, true));
+        setMoveShortcut(INNERFLAME);
     }
 
     @Override
@@ -81,14 +84,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     }
 
     @Override
-    public void takeCustomTurn() {
-        DamageInfo info = new DamageInfo(this, moves.get(this.nextMove).baseDamage, DamageInfo.DamageType.NORMAL);
-        DamageInfo info_mon = new DamageInfo(this, moves.get(this.nextMove).baseDamage, DamageInfo.DamageType.NORMAL);
-        if (info.base > -1) {
-            info.applyPowers(this, AbstractDungeon.player);
-        }
-        int multiplier = moves.get(this.nextMove).multiplier;
-
+    public void takeCustomTurn(DamageInfo info, int multiplier) {
         switch (this.nextMove) {
             case INNERFLAME:
                 for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
@@ -107,8 +103,8 @@ public class ImmortalFlame extends AbstractWanderingBoss {
                 addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, EXPLOSION_VULN, true), EXPLOSION_VULN));
                 for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
                     if (!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                        info_mon.applyPowers(this, m);
-                        AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info_mon, AbstractGameAction.AttackEffect.FIRE));
+                        info.applyPowers(this, m);
+                        AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info, AbstractGameAction.AttackEffect.FIRE));
                         addToBot(new ApplyPowerAction(m, this, new VulnerablePower(m, EXPLOSION_VULN, true), EXPLOSION_VULN));
                     }
                 }
@@ -119,8 +115,8 @@ public class ImmortalFlame extends AbstractWanderingBoss {
                     AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.FIRE));
                     for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
                         if (!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                            info_mon.applyPowers(this, m);
-                            AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info_mon, AbstractGameAction.AttackEffect.FIRE));
+                            info.applyPowers(this, m);
+                            AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info, AbstractGameAction.AttackEffect.FIRE));
                         }
                     }
                 }
@@ -165,6 +161,15 @@ public class ImmortalFlame extends AbstractWanderingBoss {
 
     @Override
     public void render(SpriteBatch sb) {
+        if (!this.isDying && !this.isEscaping && (AbstractDungeon.getCurrRoom()).phase == AbstractRoom.RoomPhase.COMBAT && !AbstractDungeon.player.isDead) {
+            if (!AbstractDungeon.player.hasRelic(RunicDome.ID) && this.intent != Intent.NONE && !Settings.hideCombatElements) {
+                renderIntentVfxBehind(sb);
+                renderIntent(sb);
+                renderIntentVfxAfter(sb);
+                renderDamageRange(sb);
+            }
+        }
+
         if (!this.isDead && !this.escaped) {
             this.hb.render(sb);
             this.intentHb.render(sb);
@@ -178,12 +183,6 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     }
 
     private void positionSelf() {
-        final float MAX_Y = 250.0F;
-        final float MIN_Y = 150.0F;
-        final float MIN_X = -350.0F;
-        final float MAX_X = 150.0F;
-        float x = MathUtils.random(MIN_X, MAX_X);
-        float y = MathUtils.random(MIN_Y, MAX_Y);
         float actualX = this.hb.x;
         float actualY = this.hb.y;
         float adjustDistance = 0;
