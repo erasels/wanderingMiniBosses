@@ -16,7 +16,9 @@ import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.vfx.combat.ScreenOnFireEffect;
+import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.BlazingPower;
@@ -47,11 +49,11 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final byte INNERFLAME = 0;
     private static final byte EXPLOSION = 1;
     private static final byte FLAMEWALL = 2;
-    private static final byte LIMITBREAK = 3;
 
     private static final int MAX_HEALTH = 190;
 
     private static final int EXPLOSION_DMG = 7;
+    private static final int EXPLOSION_VULN = 2;
 
     private static final int FW_DMG = 3;
     private static final int FW_MULTI = 6;
@@ -65,20 +67,21 @@ public class ImmortalFlame extends AbstractWanderingBoss {
 
     public ImmortalFlame(String name, String id, int maxHealth) {
         super(name, id, maxHealth, 150f, 150f, HB_WIDTH, HB_HEIGHT, "");
-        positionSelf();
 
         this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
-        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK, EXPLOSION_DMG * actNum, 0, false));
+        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK_DEBUFF, EXPLOSION_DMG * actNum, 0, false));
         this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG, FW_MULTI, true));
     }
 
     public void usePreBattleAction() {
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new BlazingPower(this)));
+        positionSelf();
     }
 
     @Override
     public void takeCustomTurn() {
         DamageInfo info = new DamageInfo(this, moves.get(this.nextMove).baseDamage, DamageInfo.DamageType.NORMAL);
+        DamageInfo info_mon = new DamageInfo(this, moves.get(this.nextMove).baseDamage, DamageInfo.DamageType.NORMAL);
         if (info.base > -1) {
             info.applyPowers(this, AbstractDungeon.player);
         }
@@ -88,17 +91,37 @@ public class ImmortalFlame extends AbstractWanderingBoss {
             case INNERFLAME:
                 for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
                     if(!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                        addToBot(new ApplyPowerAction(m, this, new InnerFlamePower(m, IF_HPL, IF_SG), IF_HPL));
+                        addToBot(new ApplyPowerAction(m, this, new InnerFlamePower(m, IF_HPL*actNum, IF_SG*actNum), IF_HPL*actNum));
                     }
                 }
                 break;
             case EXPLOSION:
+                addToBot(new VFXAction(new ShockWaveEffect(this.hb.cX, this.hb.cY, Color.ORANGE, ShockWaveEffect.ShockWaveType.CHAOTIC)));
+                addToBot(new VFXAction(new ShockWaveEffect(this.hb.cX, this.hb.cY, Color.FIREBRICK, ShockWaveEffect.ShockWaveType.CHAOTIC)));
+                addToBot(new VFXAction(new ShockWaveEffect(this.hb.cX, this.hb.cY, Color.ORANGE, ShockWaveEffect.ShockWaveType.CHAOTIC)));
+                addToBot(new VFXAction(new ShockWaveEffect(this.hb.cX, this.hb.cY, Color.SALMON, ShockWaveEffect.ShockWaveType.CHAOTIC)));
 
+                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.FIRE));
+                addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, EXPLOSION_VULN, true), EXPLOSION_VULN));
+                for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
+                    if (!m.isDeadOrEscaped() && !m.id.equals(ID)) {
+                        info_mon.applyPowers(this, m);
+                        AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info_mon, AbstractGameAction.AttackEffect.FIRE));
+                        addToBot(new ApplyPowerAction(m, this, new VulnerablePower(m, EXPLOSION_VULN, true), EXPLOSION_VULN));
+                    }
+                }
                 break;
             case FLAMEWALL:
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ScreenOnFireEffect(), 1.0F));
-                for (int i = 0; i < multiplier; i++)
+                for (int i = 0; i < multiplier; i++) {
                     AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.FIRE));
+                    for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
+                        if (!m.isDeadOrEscaped() && !m.id.equals(ID)) {
+                            info_mon.applyPowers(this, m);
+                            AbstractDungeon.actionManager.addToBottom(new DamageAction(m, info_mon, AbstractGameAction.AttackEffect.FIRE));
+                        }
+                    }
+                }
                 break;
         }
 
