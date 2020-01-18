@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -13,9 +16,11 @@ import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
+import com.megacrit.cardcrawl.vfx.combat.ScreenOnFireEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.BlazingPower;
+import wanderingMiniBosses.powers.InnerFlamePower;
 import wanderingMiniBosses.vfx.general.CalmFireEffect;
 import wanderingMiniBosses.vfx.general.CasualFlameParticleEffect;
 
@@ -51,6 +56,9 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final int FW_DMG = 3;
     private static final int FW_MULTI = 6;
 
+    private static final int IF_HPL = 5;
+    private static final int IF_SG = 1;
+
     public ImmortalFlame() {
         this(NAME, ID, MAX_HEALTH);
     }
@@ -60,7 +68,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
         positionSelf();
 
         this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
-        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK, EXPLOSION_DMG*actNum, 0, false));
+        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK, EXPLOSION_DMG * actNum, 0, false));
         this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG, FW_MULTI, true));
     }
 
@@ -71,13 +79,35 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     @Override
     public void takeCustomTurn() {
         DamageInfo info = new DamageInfo(this, moves.get(this.nextMove).baseDamage, DamageInfo.DamageType.NORMAL);
+        if (info.base > -1) {
+            info.applyPowers(this, AbstractDungeon.player);
+        }
+        int multiplier = moves.get(this.nextMove).multiplier;
+
+        switch (this.nextMove) {
+            case INNERFLAME:
+                for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
+                    if(!m.isDeadOrEscaped() && !m.id.equals(ID)) {
+                        addToBot(new ApplyPowerAction(m, this, new InnerFlamePower(m, IF_HPL, IF_SG), IF_HPL));
+                    }
+                }
+                break;
+            case EXPLOSION:
+
+                break;
+            case FLAMEWALL:
+                AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new ScreenOnFireEffect(), 1.0F));
+                for (int i = 0; i < multiplier; i++)
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.FIRE));
+                break;
+        }
 
         turnCounter++;
     }
 
     @Override
     protected void getMove(int i) {
-        if(turnCounter < 1) {
+        if (turnCounter < 1) {
             setMoveShortcut(INNERFLAME);
         } else {
             if (turnCounter % 2 == 0) {
