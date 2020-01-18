@@ -1,7 +1,9 @@
 {
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
-      ""
+      "Inner Flame",
+      "Explosion",
+      "Flame Wall"
     ],
     "NAME": "Immortal Flame",
     "DIALOG": [
