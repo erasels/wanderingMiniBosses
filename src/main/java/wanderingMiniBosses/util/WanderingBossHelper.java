@@ -18,12 +18,10 @@ public class WanderingBossHelper {
         wanderingBoss = m;
     }
 
-    //TODO: Make actual logic
     public static AbstractMonster getMonsterFromID(String id) {
         return monsterMap.get(id).get();
     }
 
-    //TODO: Make actual logic
     public static AbstractMonster getRandomMonster() {
         //Using a non-seeded random should be alright since this should only be run once per dungeon creation and the result is saved.
         return (AbstractMonster) monsterMap.values().toArray()[MathUtils.random(monsterMap.size()-1)];
