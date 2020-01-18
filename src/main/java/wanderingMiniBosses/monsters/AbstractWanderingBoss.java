@@ -42,7 +42,15 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
         this.runTimer = RUNTIMER;
 
         this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
+        populateMoves();
         this.rewards = new ArrayList<>();
+    }
+
+    protected abstract void populateMoves();
+
+    public void usePreBattleAction() {
+        moves.clear();
+        populateMoves();
     }
 
     @Override
