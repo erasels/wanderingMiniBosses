@@ -4,6 +4,7 @@ import basemod.BaseMod;
 import basemod.ModLabel;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
+import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -14,10 +15,12 @@ import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.cards.*;
 import wanderingMiniBosses.characters.Wanderingminibosses;
 import wanderingMiniBosses.events.IdentityCrisisEvent;
+import wanderingMiniBosses.patches.DungeonMonsterFieldPatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.BottledPlaceholderRelic;
 import wanderingMiniBosses.relics.DefaultClickableRelic;
@@ -47,7 +51,8 @@ public class WanderingminibossesMod implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
-        PostInitializeSubscriber {
+        PostInitializeSubscriber,
+        PreStartGameSubscriber{
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
 
@@ -201,21 +206,44 @@ public class WanderingminibossesMod implements
         settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
+
+        BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
+            @Override
+            public String onSave() {
+                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).id;
+            }
+
+            @Override
+            public void onLoad(String i) {
+                //TODO: Method to create new monster instance from ID.
+                DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, null);
+            }
+        });
+
+        BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
+            @Override
+            public Integer onSave() {
+                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).currentHealth;
+            }
+
+            @Override
+            public void onLoad(Integer i) {
+                //TODO: Method to create new monster instance from ID.
+                DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).currentHealth = i;
+            }
+        });
     }
-    
-    // =============== / POST-INITIALIZE/ =================
-    
-    
-    // ================ ADD POTIONS ===================
+
+    @Override
+    public void receivePreStartGame() {
+        // TODO: Method for selecting one of our created monsters
+        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, null);
+    }
+
     
     public void receiveEditPotions() {
         BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID, Wanderingminibosses.Enums.THE_DEFAULT);
     }
-    
-    // ================ /ADD POTIONS/ ===================
-    
-    
-    // ================ ADD RELICS ===================
     
     @Override
     public void receiveEditRelics() {
