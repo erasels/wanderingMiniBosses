@@ -203,7 +203,7 @@ public class WanderingminibossesMod implements
         BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
             @Override
             public String onSave() {
-                return WanderingBossHelper.getMonster().id;
+                return WanderingBossHelper.getMonster() != null?WanderingBossHelper.getMonster().id:"null";
             }
 
             @Override
@@ -215,12 +215,14 @@ public class WanderingminibossesMod implements
         BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
             @Override
             public Integer onSave() {
-                return WanderingBossHelper.getMonster().currentHealth;
+                return WanderingBossHelper.getMonster() != null?WanderingBossHelper.getMonster().currentHealth:-1;
             }
 
             @Override
             public void onLoad(Integer i) {
-                WanderingBossHelper.getMonster().currentHealth = i;
+                if(WanderingBossHelper.getMonster() != null) {
+                    WanderingBossHelper.getMonster().currentHealth = i;
+                }
             }
         });
     }
