@@ -34,15 +34,17 @@ public class MaybeSpawnDudePatch {
             locator = Locator.class
     )
     public static void Insert(GameActionManager __instance) {
-        logger.error("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
-        if(spawningDudeThisFight()) {
-            turnCounter++;
-            logger.error("TurnCount: " + turnCounter + ", Chance: " + (((float)turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)));
-            if (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float)turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)))) {
-                logger.error("Spawning Dude");
-                turnCounter = -1;
+        if(WanderingBossHelper.isMonsterAlive()) {
+            logger.error("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
+            if (spawningDudeThisFight()) {
+                turnCounter++;
+                logger.error("TurnCount: " + turnCounter + ", Chance: " + (((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)));
+                if (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)))) {
+                    logger.error("Spawning Dude");
+                    turnCounter = -1;
 
-                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
+                    AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
+                }
             }
         }
     }

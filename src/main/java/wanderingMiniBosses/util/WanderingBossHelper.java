@@ -26,6 +26,10 @@ public class WanderingBossHelper {
         wanderingBoss = m;
     }
 
+    public static boolean isMonsterAlive() {
+        return wanderingBoss.currentHealth > 0;
+    }
+
     public static AbstractMonster getMonsterFromID(String id) {
         return monsterMap.get(id).get();
     }
