@@ -81,7 +81,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
         super.usePreBattleAction();
         AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this, this, new BlazingPower(this)));
         positionSelf();
-        setMoveShortcut(INNERFLAME);
+        setMoveShortcut(INNERFLAME, MOVES[0]);
     }
 
     @Override
@@ -137,12 +137,12 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     @Override
     protected void getMove(int i) {
         if (turnCounter < 1) {
-            setMoveShortcut(INNERFLAME);
+            setMoveShortcut(INNERFLAME, MOVES[0]);
         } else {
             if (turnCounter % 2 == 0) {
-                setMoveShortcut(EXPLOSION);
+                setMoveShortcut(EXPLOSION, MOVES[1]);
             } else {
-                setMoveShortcut(FLAMEWALL);
+                setMoveShortcut(FLAMEWALL, MOVES[2]);
             }
         }
     }
