@@ -66,16 +66,18 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     }
 
     public ImmortalFlame(String name, String id, int maxHealth) {
-        super(name, id, maxHealth, 150f, 150f, HB_WIDTH, HB_HEIGHT, "");
+        super(name, id, maxHealth, Settings.WIDTH/2f, Settings.HEIGHT/2f, HB_WIDTH, HB_HEIGHT, "");
 
         this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
         this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK_DEBUFF, EXPLOSION_DMG * actNum, 0, false));
         this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG, FW_MULTI, true));
     }
 
+    @Override
     public void usePreBattleAction() {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new BlazingPower(this)));
+        AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this, this, new BlazingPower(this)));
         positionSelf();
+        setMoveShortcut(INNERFLAME);
     }
 
     @Override
@@ -194,7 +196,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
         while (!success) {
             success = true;
             for (AbstractMonster monster : AbstractDungeon.getMonsters().monsters) {
-                if (!(monster.isDeadOrEscaped())) {
+                if (!(monster.isDeadOrEscaped()) && monster != this) {
                     if (overlap(monster.hb, this.hb)) {
                         success = false;
 
