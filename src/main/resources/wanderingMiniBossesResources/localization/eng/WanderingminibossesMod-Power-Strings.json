@@ -6,5 +6,31 @@
 "wanderingMiniBosses:RarePower": {
         "NAME": "Placeholder Power",
         "DESCRIPTIONS": ["At the start of your turn, TOUCH #b", " enemy." , " enemies."]
+},
+
+"wanderingMiniBosses:GazeOne": {
+        "NAME": "Gaze of the closing Eyes",
+        "DESCRIPTIONS": [
+                "After playing the first card each turn its adjacent cards cost #b",
+                " more [E] until end of turn."
+        ]
+},
+"wanderingMiniBosses:GazeTwo": {
+        "NAME": "Gaze of the empty Mind",
+        "DESCRIPTIONS": [
+                "The second card you play each turn is ",
+                "removed from combat.",
+                "replaced with a #gSlimed this combat.",
+                "replaced with a random #pCurse this combat."
+        ]
+},
+"wanderingMiniBosses:GazeThree": {
+        "NAME": "Gaze of the reborn Heart",
+        "DESCRIPTIONS": [
+                "After playing the third card each turn, ",
+                "all enemies gain #b",
+                " #rStrength and ",
+                "shuffle a random card from your starterdeck into your discard pile."
+        ]
 }
 }
