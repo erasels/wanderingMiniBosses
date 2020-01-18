@@ -17,12 +17,15 @@ import com.google.gson.Gson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
 import wanderingMiniBosses.util.TextureLoader;
@@ -38,8 +41,9 @@ public class WanderingminibossesMod implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
-        PostInitializeSubscriber,
-        StartGameSubscriber{
+        OnStartBattleSubscriber,
+        StartGameSubscriber,
+        PostInitializeSubscriber {
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
 
@@ -296,5 +300,16 @@ public class WanderingminibossesMod implements
 
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
+    }
+
+
+    private static final float CHANCE = 0.15F;
+    @Override
+    public void receiveOnBattleStart(AbstractRoom abstractRoom) {
+        if(Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
+            MaybeSpawnDudePatch.resetTurnCounter();
+        } else {
+            MaybeSpawnDudePatch.noEncounterThisFight();
+        }
     }
 }
