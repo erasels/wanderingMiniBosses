@@ -1,47 +1,42 @@
 package wanderingMiniBosses;
 
 import basemod.BaseMod;
-import basemod.ModLabel;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
+import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.localization.*;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.exordium.FungiBeast;
+import com.megacrit.cardcrawl.monsters.exordium.JawWorm;
+import com.megacrit.cardcrawl.monsters.exordium.Looter;
+import com.megacrit.cardcrawl.monsters.exordium.LouseNormal;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wanderingMiniBosses.cards.*;
-import wanderingMiniBosses.characters.Wanderingminibosses;
-import wanderingMiniBosses.events.IdentityCrisisEvent;
 import wanderingMiniBosses.patches.DungeonMonsterFieldPatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
-import wanderingMiniBosses.relics.BottledPlaceholderRelic;
-import wanderingMiniBosses.relics.DefaultClickableRelic;
-import wanderingMiniBosses.relics.PlaceholderRelic;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
-import wanderingMiniBosses.util.IDCheckDontTouchPls;
 import wanderingMiniBosses.util.TextureLoader;
-import wanderingMiniBosses.variables.DefaultCustomVariable;
-import wanderingMiniBosses.variables.DefaultSecondMagicNumber;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Properties;
 
 @SpireInitializer
@@ -52,7 +47,8 @@ public class WanderingminibossesMod implements
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
         PostInitializeSubscriber,
-        PreStartGameSubscriber{
+        StartGameSubscriber,
+OnStartBattleSubscriber{
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
 
@@ -86,6 +82,14 @@ public class WanderingminibossesMod implements
     private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/card_default_gray_orb.png";
 
     public static final String BADGE_IMAGE = "wanderingMiniBossesResources/images/Badge.png";
+
+    public static class Enums {
+        @SpireEnum(name = "WB_COLOR") // These two HAVE to have the same absolutely identical name.
+        public static AbstractCard.CardColor COLOR_WB;
+        @SpireEnum(name = "WB_COLOR")
+        @SuppressWarnings("unused")
+        public static CardLibrary.LibraryType LIBRARY_COLOR;
+    }
     
     // =============== MAKE IMAGE PATHS =================
     
@@ -125,13 +129,11 @@ public class WanderingminibossesMod implements
       
         setModID("wanderingMiniBosses");
         
-        logger.info("Creating the color " + Wanderingminibosses.Enums.COLOR_GRAY.toString());
-        
-        BaseMod.addColor(Wanderingminibosses.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
+        /*BaseMod.addColor(WanderingminibossesMod.Enums.COLOR_WB, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
                 DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
                 ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
                 ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
-                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
+                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);*/
 
         wanderingMiniBossesDefaultSettings.setProperty(ENABLE_PLACEHOLDER_SETTINGS, "FALSE");
         try {
@@ -207,16 +209,22 @@ public class WanderingminibossesMod implements
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
-        BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
+        BaseMod.addSaveField("WBMonsterUID", new CustomSavable<String>() {
             @Override
             public String onSave() {
-                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).id;
+                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).name;
             }
 
             @Override
             public void onLoad(String i) {
                 //TODO: Method to create new monster instance from ID.
-                DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, null);
+                for(AbstractMonster m : mons) {
+                    if(m.name.equals(i)) {
+                        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, m);
+                        System.out.println("HIT!!!!!!!!!!!!!");
+                    }
+                }
+
             }
         });
 
@@ -234,29 +242,29 @@ public class WanderingminibossesMod implements
         });
     }
 
+    public static ArrayList<AbstractMonster> mons = new ArrayList<>();
+
     @Override
-    public void receivePreStartGame() {
+    public void receiveStartGame() {
+        mons.add(new JawWorm(55f, 137f));
+        mons.add(new LouseNormal(55f, 137f));
+        mons.add(new FungiBeast(55f, 137f));
+        mons.add(new Looter(55f, 137f));
         // TODO: Method for selecting one of our created monsters
-        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, null);
+        System.out.println("SEE THIS:" + DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon));
+        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, mons.get(MathUtils.random(mons.size()-1)));
     }
 
     
     public void receiveEditPotions() {
-        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID, Wanderingminibosses.Enums.THE_DEFAULT);
+        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID);
     }
     
     @Override
     public void receiveEditRelics() {
-        // This adds a character specific relic. Only when you play with the mentioned color, will you get this relic.
-        BaseMod.addRelicToCustomPool(new PlaceholderRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new BottledPlaceholderRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new DefaultClickableRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        
-        // This adds a relic to the Shared pool. Every character can find this relic.
         BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
         
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
-        UnlockTracker.markRelicAsSeen(BottledPlaceholderRelic.ID);
     }
     
     // ================ /ADD RELICS/ ===================
@@ -326,5 +334,10 @@ public class WanderingminibossesMod implements
 
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
+    }
+
+    @Override
+    public void receiveOnBattleStart(AbstractRoom abstractRoom) {
+        System.out.println("LOOK HERE:" +DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).name);
     }
 }

@@ -1,6 +1,5 @@
 package wanderingMiniBosses.cards;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,7 +8,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.actions.UncommonPowerAction;
-import wanderingMiniBosses.characters.Wanderingminibosses;
 
 import static wanderingMiniBosses.WanderingminibossesMod.makeCardPath;
 
@@ -36,7 +34,7 @@ public class DefaultUncommonPower extends AbstractDynamicCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
     private static final CardType TYPE = CardType.POWER;
-    public static final CardColor COLOR = Wanderingminibosses.Enums.COLOR_GRAY;
+    public static final CardColor COLOR = WanderingminibossesMod.Enums.COLOR_WB;
 
     private static final int COST = -1;
     private static final int MAGIC = 1;

@@ -4,12 +4,9 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
-import wanderingMiniBosses.characters.Wanderingminibosses;
 
 import static wanderingMiniBosses.WanderingminibossesMod.makeCardPath;
 
@@ -50,7 +47,7 @@ public class CardTemplate extends AbstractDynamicCard {
     private static final CardRarity RARITY = CardRarity.COMMON; //  Up to you, I like auto-complete on these
     private static final CardTarget TARGET = CardTarget.ENEMY;  //   since they don't change much.
     private static final CardType TYPE = CardType.ATTACK;       //
-    public static final CardColor COLOR = Wanderingminibosses.Enums.COLOR_GRAY;
+    public static final CardColor COLOR = WanderingminibossesMod.Enums.COLOR_WB;
 
     private static final int COST = 1;  // COST = ${COST}
     private static final int UPGRADED_COST = 0; // UPGRADED_COST = ${UPGRADED_COST}
