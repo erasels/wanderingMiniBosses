@@ -313,7 +313,7 @@ public class WanderingminibossesMod implements
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
     }
-    
+
     private static final float CHANCE = 0.15F;
 
     @Override

@@ -3,6 +3,7 @@ package wanderingMiniBosses.patches;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
@@ -42,13 +43,14 @@ public class MaybeSpawnDudePatch {
         if (spawningDudeThisFight()) {
             turnCounter++;
             logger.error("TurnCount: " + turnCounter + ", Chance: " + (((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)));
-            if (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)))) {
+            if (Settings.isDebug || (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1))))) {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
 
                 AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
             }
         }
+
     }
 
     private static class Locator extends SpireInsertLocator {
