@@ -318,11 +318,13 @@ public class WanderingminibossesMod implements
     private static final float CHANCE = 0.15F;
     @Override
     public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-        if(!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
-            if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
-                MaybeSpawnDudePatch.resetTurnCounter();
-            } else {
-                MaybeSpawnDudePatch.noEncounterThisFight();
+        if (WanderingBossHelper.isMonsterAlive()) {
+            if (!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
+                if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
+                    MaybeSpawnDudePatch.resetTurnCounter();
+                } else {
+                    MaybeSpawnDudePatch.noEncounterThisFight();
+                }
             }
         }
     }
