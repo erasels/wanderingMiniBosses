@@ -1,23 +1,25 @@
 package wanderingMiniBosses;
 
 import basemod.BaseMod;
-import basemod.ModLabel;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
+import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
+import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -29,17 +31,10 @@ import wanderingMiniBosses.characters.Wanderingminibosses;
 import wanderingMiniBosses.events.IdentityCrisisEvent;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
-import wanderingMiniBosses.relics.BottledPlaceholderRelic;
-import wanderingMiniBosses.relics.DefaultClickableRelic;
-import wanderingMiniBosses.relics.PlaceholderRelic;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
-import wanderingMiniBosses.util.IDCheckDontTouchPls;
 import wanderingMiniBosses.util.TextureLoader;
-import wanderingMiniBosses.variables.DefaultCustomVariable;
-import wanderingMiniBosses.variables.DefaultSecondMagicNumber;
+import wanderingMiniBosses.util.WanderingBossHelper;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
@@ -85,6 +80,14 @@ public class WanderingminibossesMod implements
     private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/card_default_gray_orb.png";
 
     public static final String BADGE_IMAGE = "wanderingMiniBossesResources/images/Badge.png";
+
+    public static class Enums {
+        @SpireEnum(name = "WB_COLOR") // These two HAVE to have the same absolutely identical name.
+        public static AbstractCard.CardColor COLOR_WB;
+        @SpireEnum(name = "WB_COLOR")
+        @SuppressWarnings("unused")
+        public static CardLibrary.LibraryType LIBRARY_COLOR;
+    }
     
     // =============== MAKE IMAGE PATHS =================
     
@@ -124,13 +127,11 @@ public class WanderingminibossesMod implements
       
         setModID("wanderingMiniBosses");
         
-        logger.info("Creating the color " + Wanderingminibosses.Enums.COLOR_GRAY.toString());
-        
-        BaseMod.addColor(Wanderingminibosses.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
+        /*BaseMod.addColor(WanderingminibossesMod.Enums.COLOR_WB, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
                 DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
                 ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
                 ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
-                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
+                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);*/
 
         wanderingMiniBossesDefaultSettings.setProperty(ENABLE_PLACEHOLDER_SETTINGS, "FALSE");
         try {
@@ -205,50 +206,54 @@ public class WanderingminibossesMod implements
         settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
+
+        BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
+            @Override
+            public String onSave() {
+                return WanderingBossHelper.getMonster().id;
+            }
+
+            @Override
+            public void onLoad(String i) {
+                WanderingBossHelper.setMonster(WanderingBossHelper.getMonsterFromID(i));
+            }
+        });
+
+        BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
+            @Override
+            public Integer onSave() {
+                return WanderingBossHelper.getMonster().currentHealth;
+            }
+
+            @Override
+            public void onLoad(Integer i) {
+                WanderingBossHelper.getMonster().currentHealth = i;
+            }
+        });
     }
-    
-    // =============== / POST-INITIALIZE/ =================
-    
-    
-    // ================ ADD POTIONS ===================
+
+    @Override
+    public void receiveStartGame() {
+        if(!CardCrawlGame.loadingSave) {
+            WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
+        }
+    }
     
     public void receiveEditPotions() {
-        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID, Wanderingminibosses.Enums.THE_DEFAULT);
+        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID);
     }
-    
-    // ================ /ADD POTIONS/ ===================
-    
-    
-    // ================ ADD RELICS ===================
     
     @Override
     public void receiveEditRelics() {
-        // This adds a character specific relic. Only when you play with the mentioned color, will you get this relic.
-        BaseMod.addRelicToCustomPool(new PlaceholderRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new BottledPlaceholderRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new DefaultClickableRelic(), Wanderingminibosses.Enums.COLOR_GRAY);
-        
-        // This adds a relic to the Shared pool. Every character can find this relic.
         BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
         
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
-        UnlockTracker.markRelicAsSeen(BottledPlaceholderRelic.ID);
     }
-    
-    // ================ /ADD RELICS/ ===================
-    
-    
-    // ================ ADD CARDS ===================
     
     @Override
     public void receiveEditCards() {
 
     }
-    
-    // ================ /ADD CARDS/ ===================
-    
-    
-    // ================ LOAD THE TEXT ===================
     
     @Override
     public void receiveEditStrings() {
@@ -281,10 +286,6 @@ public class WanderingminibossesMod implements
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Orb-Strings.json");
     }
     
-    // ================ /LOAD THE TEXT/ ===================
-    
-    // ================ LOAD THE KEYWORDS ===================
-    
     @Override
     public void receiveEditKeywords() {
         Gson gson = new Gson();
@@ -297,8 +298,6 @@ public class WanderingminibossesMod implements
             }
         }
     }
-    
-    // ================ /LOAD THE KEYWORDS/ ===================    
 
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
