@@ -80,7 +80,6 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     public void usePreBattleAction() {
         AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this, this, new BlazingPower(this)));
         positionSelf();
-        setMoveShortcut(INNERFLAME);
     }
 
     @Override
