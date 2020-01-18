@@ -43,8 +43,8 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private static final int VULNERABLE = 2;
     private static final float HEAL = 0.10F;
 
-    private static final int ETERNITY_DAMAGE = 10;
-    private static final int ETERNITY_ACT_DAMAGE_BONUS = 5;
+    private static final int ETERNITY_DAMAGE = 8;
+    private static final int ETERNITY_ACT_DAMAGE_BONUS = 4;
     private static final int ETERNITY_MAX_HITS = 3;
 
     private int strength;
@@ -60,16 +60,16 @@ public class EternalPrincess extends AbstractWanderingBoss {
         super(NAME, ID, MAX_HEALTH, 0.0F, 300.0F, HB_WIDTH, HB_HEIGHT, null, x, y);
         this.animation = new SpriterAnimation("wanderingMiniBossesResources/images/eternalPrincess/Spriter/EternalPrincessAnimation.scml");
         rewards.add(new RewardItem(RelicLibrary.getRelic(Blackblade.ID).makeCopy()));
-        initializeMoves();
     }
 
     @Override
     public void usePreBattleAction() {
+        super.usePreBattleAction();
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new BountyOfPlenty(AbstractDungeon.player)));
-        initializeMoves();
     }
 
-    private void initializeMoves() {
+    @Override
+    protected void populateMoves() {
         this.strength = STRENGTH + (STRENGTH_ACT_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityDamage = ETERNITY_DAMAGE + (ETERNITY_ACT_DAMAGE_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityHits = ETERNITY_MAX_HITS;
