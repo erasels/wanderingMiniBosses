@@ -2,20 +2,24 @@ package wanderingMiniBosses.monsters;
 
 import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.common.EscapeAction;
+import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractWanderingBoss extends CustomMonster {
     public static final int RUNTIMER = 3;
-    public static final Byte RUN = Byte.MIN_VALUE;
+    public static final byte RUN = Byte.MIN_VALUE;
 
     protected Map<Byte, EnemyMoveInfo> moves;
     protected int runTimer;
+    protected ArrayList<RewardItem> rewards;
 
     public AbstractWanderingBoss(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY) {
         super(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, imgUrl, offsetX, offsetY);
@@ -37,6 +41,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
         this.runTimer = RUNTIMER;
 
         this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
+        this.rewards = new ArrayList<>();
     }
 
     @Override
@@ -48,12 +53,13 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
             takeCustomTurn();
         }
         runTimer--;
+        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
     }
     public abstract void takeCustomTurn();
 
     @Override
     public void rollMove() {
-        if(this.runTimer-- <= 0) {
+        if(this.runTimer <= 0) {
             this.setMoveShortcut(RUN);
         } else {
             super.rollMove();
@@ -70,12 +76,17 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
         WanderingBossHelper.getMonster().currentHealth = this.currentHealth;
     }
 
-    public void setMoveShortcut(byte next, int moveIndex) {
+    public void setMoveShortcut(byte next, String text) {
         EnemyMoveInfo info = this.moves.get(next);
-        this.setMove(MOVES[moveIndex], next, info.intent, info.baseDamage, info.multiplier, info.isMultiDamage);
+        this.setMove(text, next, info.intent, info.baseDamage, info.multiplier, info.isMultiDamage);
     }
     public void setMoveShortcut(byte next) {
         EnemyMoveInfo info = this.moves.get(next);
         this.setMove(next, info.intent, info.baseDamage, info.multiplier, info.isMultiDamage);
+    }
+
+    public void die(boolean triggerRelics) {
+        AbstractDungeon.getCurrRoom().rewards.addAll(rewards);
+        super.die(triggerRelics);
     }
 }

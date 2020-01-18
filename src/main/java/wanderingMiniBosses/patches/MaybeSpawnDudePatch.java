@@ -2,11 +2,13 @@ package wanderingMiniBosses.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.common.SpawnMonsterAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.util.WanderingBossHelper;
 
 @SpirePatch(
         clz = GameActionManager.class,
@@ -39,7 +41,8 @@ public class MaybeSpawnDudePatch {
             if (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float)turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)))) {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
-                // TODO: spawn dude
+
+                AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(WanderingBossHelper.getMonster(), false));
             }
         }
     }
