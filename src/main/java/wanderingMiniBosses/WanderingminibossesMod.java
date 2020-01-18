@@ -27,6 +27,8 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.monsters.exordium.Cultist;
 import com.megacrit.cardcrawl.monsters.exordium.Lagavulin;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
@@ -113,9 +115,13 @@ public class WanderingminibossesMod implements
     public static String makePowerPath(String resourcePath) {
         return getModID() + "Resources/images/powers/" + resourcePath;
     }
-    
+
     public static String makeEventPath(String resourcePath) {
         return getModID() + "Resources/images/events/" + resourcePath;
+    }
+
+    public static String makeMonsterPath(String resourcePath) {
+        return getModID() + "Resources/images/monsters/" + resourcePath;
     }
     
     // =============== /MAKE IMAGE PATHS/ =================
@@ -318,10 +324,12 @@ public class WanderingminibossesMod implements
     private static final float CHANCE = 0.15F;
     @Override
     public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-        if(Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
-            MaybeSpawnDudePatch.resetTurnCounter();
-        } else {
-            MaybeSpawnDudePatch.noEncounterThisFight();
+        if(!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
+            if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
+                MaybeSpawnDudePatch.resetTurnCounter();
+            } else {
+                MaybeSpawnDudePatch.noEncounterThisFight();
+            }
         }
     }
 }

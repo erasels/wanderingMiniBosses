@@ -57,29 +57,38 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final int EXPLOSION_DMG = 7;
     private static final int EXPLOSION_VULN = 2;
 
-    private static final int FW_DMG = 3;
+    private static final int FW_DMG = 2;
     private static final int FW_MULTI = 6;
 
     private static final int IF_HPL = 5;
     private static final int IF_SG = 1;
+
+    private static final float MAX_Y = 250.0F;
+    private static final float MIN_Y = 150.0F;
+    private static final float MIN_X = -350.0F;
+    private static final float MAX_X = 150.0F;
 
     public ImmortalFlame() {
         this(NAME, ID, MAX_HEALTH);
     }
 
     public ImmortalFlame(String name, String id, int maxHealth) {
-        super(name, id, maxHealth, -100f, 400f, HB_WIDTH, HB_HEIGHT, "");
-
-        this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
-        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK_DEBUFF, EXPLOSION_DMG * actNum, 0, false));
-        this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG, FW_MULTI, true));
-        setMoveShortcut(INNERFLAME);
+        super(name, id, maxHealth, MathUtils.random(MIN_X, MAX_X), MathUtils.random(MIN_Y, MAX_Y), HB_WIDTH, HB_HEIGHT, "");
     }
 
     @Override
     public void usePreBattleAction() {
+        super.usePreBattleAction();
         AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this, this, new BlazingPower(this)));
         positionSelf();
+        setMoveShortcut(INNERFLAME);
+    }
+
+    @Override
+    protected void populateMoves() {
+        this.moves.put(INNERFLAME, new EnemyMoveInfo(INNERFLAME, Intent.BUFF, -1, 0, false));
+        this.moves.put(EXPLOSION, new EnemyMoveInfo(EXPLOSION, Intent.ATTACK_DEBUFF, EXPLOSION_DMG * actNum, 0, false));
+        this.moves.put(FLAMEWALL, new EnemyMoveInfo(FLAMEWALL, Intent.ATTACK, FW_DMG + actNum, FW_MULTI, true));
     }
 
     @Override
