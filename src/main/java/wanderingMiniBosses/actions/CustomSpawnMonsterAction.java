@@ -5,20 +5,17 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class CustomSpawnMonsterAction extends SpawnMonsterAction {
     private AbstractMonster mon;
-    private boolean calledPreBattle;
 
     public CustomSpawnMonsterAction(AbstractMonster m, boolean isMinion) {
         super(m, isMinion);
         mon = m;
-        calledPreBattle = false;
     }
 
     @Override
     public void update() {
         super.update();
-        if(isDone && !calledPreBattle) {
+        if(isDone) {
             mon.usePreBattleAction();
-            calledPreBattle = true;
         }
     }
 }
