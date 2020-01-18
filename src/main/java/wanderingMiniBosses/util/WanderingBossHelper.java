@@ -24,6 +24,6 @@ public class WanderingBossHelper {
 
     public static AbstractMonster getRandomMonster() {
         //Using a non-seeded random should be alright since this should only be run once per dungeon creation and the result is saved.
-        return (AbstractMonster) monsterMap.values().toArray()[MathUtils.random(monsterMap.size()-1)];
+        return ((BaseMod.GetMonster) monsterMap.values().toArray()[MathUtils.random(monsterMap.size()-1)]).get();
     }
 }
