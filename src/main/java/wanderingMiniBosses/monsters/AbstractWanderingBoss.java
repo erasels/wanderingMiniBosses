@@ -2,7 +2,6 @@ package wanderingMiniBosses.monsters;
 
 import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
-import wanderingMiniBosses.WanderingminibossesMod;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +15,6 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
 
         this.type = EnemyType.BOSS;
         this.moves = new HashMap<>();
-    }
-
-    public String getUID() {
-        return WanderingminibossesMod.getModID() + ":" + name;
     }
 
     //TODO: Add automated running here since every monster should have this.

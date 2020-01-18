@@ -9,7 +9,6 @@ import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
@@ -22,21 +21,14 @@ import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.exordium.FungiBeast;
-import com.megacrit.cardcrawl.monsters.exordium.JawWorm;
-import com.megacrit.cardcrawl.monsters.exordium.Looter;
-import com.megacrit.cardcrawl.monsters.exordium.LouseNormal;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wanderingMiniBosses.patches.DungeonMonsterFieldPatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
 import wanderingMiniBosses.util.TextureLoader;
+import wanderingMiniBosses.util.WanderingBossHelper;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Properties;
 
 @SpireInitializer
@@ -47,8 +39,7 @@ public class WanderingminibossesMod implements
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
         PostInitializeSubscriber,
-        StartGameSubscriber,
-OnStartBattleSubscriber{
+        StartGameSubscriber{
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
 
@@ -209,52 +200,37 @@ OnStartBattleSubscriber{
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
-        BaseMod.addSaveField("WBMonsterUID", new CustomSavable<String>() {
+        BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
             @Override
             public String onSave() {
-                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).name;
+                return WanderingBossHelper.getMonster().id;
             }
 
             @Override
             public void onLoad(String i) {
-                //TODO: Method to create new monster instance from ID.
-                for(AbstractMonster m : mons) {
-                    if(m.name.equals(i)) {
-                        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, m);
-                        System.out.println("HIT!!!!!!!!!!!!!");
-                    }
-                }
-
+                WanderingBossHelper.setMonster(WanderingBossHelper.getMonsterFromID(i));
             }
         });
 
         BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
             @Override
             public Integer onSave() {
-                return DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).currentHealth;
+                return WanderingBossHelper.getMonster().currentHealth;
             }
 
             @Override
             public void onLoad(Integer i) {
-                //TODO: Method to create new monster instance from ID.
-                DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).currentHealth = i;
+                WanderingBossHelper.getMonster().currentHealth = i;
             }
         });
     }
 
-    public static ArrayList<AbstractMonster> mons = new ArrayList<>();
-
     @Override
     public void receiveStartGame() {
-        mons.add(new JawWorm(55f, 137f));
-        mons.add(new LouseNormal(55f, 137f));
-        mons.add(new FungiBeast(55f, 137f));
-        mons.add(new Looter(55f, 137f));
-        // TODO: Method for selecting one of our created monsters
-        System.out.println("SEE THIS:" + DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon));
-        DungeonMonsterFieldPatch.dungeonMiniboss.set(CardCrawlGame.dungeon, mons.get(MathUtils.random(mons.size()-1)));
+        if(!CardCrawlGame.loadingSave) {
+            WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
+        }
     }
-
     
     public void receiveEditPotions() {
         BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID);
@@ -267,20 +243,10 @@ OnStartBattleSubscriber{
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
     }
     
-    // ================ /ADD RELICS/ ===================
-    
-    
-    // ================ ADD CARDS ===================
-    
     @Override
     public void receiveEditCards() {
 
     }
-    
-    // ================ /ADD CARDS/ ===================
-    
-    
-    // ================ LOAD THE TEXT ===================
     
     @Override
     public void receiveEditStrings() {
@@ -313,10 +279,6 @@ OnStartBattleSubscriber{
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Orb-Strings.json");
     }
     
-    // ================ /LOAD THE TEXT/ ===================
-    
-    // ================ LOAD THE KEYWORDS ===================
-    
     @Override
     public void receiveEditKeywords() {
         Gson gson = new Gson();
@@ -329,15 +291,8 @@ OnStartBattleSubscriber{
             }
         }
     }
-    
-    // ================ /LOAD THE KEYWORDS/ ===================    
 
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
-    }
-
-    @Override
-    public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-        System.out.println("LOOK HERE:" +DungeonMonsterFieldPatch.dungeonMiniboss.get(CardCrawlGame.dungeon).name);
     }
 }
