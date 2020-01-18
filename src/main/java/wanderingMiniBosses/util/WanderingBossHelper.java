@@ -15,7 +15,7 @@ public class WanderingBossHelper {
 
     public static void populateMonsterMap() {
         if(monsterMap.isEmpty()) {
-            //monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
+            monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
         }
     }

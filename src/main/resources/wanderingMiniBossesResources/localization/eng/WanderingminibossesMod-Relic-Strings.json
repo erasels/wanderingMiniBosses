@@ -30,5 +30,12 @@
       ".",
       "Select a card to bottle for "
     ]
+  },
+  "wanderingMiniBosses:Blackblade": {
+    "NAME": "Blackblade",
+    "FLAVOR": "A sinister blade that has tasted the blood of dragons.",
+    "DESCRIPTIONS": [
+      "Whenever you play a card, gain #b", " #yStrength this turn."
+    ]
   }
 }

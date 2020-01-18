@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
+import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.PlaceholderRelic2;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
@@ -236,14 +237,6 @@ public class WanderingminibossesMod implements
         });
 
         WanderingBossHelper.populateMonsterMap();
-
-        //Here for testing purposes
-        //BaseMod.addMonster(EternalPrincess.ID, (BaseMod.GetMonster)EternalPrincess::new);
-        BaseMod.addMonster(EternalPrincess.ID, "Eternal Princess", () -> new MonsterGroup(
-                new AbstractMonster[] {
-                        new Cultist( -150.0F, 0.0F),
-                        new EternalPrincess(-450.0F, 0.0F)
-                }));
     }
 
     @Override
@@ -260,7 +253,7 @@ public class WanderingminibossesMod implements
     @Override
     public void receiveEditRelics() {
         BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
-        
+        BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
     }
     

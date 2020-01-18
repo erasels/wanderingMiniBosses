@@ -4,19 +4,22 @@ import basemod.animations.SpriterAnimation;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.monsters.city.Byrd;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
+import wanderingMiniBosses.powers.eternalPrincessPowers.BountyOfPlenty;
+import wanderingMiniBosses.relics.Blackblade;
 
 public class EternalPrincess extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("EternalPrincess");
@@ -54,13 +57,15 @@ public class EternalPrincess extends AbstractWanderingBoss {
     }
 
     public EternalPrincess(final float x, final float y) {
-        super(NAME, ID, MAX_HEALTH, 0.0F, 100.0F, HB_WIDTH, HB_HEIGHT, null, x, y);
+        super(NAME, ID, MAX_HEALTH, 0.0F, 300.0F, HB_WIDTH, HB_HEIGHT, null, x, y);
         this.animation = new SpriterAnimation("wanderingMiniBossesResources/images/eternalPrincess/Spriter/EternalPrincessAnimation.scml");
+        rewards.add(new RewardItem(RelicLibrary.getRelic(Blackblade.ID).makeCopy()));
         initializeMoves();
     }
 
     @Override
     public void usePreBattleAction() {
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new BountyOfPlenty(AbstractDungeon.player)));
         initializeMoves();
     }
 
@@ -73,6 +78,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
         this.moves.put(FINALE_OF_DEVASTATION, new EnemyMoveInfo(FINALE_OF_DEVASTATION, Intent.STRONG_DEBUFF, -1, 0, false));
         this.moves.put(FINALE_OF_PROMISE, new EnemyMoveInfo(FINALE_OF_PROMISE, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_ETERNITY, new EnemyMoveInfo(FINALE_OF_ETERNITY, Intent.ATTACK, eternityDamage, eternityHits, true));
+        this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
         this.damage.add(new DamageInfo(this, this.eternityDamage));
     }
 
@@ -115,11 +121,11 @@ public class EternalPrincess extends AbstractWanderingBoss {
                     addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.FIRE));
                 }
                 break;
-            case RUN:
-                onEscape();
-                AbstractDungeon.actionManager.addToBottom(new EscapeAction(this));
-                break;
         }
+    }
+
+    public void onEscape() {
+        this.animation.setFlip(true, false);
     }
 
     @Override
