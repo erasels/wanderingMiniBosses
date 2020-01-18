@@ -1,5 +1,6 @@
 package wanderingMiniBosses.monsters;
 
+import basemod.BaseMod;
 import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
@@ -50,12 +51,25 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
             onEscape();
             AbstractDungeon.actionManager.addToBottom(new EscapeAction(this));
         } else {
-            takeCustomTurn();
+            DamageInfo info = null;
+            int multiplier = 0;
+            if(moves.containsKey(this.nextMove)) {
+                EnemyMoveInfo emi = moves.get(this.nextMove);
+                info = new DamageInfo(this, emi.baseDamage, DamageInfo.DamageType.NORMAL);
+                if(emi.baseDamage > -1) {
+                    info.applyPowers(this, AbstractDungeon.player);
+                    multiplier = emi.multiplier;
+                }
+            } else {
+                info = new DamageInfo(this, 0, DamageInfo.DamageType.NORMAL);
+                BaseMod.logger.error(this.name + " MOVECODE " + this.nextMove + " NOT FOUND!");
+            }
+            takeCustomTurn(info, multiplier);
         }
         runTimer--;
         AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
     }
-    public abstract void takeCustomTurn();
+    public abstract void takeCustomTurn(DamageInfo info, int multiplier);
 
     @Override
     public void rollMove() {
