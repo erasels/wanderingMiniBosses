@@ -3,6 +3,7 @@ package wanderingMiniBosses.util;
 import basemod.BaseMod;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class WanderingBossHelper {
     public static void populateMonsterMap() {
         if(monsterMap.isEmpty()) {
             monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
+            monsterMap.put(GazeMonster.ID, GazeMonster::new);
         }
     }
 

@@ -235,6 +235,8 @@ public class WanderingminibossesMod implements
                 }
             }
         });
+
+        WanderingBossHelper.populateMonsterMap();
     }
 
     @Override
@@ -289,6 +291,10 @@ public class WanderingminibossesMod implements
         // OrbStrings
         BaseMod.loadCustomStringsFile(OrbStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Orb-Strings.json");
+
+        // MonsterStrings
+        BaseMod.loadCustomStringsFile(MonsterStrings.class,
+                getModID() + "Resources/localization/eng/WanderingminibossesMod-Monster-Strings.json");
     }
     
     @Override

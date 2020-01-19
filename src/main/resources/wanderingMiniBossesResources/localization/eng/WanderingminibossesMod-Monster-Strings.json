@@ -1,4 +1,13 @@
 {
+  "wanderingMiniBosses:GazeMonster": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Staring Abyss",
+    "DIALOG": [
+      ""
+    ]
+  },
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
       ""

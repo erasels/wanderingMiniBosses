@@ -1,4 +1,4 @@
-package wanderingMiniBosses.monsters;
+package wanderingMiniBosses.monsters.gazemonster;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,15 +16,15 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.orbs.AbstractOrb;
-import com.megacrit.cardcrawl.orbs.Dark;
-import com.megacrit.cardcrawl.orbs.Lightning;
 import com.megacrit.cardcrawl.orbs.Plasma;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.megacrit.cardcrawl.vfx.combat.SearingBlowEffect;
 import com.megacrit.cardcrawl.vfx.combat.SweepingBeamEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.actions.SetPlayerBurnAction;
 import wanderingMiniBosses.cards.BossBurn;
+import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.gazepowers.GazeOne;
 import wanderingMiniBosses.powers.gazepowers.GazeThree;
 import wanderingMiniBosses.powers.gazepowers.GazeTwo;
@@ -36,8 +36,7 @@ public class GazeMonster extends AbstractWanderingBoss {
     public static final String[] MOVES;
     public static final String[] DIALOG;
 
-    private Bone[] orbBones;
-    private AbstractOrb[] orbs;
+    private Orbital[] orbs;
 
     private static final byte LASERSHOWER = 0;
     private static final byte STRENGTHEN = 1;
@@ -52,14 +51,10 @@ public class GazeMonster extends AbstractWanderingBoss {
         this.stateData.setMix("Hit", "Idle", 0.2F);
         this.stateData.setMix("Idle", "Attack", 0.1F);
 
-        orbBones = new Bone[3];
-        orbBones[0] = this.skeleton.findBone("Orb_Down");
-        orbBones[1] = this.skeleton.findBone("Orb_Left");
-        orbBones[2] = this.skeleton.findBone("Orb_Right");
-        orbs = new AbstractOrb[3];
-        orbs[0] = new Dark();
-        orbs[1] = new Lightning();
-        orbs[2] = new Plasma();
+        orbs = new Orbital[3];
+        orbs[0] = new Orbital(skeleton.findBone("Orb_Down"), new NumberlessDark());
+        orbs[1] = new Orbital(skeleton.findBone("Orb_Left"), new NumberlessLightning());
+        orbs[2] = new Orbital(skeleton.findBone("Orb_Right"), new Plasma());
     }
 
     @Override
@@ -86,8 +81,8 @@ public class GazeMonster extends AbstractWanderingBoss {
     public void takeCustomTurn(DamageInfo info, int multiplier) {
         switch(this.nextMove) {
             case LASERSHOWER:
-                addToBot(new VFXAction(new SweepingBeamEffect(hb.cX, hb.cY, false)));
-                addToBot(new VFXAction(new SweepingBeamEffect(hb.cX, hb.cY, true)));
+                addToBot(new VFXAction(new SweepingBeamEffect(hb.x, hb.cY, false)));
+                addToBot(new VFXAction(new SweepingBeamEffect(hb.x + hb.width, hb.cY, true)));
                 for(int i = 0; i < multiplier; i++) {
                     addToBot(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.NONE));
                 }
@@ -115,25 +110,41 @@ public class GazeMonster extends AbstractWanderingBoss {
             case BOSSBURN:
                 addToBot(new VFXAction(new SearingBlowEffect(AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, AbstractDungeon.actNum)));
                 addToBot(new MakeTempCardInDrawPileAction(new BossBurn(), AbstractDungeon.actNum, true, true));
+                addToBot(new SetPlayerBurnAction());
                 break;
+        }
+    }
+
+    @Override
+    public void damage(DamageInfo info) {
+        super.damage(info);
+        if (info.owner != null && info.type != DamageInfo.DamageType.THORNS && info.output > 0) {
+            this.state.setAnimation(0, "Hit", false);
+            this.state.setTimeScale(0.8F);
+            this.state.addAnimation(0, "Idle", true, 0.0F);
         }
     }
 
     @Override
     public void update() {
         super.update();
-        for(int i = 0; i < orbBones.length; i++) {
-            orbs[i].cX = this.skeleton.getX() + orbBones[i].getWorldX();
-            orbs[i].cY = this.skeleton.getY() + orbBones[i].getWorldY();
-            orbs[i].update();
+        for(int i = 0; i < orbs.length; i++) {
+            orbs[i].update(this.skeleton.getTime(), this.skeleton.getX(), this.skeleton.getY());
         }
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        for(int i = 0; i < orbs.length; i++) {
+            if(orbs[i].renderBehind) {
+                orbs[i].render(sb);
+            }
+        }
         super.render(sb);
         for(int i = 0; i < orbs.length; i++) {
-            orbs[i].render(sb);
+            if(!orbs[i].renderBehind) {
+                orbs[i].render(sb);
+            }
         }
     }
 
@@ -142,5 +153,30 @@ public class GazeMonster extends AbstractWanderingBoss {
         NAME = monsterStrings.NAME;
         MOVES = monsterStrings.MOVES;
         DIALOG = monsterStrings.DIALOG;
+    }
+
+    static class Orbital {
+        AbstractOrb orb;
+        Bone bone;
+        boolean renderBehind;
+
+        public Orbital(Bone bone, AbstractOrb orb) {
+            this.bone = bone;
+            this.orb = orb;
+        }
+
+        public void update(float time, float skeletonX, float skeletonY) {
+            orb.cX = skeletonX + bone.getWorldX();
+            orb.cY = skeletonY + bone.getWorldY();
+            orb.tX = orb.cX - AbstractDungeon.player.animX;
+            orb.tY = orb.cY - AbstractDungeon.player.animY;
+            orb.updateAnimation();
+
+            renderBehind = (time % 1F) > 0.5F;
+        }
+
+        public void render(SpriteBatch sb) {
+            orb.render(sb);
+        }
     }
 }
