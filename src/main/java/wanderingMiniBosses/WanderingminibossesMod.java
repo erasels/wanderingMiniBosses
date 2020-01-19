@@ -24,6 +24,7 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
+import wanderingMiniBosses.relics.AbyssPearl;
 import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.CarrionFlame;
 import wanderingMiniBosses.relics.Inkheart;
@@ -245,6 +246,7 @@ public class WanderingminibossesMod implements
     public void receiveEditRelics() {
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
+        BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
 
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
     }

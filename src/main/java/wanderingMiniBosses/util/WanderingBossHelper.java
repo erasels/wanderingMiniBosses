@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
+import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
 
@@ -22,6 +23,7 @@ public class WanderingBossHelper {
     public static void populateMonsterMap() {
         if(monsterMap.isEmpty()) {
             monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
+            monsterMap.put(GazeMonster.ID, GazeMonster::new);
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
             monsterMap.put(InkMan.ID, InkMan::new);
         }

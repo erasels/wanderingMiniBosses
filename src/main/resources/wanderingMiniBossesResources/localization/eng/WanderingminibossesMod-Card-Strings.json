@@ -1,4 +1,9 @@
 {
+  "wanderingMiniBosses:BossBurn": {
+    "NAME": "Burn",
+    "DESCRIPTION": "When drawn, NL draw a card. NL You take !M! more damage. NL Exhaust."
+  },
+
   "wanderingMiniBosses:DefaultCommonAttack": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! Damage. NL [#0000ff]This[] [#ff0000]Is[] [#ffff00]How[] [#88888]color[] [#ff00ff]works.[]"
