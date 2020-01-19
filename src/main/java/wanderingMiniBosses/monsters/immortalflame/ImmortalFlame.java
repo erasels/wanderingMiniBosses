@@ -18,6 +18,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.relics.RunicDome;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.combat.ScreenOnFireEffect;
 import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect;
@@ -25,6 +26,7 @@ import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.BlazingPower;
 import wanderingMiniBosses.powers.InnerFlamePower;
+import wanderingMiniBosses.relics.CarrionFlame;
 import wanderingMiniBosses.vfx.general.CalmFireEffect;
 import wanderingMiniBosses.vfx.general.CasualFlameParticleEffect;
 
@@ -40,11 +42,11 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     protected static final float HB_WIDTH = 140.0F; //scale is all multiplied in abstract monster class
     protected static final float HB_HEIGHT = 140.0F;
 
-    protected static final float MAX_OFFSET = 20.0F * Settings.scale;
-    protected static final float FLAME_CHANCE = 0.3f;
+    protected static final float MAX_OFFSET = 30.0F * Settings.scale;
+    protected static final float FLAME_CHANCE = 0.45f;
 
     protected float fireTimer = 0.0F;
-    protected static final float FIRE_TIME = 0.025F;
+    protected static final float FIRE_TIME = 0.01F;
 
     private int turnCounter = 0;
 
@@ -60,7 +62,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final int FW_DMG = 2;
     private static final int FW_MULTI = 6;
 
-    private static final int IF_HPL = 5;
+    private static final int IF_HPL = 4;
     private static final int IF_SG = 1;
 
     private static final float MAX_Y = 250.0F;
@@ -74,6 +76,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
 
     public ImmortalFlame(String name, String id, int maxHealth) {
         super(name, id, maxHealth, MathUtils.random(MIN_X, MAX_X), MathUtils.random(MIN_Y, MAX_Y), HB_WIDTH, HB_HEIGHT, "");
+        rewards.add(new RewardItem(new CarrionFlame()));
     }
 
     @Override
@@ -81,7 +84,7 @@ public class ImmortalFlame extends AbstractWanderingBoss {
         super.usePreBattleAction();
         AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this, this, new BlazingPower(this)));
         positionSelf();
-        setMoveShortcut(INNERFLAME);
+        setMoveShortcut(INNERFLAME, MOVES[0]);
     }
 
     @Override
@@ -137,12 +140,12 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     @Override
     protected void getMove(int i) {
         if (turnCounter < 1) {
-            setMoveShortcut(INNERFLAME);
+            setMoveShortcut(INNERFLAME, MOVES[0]);
         } else {
             if (turnCounter % 2 == 0) {
-                setMoveShortcut(EXPLOSION);
+                setMoveShortcut(EXPLOSION, MOVES[1]);
             } else {
-                setMoveShortcut(FLAMEWALL);
+                setMoveShortcut(FLAMEWALL, MOVES[2]);
             }
         }
     }

@@ -28,12 +28,15 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
-import wanderingMiniBosses.potions.PlaceholderPotion;
-import wanderingMiniBosses.relics.PlaceholderRelic2;
+import wanderingMiniBosses.relics.Blackblade;
+import wanderingMiniBosses.relics.CarrionFlame;
+import wanderingMiniBosses.relics.dunno;
+import wanderingMiniBosses.relics.Inkheart;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Properties;
 
 @SpireInitializer
@@ -45,7 +48,8 @@ public class WanderingminibossesMod implements
         EditCharactersSubscriber,
         OnStartBattleSubscriber,
         StartGameSubscriber,
-        PostInitializeSubscriber {
+        PostInitializeSubscriber,
+        PostBattleSubscriber {
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
 
@@ -54,46 +58,25 @@ public class WanderingminibossesMod implements
     public static boolean enablePlaceholder = true;
 
     private static final String MODNAME = "Wandering Minibosses";
-    private static final String AUTHOR = "erasels, raz";
-    private static final String DESCRIPTION = "TBD";
+    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd";
+    private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
+
+    public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
     
     // =============== INPUT TEXTURE LOCATION =================
-    public static final Color DEFAULT_GRAY = CardHelper.getColor(64.0f, 70.0f, 70.0f);
-    
-    // Potion Colors in RGB
-    public static final Color PLACEHOLDER_POTION_LIQUID = CardHelper.getColor(209.0f, 53.0f, 18.0f); // Orange-ish Red
-    public static final Color PLACEHOLDER_POTION_HYBRID = CardHelper.getColor(255.0f, 230.0f, 230.0f); // Near White
-    public static final Color PLACEHOLDER_POTION_SPOTS = CardHelper.getColor(100.0f, 25.0f, 10.0f); // Super Dark Red/Brown
-  
-    // Card backgrounds - The actual rectangular card.
-    private static final String ATTACK_DEFAULT_GRAY = "wanderingMiniBossesResources/images/512/bg_attack_default_gray.png";
-    private static final String SKILL_DEFAULT_GRAY = "wanderingMiniBossesResources/images/512/bg_skill_default_gray.png";
-    private static final String POWER_DEFAULT_GRAY = "wanderingMiniBossesResources/images/512/bg_power_default_gray.png";
-    
-    private static final String ENERGY_ORB_DEFAULT_GRAY = "wanderingMiniBossesResources/images/512/card_default_gray_orb.png";
-    private static final String CARD_ENERGY_ORB = "wanderingMiniBossesResources/images/512/card_small_orb.png";
-    
-    private static final String ATTACK_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/bg_attack_default_gray.png";
-    private static final String SKILL_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/bg_skill_default_gray.png";
-    private static final String POWER_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/bg_power_default_gray.png";
-    private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "wanderingMiniBossesResources/images/1024/card_default_gray_orb.png";
-
     public static final String BADGE_IMAGE = "wanderingMiniBossesResources/images/Badge.png";
 
-    public static class Enums {
-        @SpireEnum(name = "WB_COLOR") // These two HAVE to have the same absolutely identical name.
-        public static AbstractCard.CardColor COLOR_WB;
-        @SpireEnum(name = "WB_COLOR")
-        @SuppressWarnings("unused")
-        public static CardLibrary.LibraryType LIBRARY_COLOR;
-    }
-    
     // =============== MAKE IMAGE PATHS =================
     
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
-    
+
+    public static String makeUIPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/" + resourcePath;
+    }
+
+
     public static String makeRelicPath(String resourcePath) {
         return getModID() + "Resources/images/relics/" + resourcePath;
     }
@@ -247,14 +230,16 @@ public class WanderingminibossesMod implements
     }
     
     public void receiveEditPotions() {
-        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID);
+
     }
     
     @Override
     public void receiveEditRelics() {
-        BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
-        
-        // Mark relics as seen (the others are all starters so they're marked as seen in the character file
+        BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
+        BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
+
+        BaseMod.addRelic(new dunno(), RelicType.SHARED);
+        BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
     }
     
     @Override
@@ -283,14 +268,6 @@ public class WanderingminibossesMod implements
         // PotionStrings
         BaseMod.loadCustomStringsFile(PotionStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Potion-Strings.json");
-        
-        // CharacterStrings
-        BaseMod.loadCustomStringsFile(CharacterStrings.class,
-                getModID() + "Resources/localization/eng/WanderingminibossesMod-Character-Strings.json");
-        
-        // OrbStrings
-        BaseMod.loadCustomStringsFile(OrbStrings.class,
-                getModID() + "Resources/localization/eng/WanderingminibossesMod-Orb-Strings.json");
 
         // MonsterStrings
         BaseMod.loadCustomStringsFile(MonsterStrings.class,
@@ -314,16 +291,20 @@ public class WanderingminibossesMod implements
         return getModID() + ":" + idText;
     }
 
-
     private static final float CHANCE = 0.15F;
+
     @Override
     public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-        if(!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
+        MaybeSpawnDudePatch.noEncounterThisFight();
+        if (WanderingBossHelper.isMonsterAlive() && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
             if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
                 MaybeSpawnDudePatch.resetTurnCounter();
-            } else {
-                MaybeSpawnDudePatch.noEncounterThisFight();
             }
         }
+    }
+
+    @Override
+    public void receivePostBattle(AbstractRoom abstractRoom) {
+        inkedCardsList.clear();
     }
 }

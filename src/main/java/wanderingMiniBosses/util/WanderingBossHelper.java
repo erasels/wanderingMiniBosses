@@ -3,8 +3,10 @@ package wanderingMiniBosses.util;
 import basemod.BaseMod;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
+import wanderingMiniBosses.monsters.inkman.InkMan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,8 @@ public class WanderingBossHelper {
         if(monsterMap.isEmpty()) {
             monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
             monsterMap.put(GazeMonster.ID, GazeMonster::new);
+            monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
+            monsterMap.put(InkMan.ID, InkMan::new);
         }
     }
 
@@ -26,6 +30,10 @@ public class WanderingBossHelper {
 
     public static void setMonster(AbstractMonster m) {
         wanderingBoss = m;
+    }
+
+    public static boolean isMonsterAlive() {
+        return wanderingBoss.currentHealth > 0;
     }
 
     public static AbstractMonster getMonsterFromID(String id) {

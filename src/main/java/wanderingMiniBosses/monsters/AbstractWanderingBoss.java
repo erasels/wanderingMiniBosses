@@ -50,6 +50,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
 
     public void usePreBattleAction() {
         moves.clear();
+        this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
         populateMoves();
     }
 

@@ -10,11 +10,40 @@
   },
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
-      ""
+      "Inner Flame",
+      "Explosion",
+      "Flame Wall"
     ],
     "NAME": "Immortal Flame",
     "DIALOG": [
       ""
+    ]
+  },
+  "wanderingMiniBosses:EternalPrincess": {
+    "MOVES": [
+      "Finale of Glory",
+      "Finale of Devastation",
+      "Finale of Promise",
+      "Finale of Eternity"
+    ],
+    "NAME": "Eternal Princess",
+    "DIALOG": [
+      ""
+    ]
+  },
+  "wanderingMiniBosses:InkMan": {
+    "MOVES": [
+      "Squick!",
+      "Buff Time!",
+      "Void BRUHHHHH"
+    ],
+    "NAME": "Ink Elemental",
+    "DIALOG": [
+      "Hee hee... HELLO AGAIN!",
+      "I can see you.",
+      "MY EYE STARES DEEP...",
+      "squick",
+      "DIALOGUE."
     ]
   }
 }

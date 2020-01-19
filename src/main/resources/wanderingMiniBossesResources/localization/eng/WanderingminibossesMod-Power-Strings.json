@@ -46,5 +46,31 @@
       " HP and gains #b",
       " #yStrength."
     ]
+  },
+  "wanderingMiniBosses:BountyOfPlenty": {
+    "NAME": "Bounty of Plenty",
+    "DESCRIPTIONS": [
+      "If you end your turn with unspent [E] , gain #b", " #ygold."
+    ]
+  },
+  "wanderingMiniBosses:BountyOfJustice": {
+    "NAME": "Bounty of Justice",
+    "DESCRIPTIONS": [
+      "If you end your turn without playing a #ySkill, gain #b", " #ygold."
+    ]
+  },
+  "wanderingMiniBosses:BountyOfMercy": {
+    "NAME": "Bounty of Mercy",
+    "DESCRIPTIONS": [
+      "If you end your turn without playing an #yAttack, gain #b", " #ygold."
+    ]
+  },
+  "wanderingMiniBosses:InkPower": {
+    "NAME": "Inked!",
+    "DESCRIPTIONS": [
+      "The first card you draw each turn is scribbled upon.",
+      "The first #b",
+      " cards you draw each turn are scribbled upon."
+    ]
   }
 }
