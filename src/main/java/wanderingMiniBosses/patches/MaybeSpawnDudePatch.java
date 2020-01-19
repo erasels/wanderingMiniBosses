@@ -24,7 +24,7 @@ public class MaybeSpawnDudePatch {
     private static int turnCounter;
 
     public static boolean spawningDudeThisFight() {
-        return turnCounter >= 0;
+        return turnCounter >= 0 && (AbstractDungeon.floorNum > 1 || Settings.isDebug);
     }
 
     public static void resetTurnCounter() {
@@ -39,7 +39,6 @@ public class MaybeSpawnDudePatch {
             locator = Locator.class
     )
     public static void Insert(GameActionManager __instance) {
-
         logger.error("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
         if (spawningDudeThisFight()) {
             turnCounter++;
