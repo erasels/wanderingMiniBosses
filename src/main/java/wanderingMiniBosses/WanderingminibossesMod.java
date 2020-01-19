@@ -266,6 +266,10 @@ public class WanderingminibossesMod implements
         // MonsterStrings
         BaseMod.loadCustomStringsFile(MonsterStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Monster-Strings.json");
+
+        //UI Strings
+        BaseMod.loadCustomStringsFile(UIStrings.class,
+                getModID() + "Resources/localization/eng/WanderingminibossesMod-UI-Strings.json");
     }
     
     @Override
