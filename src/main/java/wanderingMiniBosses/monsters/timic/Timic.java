@@ -20,15 +20,15 @@ public class Timic extends AbstractWanderingBoss {
     private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static final String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
-    private static final float HB_W = 160.0F;
-    private static final float HB_H = 260.0F;
+    private static final float HB_W = 265.0F;
+    private static final float HB_H = 135.0F;
 
     private static int MAX_HEALTH = 400;
 
     private static final byte DISTACTION = 0;
     private static final byte FLEEATTEMPTONE = 1;
-    private static final byte FLEEATTEMPTTWO = 3;
     private static final byte OOPSBUFF = 2;
+    private static final byte FLEEATTEMPTTWO = 3;
 
     private int turnCounter = 0;
 

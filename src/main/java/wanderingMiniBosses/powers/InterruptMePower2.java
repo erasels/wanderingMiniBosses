@@ -32,7 +32,6 @@ public class InterruptMePower2 extends AbstractPower implements CloneablePowerIn
 
         type = PowerType.DEBUFF;
         isTurnBased = false;
-        canGoNegative = false;
 
         this.region128 = new TextureAtlas.AtlasRegion(tex84, 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(tex32, 0, 0, 32, 32);
@@ -41,7 +40,7 @@ public class InterruptMePower2 extends AbstractPower implements CloneablePowerIn
     }
 
     @Override
-    public void wasHPLost(DamageInfo info, int damageAmount) {
+    public int onAttacked(DamageInfo info, int damageAmount) {
         this.flashWithoutSound();
         amount -= damageAmount;
         if (amount <= 0) {
@@ -49,6 +48,7 @@ public class InterruptMePower2 extends AbstractPower implements CloneablePowerIn
             AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(owner, owner, this));
             AbstractDungeon.actionManager.addToBottom(new StunMonsterAction((AbstractMonster) owner, owner));
         }
+        return damageAmount;
     }
 
     @Override

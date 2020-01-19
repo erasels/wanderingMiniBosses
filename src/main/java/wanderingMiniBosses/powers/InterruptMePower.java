@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
+import wanderingMiniBosses.monsters.timic.Timic;
 import wanderingMiniBosses.util.TextureLoader;
 
 public class InterruptMePower extends AbstractPower implements CloneablePowerInterface {
@@ -31,7 +32,6 @@ public class InterruptMePower extends AbstractPower implements CloneablePowerInt
 
         type = PowerType.DEBUFF;
         isTurnBased = false;
-        canGoNegative = false;
 
         this.region128 = new TextureAtlas.AtlasRegion(tex84, 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(tex32, 0, 0, 32, 32);
@@ -40,16 +40,17 @@ public class InterruptMePower extends AbstractPower implements CloneablePowerInt
     }
 
     @Override
-    public void wasHPLost(DamageInfo info, int damageAmount) {
+    public int onAttacked(DamageInfo info, int damageAmount) {
         this.flashWithoutSound();
         amount -= damageAmount;
         if (amount <= 0) {
             this.flash();
             AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(owner, owner, this));
-            if (owner instanceof AbstractWanderingBoss) {
-                ((AbstractWanderingBoss) owner).setMoveShortcut((byte) 2);
+            if (owner instanceof Timic) {
+                ((Timic) owner).setMoveShortcut((byte) 2);
             }
         }
+        return damageAmount;
     }
 
     @Override
