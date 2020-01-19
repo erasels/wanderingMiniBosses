@@ -112,4 +112,14 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
         AbstractDungeon.getCurrRoom().rewards.addAll(rewards);
         super.die(triggerRelics);
     }
+
+    public AbstractWanderingBoss createNewInstance() {
+        try{
+            AbstractWanderingBoss tmp = this.getClass().newInstance();
+            tmp.currentHealth = this.currentHealth;
+            return tmp;
+        }catch(InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException("Failed to generate new monster instance for monster: " + this.id);
+        }
+    }
 }
