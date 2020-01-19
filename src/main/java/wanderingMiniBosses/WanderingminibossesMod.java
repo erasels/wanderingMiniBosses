@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.CarrionFlame;
+import wanderingMiniBosses.relics.dunno;
 import wanderingMiniBosses.relics.Inkheart;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
@@ -236,6 +237,8 @@ public class WanderingminibossesMod implements
     public void receiveEditRelics() {
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
+
+        BaseMod.addRelic(new dunno(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
     }
     
