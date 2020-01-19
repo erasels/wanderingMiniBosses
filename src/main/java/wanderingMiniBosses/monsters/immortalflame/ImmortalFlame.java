@@ -55,13 +55,13 @@ public class ImmortalFlame extends AbstractWanderingBoss {
     private static final byte EXPLOSION = 1;
     private static final byte FLAMEWALL = 2;
 
-    private static final int MAX_HEALTH = 200;
+    private static final int MAX_HEALTH = 275;
 
     private static final int EXPLOSION_DMG = 7;
     private static final int EXPLOSION_VULN = 2;
 
     private static final int FW_DMG = 2;
-    private static final int FW_MULTI = 6;
+    private static final int FW_MULTI = 5;
 
     private static final int IF_HPL = 5;
     private static final int IF_SG = 2;
