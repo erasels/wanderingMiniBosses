@@ -4,6 +4,7 @@ import basemod.BaseMod;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.abstracts.CustomSavable;
+import basemod.devcommands.relic.Relic;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -241,8 +242,9 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
-
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
+        BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
+        BaseMod.addRelic(new ThiefScarf2(), RelicType.SHARED);
     }
 
     @Override
@@ -318,6 +320,8 @@ public class WanderingminibossesMod implements
         if (AbstractDungeon.player != null) {
             if (AbstractDungeon.player.hasRelic(ThiefScarf.ID))
                 ThiefScarf.wjhatefhefjeujf();
+            if (AbstractDungeon.player.hasRelic(ThiefScarf2.ID))
+                ThiefScarf2.wjhatefhefjeujf();
         }
     }
 }

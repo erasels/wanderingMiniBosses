@@ -1,5 +1,6 @@
 package wanderingMiniBosses.monsters.banditking;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
@@ -7,10 +8,8 @@ import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
-import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.ThieveryPower;
@@ -19,17 +18,14 @@ import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
-import wanderingMiniBosses.relics.Inkheart;
 import wanderingMiniBosses.relics.ThiefScarf;
+import wanderingMiniBosses.relics.ThiefScarf2;
 import wanderingMiniBosses.vfx.general.StealRelicEffect;
 
 import java.util.ArrayList;
 
 public class BanditKing extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("BanditKing");
-    private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
-    public static final String NAME = monsterstrings.NAME;
-    public static final String[] DIALOG = monsterstrings.DIALOG;
     private static final float HB_W = 160.0F;
     private static final float HB_H = 260.0F;
 
@@ -43,13 +39,23 @@ public class BanditKing extends AbstractWanderingBoss {
     private static int myGold = 0;
     private static ArrayList<String> relicList = new ArrayList<>();
 
+    public static String funnyNameThing() {
+        if (MathUtils.randomBoolean()) {
+            return "Bandit Ninja";
+        }
+        return "Ninja Bandit";
+    }
+
     public BanditKing() {
-        this(NAME, ID, MAX_HEALTH);
+        this(funnyNameThing(), ID, MAX_HEALTH);
     }
 
     public BanditKing(String name, String ID, int maxHealth) {
         super(name, ID, maxHealth, 0, 0, HB_W, HB_H, WanderingminibossesMod.makeMonsterPath("BanditKing.png"), -1200F, 0F);
-        rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf.ID).makeCopy()));
+        if (MathUtils.randomBoolean())
+            rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf.ID).makeCopy()));
+        else
+            rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf2.ID).makeCopy()));
     }
 
     @Override

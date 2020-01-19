@@ -35,5 +35,12 @@
     "DESCRIPTIONS": [
       "At the start of each combat, obtain #b2 random #yRelics for that combat only."
     ]
+  },
+  "wanderingMiniBosses:ThiefScarf2": {
+    "NAME": "Scarf of the Ninja Bandit",
+    "FLAVOR": "You put it in your bag but now you can't find it.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, obtain #b2 random #yRelics for that combat only."
+    ]
   }
 }

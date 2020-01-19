@@ -2,9 +2,7 @@ package wanderingMiniBosses.relics;
 
 import basemod.abstracts.CustomRelic;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import wanderingMiniBosses.WanderingminibossesMod;
@@ -15,14 +13,14 @@ import java.util.ArrayList;
 import static wanderingMiniBosses.WanderingminibossesMod.makeRelicOutlinePath;
 import static wanderingMiniBosses.WanderingminibossesMod.makeRelicPath;
 
-public class ThiefScarf extends CustomRelic {
+public class ThiefScarf2 extends CustomRelic {
 
-    public static final String ID = WanderingminibossesMod.makeID("ThiefScarf");
+    public static final String ID = WanderingminibossesMod.makeID("ThiefScarf2");
 
     private static final Texture IMG = TextureLoader.getTexture(makeRelicPath("ThiefScarf.png"));
     private static final Texture OUTLINE = TextureLoader.getTexture(makeRelicOutlinePath("ThiefScarf.png"));
 
-    public ThiefScarf() {
+    public ThiefScarf2() {
         super(ID, IMG, OUTLINE, RelicTier.SPECIAL, LandingSound.FLAT);
     }
 
