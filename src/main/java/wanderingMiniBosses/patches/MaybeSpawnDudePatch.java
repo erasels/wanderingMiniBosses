@@ -24,7 +24,7 @@ public class MaybeSpawnDudePatch {
     private static int turnCounter;
 
     public static boolean spawningDudeThisFight() {
-        return turnCounter >= 0 && (AbstractDungeon.floorNum > 1 || Settings.isDebug);
+        return turnCounter >= 0 && (WanderingBossHelper.viableFloor() || Settings.isDebug);
     }
 
     public static void resetTurnCounter() {
@@ -46,7 +46,7 @@ public class MaybeSpawnDudePatch {
             if (Settings.isDebug || (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1))))) {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
-
+                WanderingBossHelper.resetSpawnChance();
                 AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(((AbstractWanderingBoss)WanderingBossHelper.getMonster()).createNewInstance()));
             }
         }

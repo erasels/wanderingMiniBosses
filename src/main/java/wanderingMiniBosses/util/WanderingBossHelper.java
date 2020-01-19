@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WanderingBossHelper {
+    private static final float BASE_CHANCE = 0.08F; //Is actually 15% because it gets incremented at the start of every fight
+    private static final float INC_CHANCE = 0.07F;
+    private static float spawnChance = BASE_CHANCE;
+
     private static AbstractMonster wanderingBoss;
     public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
 
@@ -46,5 +50,25 @@ public class WanderingBossHelper {
             return tmp;
         }
         return null;
+    }
+
+    public static float getSpawnChance() {
+        return spawnChance;
+    }
+
+    public static void resetSpawnChance() {
+        spawnChance = BASE_CHANCE;
+    }
+
+    public static void incrementSpawnChance() {
+        spawnChance += INC_CHANCE;
+    }
+
+    public static void setSpawnChance(float newChance) {
+        spawnChance = newChance;
+    }
+
+    public static boolean viableFloor() {
+        return AbstractDungeon.floorNum > 1;
     }
 }
