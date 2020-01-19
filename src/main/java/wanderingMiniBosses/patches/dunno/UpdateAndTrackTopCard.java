@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.DrawPilePanel;
 import javassist.CtBehavior;
-import wanderingMiniBosses.relics.dunno;
+import wanderingMiniBosses.relics.Inkheart;
 
 
 //DONE:
@@ -43,7 +43,7 @@ public class UpdateAndTrackTopCard {
         @SpirePostfixPatch
         public static void doTheUpdateThing(DrawPilePanel __instance)
         {
-            if (!AbstractDungeon.isScreenUp && AbstractDungeon.player.hasRelic(dunno.ID))
+            if (!AbstractDungeon.isScreenUp && AbstractDungeon.player.hasRelic(Inkheart.ID))
             {
                 if (!AbstractDungeon.player.drawPile.isEmpty())
                 {

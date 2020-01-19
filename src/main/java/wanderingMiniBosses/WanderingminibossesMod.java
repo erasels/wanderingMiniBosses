@@ -234,7 +234,6 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
 
-        BaseMod.addRelic(new dunno(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
     }
     
