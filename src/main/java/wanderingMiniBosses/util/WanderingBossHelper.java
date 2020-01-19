@@ -4,6 +4,7 @@ import basemod.BaseMod;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
@@ -26,6 +27,7 @@ public class WanderingBossHelper {
             monsterMap.put(GazeMonster.ID, GazeMonster::new);
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
             monsterMap.put(InkMan.ID, InkMan::new);
+            monsterMap.put(BanditKing.ID, BanditKing::new);
         }
     }
 
