@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CtBehavior;
-import wanderingMiniBosses.relics.dunno;
 
 import java.util.ArrayList;
 
@@ -25,23 +24,20 @@ public class HoverTopCard {
     )
     public static void GetHoverOtherHand(AbstractPlayer __instance)
     {
-        if (__instance.hasRelic(dunno.ID))
+        if (__instance.hoveredCard == null)
         {
-            if (__instance.hoveredCard == null)
+            AbstractCard top = UpdateAndTrackTopCard.Fields.currentCard.get(__instance.drawPile);
+            if (top != null)
             {
-                AbstractCard top = UpdateAndTrackTopCard.Fields.currentCard.get(__instance.drawPile);
-                if (top != null)
+                top.hb.update();
+                if (top.hb.hovered)
                 {
-                    top.hb.update();
-                    if (top.hb.hovered)
+                    for (CardQueueItem q : AbstractDungeon.actionManager.cardQueue)
                     {
-                        for (CardQueueItem q : AbstractDungeon.actionManager.cardQueue)
-                        {
-                            if (q.card == top)
-                                return;
-                        }
-                        __instance.hoveredCard = top;
+                        if (q.card == top)
+                            return;
                     }
+                    __instance.hoveredCard = top;
                 }
             }
         }

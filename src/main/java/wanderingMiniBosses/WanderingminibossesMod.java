@@ -7,19 +7,15 @@ import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
-import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.CardHelper;
-import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -30,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.CarrionFlame;
-import wanderingMiniBosses.relics.dunno;
 import wanderingMiniBosses.relics.Inkheart;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
@@ -238,7 +233,6 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
 
-        BaseMod.addRelic(new dunno(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
     }
     

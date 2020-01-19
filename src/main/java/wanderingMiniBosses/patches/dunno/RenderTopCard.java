@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.DrawPilePanel;
 import javassist.CtBehavior;
-import wanderingMiniBosses.relics.dunno;
+import wanderingMiniBosses.relics.Inkheart;
 
 public class RenderTopCard {
     //patch refresh hand layout to also refresh position of top card
@@ -21,7 +21,7 @@ public class RenderTopCard {
         @SpirePostfixPatch
         public static void doTheRenderThing(DrawPilePanel __instance, SpriteBatch sb)
         {
-            if (!AbstractDungeon.isScreenUp && AbstractDungeon.player.hasRelic(dunno.ID))
+            if (!AbstractDungeon.isScreenUp && AbstractDungeon.player.hasRelic(Inkheart.ID))
             {
                 if (!AbstractDungeon.player.drawPile.isEmpty())
                 {
