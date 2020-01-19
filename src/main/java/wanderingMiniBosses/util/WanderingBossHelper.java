@@ -3,12 +3,20 @@ package wanderingMiniBosses.util;
 import basemod.BaseMod;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class WanderingBossHelper {
     private static AbstractMonster wanderingBoss;
-    public static Map<String, BaseMod.GetMonster> monsterMap;
+    public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
+
+    public static void populateMonsterMap() {
+        if(monsterMap.isEmpty()) {
+            monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
+        }
+    }
 
     public static AbstractMonster getMonster() {
         return wanderingBoss;

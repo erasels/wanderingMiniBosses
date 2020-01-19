@@ -1,36 +1,50 @@
 {
-"wanderingMiniBosses:CommonPower": {
-        "NAME": "Placeholder Power",
-        "DESCRIPTIONS": ["You applied #b", " keyword.", " keywords."]
-},
-"wanderingMiniBosses:RarePower": {
-        "NAME": "Placeholder Power",
-        "DESCRIPTIONS": ["At the start of your turn, TOUCH #b", " enemy." , " enemies."]
-},
+  "wanderingMiniBosses:GazeOne": {
+    "NAME": "Gaze of the closing Eyes",
+    "DESCRIPTIONS": [
+      "After playing the first card each turn its adjacent cards cost #b",
+      " [E] more this turn."
+    ]
+  },
+  "wanderingMiniBosses:GazeTwo": {
+    "NAME": "Gaze of the empty Mind",
+    "DESCRIPTIONS": [
+      "The second card you play each turn is ",
+      "removed from combat.",
+      "replaced with a #gSlimed this combat.",
+      "replaced with a random #pCurse this combat."
+    ]
+  },
+  "wanderingMiniBosses:GazeThree": {
+    "NAME": "Gaze of the reborn Heart",
+    "DESCRIPTIONS": [
+      "After playing the third card each turn, ",
+      "all enemies gain #b",
+      " #rStrength and ",
+      "shuffle a random card from your starterdeck into your discard pile."
+    ]
+  },
+  "paleoftheancients:BurnPower": {
+    "NAME": "Burn",
+    "DESCRIPTIONS": [
+      "Takes #b",
+      " more damage. NL Caused by Status cards in your drawpile, discardpile or hand."
+    ]
+  },
 
-"wanderingMiniBosses:GazeOne": {
-        "NAME": "Gaze of the closing Eyes",
-        "DESCRIPTIONS": [
-                "After playing the first card each turn its adjacent cards cost #b",
-                " more [E] until end of turn."
-        ]
-},
-"wanderingMiniBosses:GazeTwo": {
-        "NAME": "Gaze of the empty Mind",
-        "DESCRIPTIONS": [
-                "The second card you play each turn is ",
-                "removed from combat.",
-                "replaced with a #gSlimed this combat.",
-                "replaced with a random #pCurse this combat."
-        ]
-},
-"wanderingMiniBosses:GazeThree": {
-        "NAME": "Gaze of the reborn Heart",
-        "DESCRIPTIONS": [
-                "After playing the third card each turn, ",
-                "all enemies gain #b",
-                " #rStrength and ",
-                "shuffle a random card from your starterdeck into your discard pile."
-        ]
-}
+  "wanderingMiniBosses:Blazing": {
+    "NAME": "Blazing",
+    "DESCRIPTIONS": [
+      "Once per turn when you deal unblocked attack damage to this enemy, add #b",
+      " #yBurn to your discard pile."
+    ]
+  },
+  "wanderingMiniBosses:InnerFlame": {
+    "NAME": "Inner Flame",
+    "DESCRIPTIONS": [
+      "At the end of its turn, loses #b",
+      " HP and gains #b",
+      " #yStrength."
+    ]
+  }
 }
