@@ -13,5 +13,12 @@
       "Whenever an enemy dies, deal damage equal to #b",
       "% of its Max HP to ALL enemies."
     ]
+  },
+  "wanderingMiniBosses:Inkheart": {
+    "NAME": "Inkheart",
+    "FLAVOR": "The eye stares as you grasp its sticky surface.",
+    "DESCRIPTIONS": [
+      "The top card of your draw pile is also in your hand."
+    ]
   }
 }

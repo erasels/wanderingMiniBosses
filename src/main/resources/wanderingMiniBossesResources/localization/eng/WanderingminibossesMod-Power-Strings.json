@@ -31,5 +31,13 @@
     "DESCRIPTIONS": [
       "If you end your turn without playing an #yAttack, gain #b", " #ygold."
     ]
+  },
+  "wanderingMiniBosses:InkPower": {
+    "NAME": "Inked!",
+    "DESCRIPTIONS": [
+      "The first card you draw each turn is scribbled upon.",
+      "The first #b",
+      " cards you draw each turn are scribbled upon."
+    ]
   }
 }
