@@ -73,12 +73,10 @@ public class EternalPrincess extends AbstractWanderingBoss {
         this.strength = STRENGTH + (STRENGTH_ACT_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityDamage = ETERNITY_DAMAGE + (ETERNITY_ACT_DAMAGE_BONUS * (AbstractDungeon.actNum - 1));
         this.eternityHits = ETERNITY_MAX_HITS;
-        this.moves.clear();
         this.moves.put(FINALE_OF_GLORY, new EnemyMoveInfo(FINALE_OF_GLORY, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_DEVASTATION, new EnemyMoveInfo(FINALE_OF_DEVASTATION, Intent.STRONG_DEBUFF, -1, 0, false));
         this.moves.put(FINALE_OF_PROMISE, new EnemyMoveInfo(FINALE_OF_PROMISE, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_ETERNITY, new EnemyMoveInfo(FINALE_OF_ETERNITY, Intent.ATTACK, eternityDamage, eternityHits, true));
-        this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
         this.damage.add(new DamageInfo(this, this.eternityDamage));
     }
 
@@ -125,6 +123,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
     }
 
     public void onEscape() {
+        super.onEscape();
         this.animation.setFlip(true, false);
     }
 
