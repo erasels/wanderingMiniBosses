@@ -58,7 +58,6 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     public void takeTurn() {
         if(this.nextMove == RUN) {
             onEscape();
-            AbstractDungeon.actionManager.addToBottom(new EscapeAction(this));
         } else {
             DamageInfo info = null;
             int multiplier = 0;
@@ -92,7 +91,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     @Override
     protected void getMove(int num) {
         ArrayList<Byte> possibilities = new ArrayList<>(this.moves.keySet());
-        possibilities.remove(RUN);
+        possibilities.remove(new Byte(RUN));
         for(int i = this.moveHistory.size() - 1, found = 0; i >= 0 && found < moves.size() - 2; i--) {
             boolean foundThisCycle = false;
             int before;
@@ -109,7 +108,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     }
 
     public void onEscape() {
-
+        AbstractDungeon.actionManager.addToBottom(new EscapeAction(this));
     }
 
     @Override
