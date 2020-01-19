@@ -1,8 +1,9 @@
 package wanderingMiniBosses.util;
 
 import basemod.BaseMod;
-import com.badlogic.gdx.math.MathUtils;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
@@ -12,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WanderingBossHelper {
+    private static final float BASE_CHANCE = 0.08F; //Is actually 15% because it gets incremented at the start of every fight
+    private static final float INC_CHANCE = 0.07F;
+    private static float spawnChance = BASE_CHANCE;
+
     private static AbstractMonster wanderingBoss;
     public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
 
@@ -41,10 +46,31 @@ public class WanderingBossHelper {
     }
 
     public static AbstractMonster getRandomMonster() {
-        //Using a non-seeded random should be alright since this should only be run once per dungeon creation and the result is saved.
         if(!monsterMap.isEmpty()) {
-            return ((BaseMod.GetMonster) monsterMap.values().toArray()[MathUtils.random(monsterMap.size()-1)]).get();
+            AbstractMonster tmp = ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size()-1)]).get();
+            WanderingminibossesMod.logger.info("Nemesis for this run: " + tmp.name);
+            return tmp;
         }
         return null;
+    }
+
+    public static float getSpawnChance() {
+        return spawnChance;
+    }
+
+    public static void resetSpawnChance() {
+        spawnChance = BASE_CHANCE;
+    }
+
+    public static void incrementSpawnChance() {
+        spawnChance += INC_CHANCE;
+    }
+
+    public static void setSpawnChance(float newChance) {
+        spawnChance = newChance;
+    }
+
+    public static boolean viableFloor() {
+        return AbstractDungeon.floorNum > 1;
     }
 }

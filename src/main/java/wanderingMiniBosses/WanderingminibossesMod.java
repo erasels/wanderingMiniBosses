@@ -215,6 +215,18 @@ public class WanderingminibossesMod implements
             }
         });
 
+        BaseMod.addSaveField("WBMonsterChance", new CustomSavable<Float>() {
+            @Override
+            public Float onSave() {
+                return WanderingBossHelper.getSpawnChance();
+            }
+
+            @Override
+            public void onLoad(Float i) {
+                WanderingBossHelper.setSpawnChance(i);
+            }
+        });
+
         WanderingBossHelper.populateMonsterMap();
     }
 
@@ -222,6 +234,7 @@ public class WanderingminibossesMod implements
     public void receiveStartGame() {
         if(!CardCrawlGame.loadingSave) {
             WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
+            WanderingBossHelper.resetSpawnChance();
         }
     }
     
@@ -268,6 +281,10 @@ public class WanderingminibossesMod implements
         // MonsterStrings
         BaseMod.loadCustomStringsFile(MonsterStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Monster-Strings.json");
+
+        //UI Strings
+        BaseMod.loadCustomStringsFile(UIStrings.class,
+                getModID() + "Resources/localization/eng/WanderingminibossesMod-UI-Strings.json");
     }
     
     @Override
@@ -287,13 +304,11 @@ public class WanderingminibossesMod implements
         return getModID() + ":" + idText;
     }
 
-    private static final float CHANCE = 0.15F;
-
     @Override
     public void receiveOnBattleStart(AbstractRoom abstractRoom) {
         MaybeSpawnDudePatch.noEncounterThisFight();
         if (WanderingBossHelper.isMonsterAlive() && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
-            if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(CHANCE)) {
+            if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(WanderingBossHelper.getSpawnChance())) {
                 MaybeSpawnDudePatch.resetTurnCounter();
             }
         }

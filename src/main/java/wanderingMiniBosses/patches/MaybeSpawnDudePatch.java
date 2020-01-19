@@ -9,6 +9,7 @@ import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
+import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 @SpirePatch(
@@ -23,7 +24,7 @@ public class MaybeSpawnDudePatch {
     private static int turnCounter;
 
     public static boolean spawningDudeThisFight() {
-        return turnCounter >= 0;
+        return turnCounter >= 0 && (WanderingBossHelper.viableFloor() || Settings.isDebug);
     }
 
     public static void resetTurnCounter() {
@@ -38,7 +39,6 @@ public class MaybeSpawnDudePatch {
             locator = Locator.class
     )
     public static void Insert(GameActionManager __instance) {
-
         logger.error("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
         if (spawningDudeThisFight()) {
             turnCounter++;
@@ -46,8 +46,8 @@ public class MaybeSpawnDudePatch {
             if (Settings.isDebug || (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1))))) {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
-
-                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
+                WanderingBossHelper.resetSpawnChance();
+                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(((AbstractWanderingBoss)WanderingBossHelper.getMonster()).createNewInstance()));
             }
         }
 
