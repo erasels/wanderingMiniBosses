@@ -76,7 +76,7 @@ public class BanditKing extends AbstractWanderingBoss {
 
     @Override
     protected void populateMoves() {
-        this.moves.put(PUNCH, new EnemyMoveInfo(PUNCH, Intent.ATTACK, 6, AbstractDungeon.actNum, AbstractDungeon.actNum > 1));
+        this.moves.put(PUNCH, new EnemyMoveInfo(PUNCH, Intent.ATTACK, 5, AbstractDungeon.actNum, AbstractDungeon.actNum > 1));
         this.moves.put(TAKEURSHIT, new EnemyMoveInfo(TAKEURSHIT, Intent.STRONG_DEBUFF, -1, 0, false));
     }
 
