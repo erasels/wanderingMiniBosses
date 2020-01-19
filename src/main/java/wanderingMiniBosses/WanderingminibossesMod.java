@@ -27,7 +27,6 @@ import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.CarrionFlame;
 import wanderingMiniBosses.relics.Inkheart;
-import wanderingMiniBosses.relics.dunno;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
