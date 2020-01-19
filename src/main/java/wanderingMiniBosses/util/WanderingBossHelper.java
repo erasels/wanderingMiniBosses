@@ -1,7 +1,7 @@
 package wanderingMiniBosses.util;
 
 import basemod.BaseMod;
-import com.badlogic.gdx.math.MathUtils;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
@@ -39,9 +39,8 @@ public class WanderingBossHelper {
     }
 
     public static AbstractMonster getRandomMonster() {
-        //Using a non-seeded random should be alright since this should only be run once per dungeon creation and the result is saved.
         if(!monsterMap.isEmpty()) {
-            return ((BaseMod.GetMonster) monsterMap.values().toArray()[MathUtils.random(monsterMap.size()-1)]).get();
+            return ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size()-1)]).get();
         }
         return null;
     }
