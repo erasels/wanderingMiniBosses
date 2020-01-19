@@ -14,8 +14,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <SlayTheSpire.version>01-23-2019</SlayTheSpire.version>
         <ModTheSpire.version>3.8.0</ModTheSpire.version>
-        <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
-        <Steam.path>K:\Steam\steamapps</Steam.path>
+        <!--CHANGE THIS TO YOUR STEAM INSTALLATION, NOT YOURS GK, MINE AND DARKS-->
+        <Steam.path>C:/Program Files (x86)/Steam/steamapps/</Steam.path>
     </properties>
 
     <dependencies>

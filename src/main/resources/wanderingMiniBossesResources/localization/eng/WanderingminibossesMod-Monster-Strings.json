@@ -21,5 +21,20 @@
     "DIALOG": [
       ""
     ]
+  },
+  "wanderingMiniBosses:InkMan": {
+    "MOVES": [
+      "Squick!",
+      "Buff Time!",
+      "Void BRUHHHHH"
+    ],
+    "NAME": "Ink Elemental",
+    "DIALOG": [
+      "Hee hee... HELLO AGAIN!",
+      "I can see you.",
+      "MY EYE STARES DEEP...",
+      "squick",
+      "DIALOGUE."
+    ]
   }
 }
