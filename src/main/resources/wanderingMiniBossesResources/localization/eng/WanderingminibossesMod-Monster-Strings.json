@@ -54,5 +54,20 @@
       "squick",
       "DIALOGUE."
     ]
+  },
+  "wanderingMiniBosses:BanditKing": {
+    "MOVES": [
+      "Puncha punch!",
+      "It's a me, Luigi!",
+      "gonna take ur sHIT BIJFIGJFKGFKG"
+    ],
+    "NAME": "Ninja Bandit",
+    "DIALOG": [
+      "Part ninja... part bandit!",
+      "You can't find me! Because I'm hidden!",
+      "Where my luigi stans at",
+      "not gonna lie doe kinda kinda a funky moment in da house doe funky funky clever and bruh doe where my babey gamers at hehe ur so babey gamer funky funky doe doe doe doe doe",
+      "DIALOGUE."
+    ]
   }
 }
