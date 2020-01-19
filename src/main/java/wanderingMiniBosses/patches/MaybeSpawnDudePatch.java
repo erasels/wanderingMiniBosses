@@ -9,6 +9,7 @@ import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
+import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 @SpirePatch(
@@ -47,7 +48,7 @@ public class MaybeSpawnDudePatch {
                 logger.error("Spawning Dude");
                 turnCounter = -1;
 
-                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(WanderingBossHelper.getMonster(), false));
+                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(((AbstractWanderingBoss)WanderingBossHelper.getMonster()).createNewInstance()));
             }
         }
 
