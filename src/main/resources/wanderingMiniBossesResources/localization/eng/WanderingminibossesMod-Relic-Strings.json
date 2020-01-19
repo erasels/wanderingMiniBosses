@@ -28,5 +28,19 @@
     "DESCRIPTIONS": [
       "You can see and play the top card of your draw pile."
     ]
+  },
+  "wanderingMiniBosses:ThiefScarf": {
+    "NAME": "Scarf of the Bandit Ninja",
+    "FLAVOR": "You put it in your bag but now you can't find it.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, obtain #b2 random #yRelics for that combat only."
+    ]
+  },
+  "wanderingMiniBosses:ThiefScarf2": {
+    "NAME": "Scarf of the Ninja Bandit",
+    "FLAVOR": "You put it in your bag but now you can't find it.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, obtain #b2 random #yRelics for that combat only."
+    ]
   }
 }
