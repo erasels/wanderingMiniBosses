@@ -25,7 +25,7 @@ import wanderingMiniBosses.vfx.general.StealRelicEffect;
 import java.util.ArrayList;
 
 public class BanditKing extends AbstractWanderingBoss {
-    public static final String ID = WanderingminibossesMod.makeID("BanditKing");
+    public static final String ID = WanderingminibossesMod.makeID("Timic");
     private static final float HB_W = 160.0F;
     private static final float HB_H = 260.0F;
 
@@ -51,7 +51,7 @@ public class BanditKing extends AbstractWanderingBoss {
     }
 
     public BanditKing(String name, String ID, int maxHealth) {
-        super(name, ID, maxHealth, 0, 0, HB_W, HB_H, WanderingminibossesMod.makeMonsterPath("BanditKing.png"), -1200F, 0F);
+        super(name, ID, maxHealth, 0, 0, HB_W, HB_H, WanderingminibossesMod.makeMonsterPath("Timic.png"), -1200F, 0F);
         if (MathUtils.randomBoolean())
             rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf.ID).makeCopy()));
         else
