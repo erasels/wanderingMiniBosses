@@ -14,6 +14,14 @@
       "% of its Max HP to ALL enemies."
     ]
   },
+  "wanderingMiniBosses:AbyssPearl": {
+    "NAME": "Abyss Pearl",
+    "FLAVOR": "As the abyss stared back, you stabbed it.",
+    "DESCRIPTIONS": [
+      "Each turn, the first #rAttack you play lowers its targets' #yStrength by #b",
+      " this turn. NL The second #rAttack you play inflicts #b"," #yVulnerable. NL The third #rAttack you play gains you #b"," #yBlock for each target hit."
+    ]
+  },
   "wanderingMiniBosses:Inkheart": {
     "NAME": "Inkheart",
     "FLAVOR": "The eye stares as you grasp its sticky surface.",
