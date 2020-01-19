@@ -22,10 +22,10 @@ public class WanderingBossHelper {
 
     public static void populateMonsterMap() {
         if(monsterMap.isEmpty()) {
-            monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
-            monsterMap.put(GazeMonster.ID, GazeMonster::new);
+            //monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
+            //monsterMap.put(GazeMonster.ID, GazeMonster::new);
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
-            monsterMap.put(InkMan.ID, InkMan::new);
+            //monsterMap.put(InkMan.ID, InkMan::new);
         }
     }
 

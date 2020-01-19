@@ -1,10 +1,9 @@
 package wanderingMiniBosses.monsters.eternalPrincess;
 
 import basemod.animations.SpriterAnimation;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
+import com.megacrit.cardcrawl.actions.common.SpawnMonsterAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -12,12 +11,11 @@ import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
-import com.megacrit.cardcrawl.monsters.city.Byrd;
-import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
+import wanderingMiniBosses.powers.delayedpowers.StrengthenAllPower;
+import wanderingMiniBosses.powers.delayedpowers.VulnerableAllPower;
 import wanderingMiniBosses.powers.eternalPrincessPowers.BountyOfPlenty;
 import wanderingMiniBosses.relics.Blackblade;
 
@@ -40,16 +38,16 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private static final int STRENGTH = 3;
     private static final int STRENGTH_ACT_BONUS = 1;
     private static final int BYRD_STRENGTH = 1; //make exception for byrds cause that would be kind of brutal lol
-    private static final int VULNERABLE = 2;
+    private static final int VULNERABLE = 3;
     private static final float HEAL = 0.10F;
 
-    private static final int ETERNITY_DAMAGE = 8;
-    private static final int ETERNITY_ACT_DAMAGE_BONUS = 4;
-    private static final int ETERNITY_MAX_HITS = 3;
+//    private static final int ETERNITY_DAMAGE = 8;
+//    private static final int ETERNITY_ACT_DAMAGE_BONUS = 4;
+//    private static final int ETERNITY_MAX_HITS = 3;
 
     private int strength;
-    private int eternityDamage;
-    private int eternityHits;
+    //private int eternityDamage;
+    //private int eternityHits;
     private int moveCounter = 0;
 
     public EternalPrincess() {
@@ -71,40 +69,26 @@ public class EternalPrincess extends AbstractWanderingBoss {
     @Override
     protected void populateMoves() {
         this.strength = STRENGTH + (STRENGTH_ACT_BONUS * (AbstractDungeon.actNum - 1));
-        this.eternityDamage = ETERNITY_DAMAGE + (ETERNITY_ACT_DAMAGE_BONUS * (AbstractDungeon.actNum - 1));
-        this.eternityHits = ETERNITY_MAX_HITS;
+        //this.eternityDamage = ETERNITY_DAMAGE + (ETERNITY_ACT_DAMAGE_BONUS * (AbstractDungeon.actNum - 1));
+        //this.eternityHits = ETERNITY_MAX_HITS;
         this.moves.clear();
         this.moves.put(FINALE_OF_GLORY, new EnemyMoveInfo(FINALE_OF_GLORY, Intent.BUFF, -1, 0, false));
         this.moves.put(FINALE_OF_DEVASTATION, new EnemyMoveInfo(FINALE_OF_DEVASTATION, Intent.STRONG_DEBUFF, -1, 0, false));
         this.moves.put(FINALE_OF_PROMISE, new EnemyMoveInfo(FINALE_OF_PROMISE, Intent.BUFF, -1, 0, false));
-        this.moves.put(FINALE_OF_ETERNITY, new EnemyMoveInfo(FINALE_OF_ETERNITY, Intent.ATTACK, eternityDamage, eternityHits, true));
+        this.moves.put(FINALE_OF_ETERNITY, new EnemyMoveInfo(FINALE_OF_ETERNITY, Intent.UNKNOWN, -1, 0, false));
         this.moves.put(RUN, new EnemyMoveInfo(RUN, Intent.ESCAPE, -1, 0, false));
-        this.damage.add(new DamageInfo(this, this.eternityDamage));
+        //this.damage.add(new DamageInfo(this, this.eternityDamage));
     }
 
     @Override
     public void takeCustomTurn(DamageInfo info, int multiplier) {
         switch (this.nextMove) {
             case FINALE_OF_GLORY:
-                addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new StrengthPower(AbstractDungeon.player, strength), strength));
-                for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-                    if(!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                        if (m instanceof Byrd) {
-                            addToBot(new ApplyPowerAction(m, this, new StrengthPower(m, BYRD_STRENGTH), BYRD_STRENGTH));
-                        } else {
-                            addToBot(new ApplyPowerAction(m, this, new StrengthPower(m, strength), strength));
-                        }
-                    }
-                }
+                addToBot(new ApplyPowerAction(this, this, new StrengthenAllPower(this, strength), strength));
                 moveCounter++;
                 break;
             case FINALE_OF_DEVASTATION:
-                addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, VULNERABLE, true), VULNERABLE));
-                for(AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-                    if (!m.isDeadOrEscaped() && !m.id.equals(ID)) {
-                        addToBot(new ApplyPowerAction(m, this, new VulnerablePower(m, VULNERABLE, true), VULNERABLE));
-                    }
-                }
+                addToBot(new ApplyPowerAction(this, this, new VulnerableAllPower(this, VULNERABLE), VULNERABLE));
                 moveCounter++;
                 break;
             case FINALE_OF_PROMISE:
@@ -117,14 +101,22 @@ public class EternalPrincess extends AbstractWanderingBoss {
                 moveCounter++;
                 break;
             case FINALE_OF_ETERNITY:
-                for (int i = 0; i < eternityHits; i++) {
-                    addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.FIRE));
+                for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
+                    AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
+                    if (m.isDead && !m.id.equals(ID)) {
+                        Wraith wraith = new Wraith(0.0F, 0.0F, m.maxHealth / 3);
+                        wraith.drawX = m.drawX;
+                        wraith.drawY = m.drawY;
+                        AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(wraith, false, i));
+                    }
                 }
                 break;
         }
     }
 
+    @Override
     public void onEscape() {
+        super.onEscape();
         this.animation.setFlip(true, false);
     }
 
