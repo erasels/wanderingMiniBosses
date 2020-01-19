@@ -3,6 +3,7 @@ package wanderingMiniBosses.util;
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
@@ -40,7 +41,9 @@ public class WanderingBossHelper {
 
     public static AbstractMonster getRandomMonster() {
         if(!monsterMap.isEmpty()) {
-            return ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size()-1)]).get();
+            AbstractMonster tmp = ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size()-1)]).get();
+            WanderingminibossesMod.logger.info("Nemesis for this run: " + tmp.name);
+            return tmp;
         }
         return null;
     }
