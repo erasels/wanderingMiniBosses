@@ -31,6 +31,7 @@ import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.potions.PlaceholderPotion;
 import wanderingMiniBosses.relics.Blackblade;
 import wanderingMiniBosses.relics.CarrionFlame;
+import wanderingMiniBosses.relics.dunno;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
@@ -255,6 +256,7 @@ public class WanderingminibossesMod implements
     public void receiveEditRelics() {
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
+        BaseMod.addRelic(new dunno(), RelicType.SHARED);
         // Mark relics as seen (the others are all starters so they're marked as seen in the character file
     }
     
