@@ -60,5 +60,20 @@
       "not gonna lie doe kinda kinda a funky moment in da house doe funky funky clever and bruh doe where my babey gamers at hehe ur so babey gamer funky funky doe doe doe doe doe",
       "DIALOGUE."
     ]
+  },
+  "wanderingMiniBosses:ThiefOfABillionGuards": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Thief Of A Billion Guards",
+    "DIALOG": [
+      "Just a Thief",
+      "Thief of One Hundred Guards",
+      "Thief of Ten Thousand Guards",
+      "Thief of One Million Guards",
+      "Thief of...",
+      "Thief of a Billion Guards",
+      "Thief of a Billion Thiefs"
+    ]
   }
 }
