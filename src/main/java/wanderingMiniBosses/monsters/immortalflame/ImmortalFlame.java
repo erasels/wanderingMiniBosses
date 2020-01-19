@@ -27,6 +27,7 @@ import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.BlazingPower;
 import wanderingMiniBosses.powers.InnerFlamePower;
 import wanderingMiniBosses.relics.CarrionFlame;
+import wanderingMiniBosses.vfx.combat.ReviveEffect;
 import wanderingMiniBosses.vfx.general.CalmFireEffect;
 import wanderingMiniBosses.vfx.general.CasualFlameParticleEffect;
 
@@ -148,6 +149,12 @@ public class ImmortalFlame extends AbstractWanderingBoss {
                 setMoveShortcut(FLAMEWALL, MOVES[2]);
             }
         }
+    }
+
+    @Override
+    public void die(boolean triggerRelics) {
+        super.die(triggerRelics);
+        addToTop(new VFXAction(new ReviveEffect(this)));
     }
 
     @Override
