@@ -13,9 +13,9 @@ Health should be around act 2 boss range.
 Current odds of a wandering mini boss showing up in a room:
 15% at first per combat, goes up by 7% with every combat nonseen.
 
-Odds for appearing at the next room, after appearing once: 15%.
-Odds for appearing at the 2nd next room, etc: 85/100 * 22/100 = 18,7%.
-Odds for appearing at the 3rd next room, etc: 85/100 * 78/100 * 29/100 = 19,2%.
-Odds for appearing at the 4th next room, etc: 85/100 * 78/100 * 71/100 * 36/100 = 16,9%.
-Odds for appearing at the 5th next room, etc: 85/100 * 78/100 * 71/100 * 64/100 * 43/100 = 12,9%.
-Odds for appearing at the 6th next room, etc: 85/100 * 78/100 * 71/100 * 64/100 * 57/100 * 50/100 = 8.5%.
+* Odds for appearing at the next room, after appearing once: 15%.
+* Odds for appearing at the 2nd next room, etc: 85/100 * 22/100 = 18,7%.
+* Odds for appearing at the 3rd next room, etc: 85/100 * 78/100 * 29/100 = 19,2%.
+* Odds for appearing at the 4th next room, etc: 85/100 * 78/100 * 71/100 * 36/100 = 16,9%.
+* Odds for appearing at the 5th next room, etc: 85/100 * 78/100 * 71/100 * 64/100 * 43/100 = 12,9%.
+* Odds for appearing at the 6th next room, etc: 85/100 * 78/100 * 71/100 * 64/100 * 57/100 * 50/100 = 8.5%.
