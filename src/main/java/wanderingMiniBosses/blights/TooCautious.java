@@ -14,7 +14,7 @@ public class TooCautious extends AbstractBlight {
 
 	public static final String ID = WanderingminibossesMod.makeID("TooCautious");
 	private static final BlightStrings blightStrings = 
-			CardCrawlGame.languagePack.getBlightString("TooCautious");
+			CardCrawlGame.languagePack.getBlightString(ID);
 	public static final String NAME = blightStrings.NAME;
 	public static final String[] DESC = blightStrings.DESCRIPTION;
 

@@ -14,7 +14,7 @@ public class FullOfOpenings extends AbstractBlight {
 
 	public static final String ID = WanderingminibossesMod.makeID("FullOfOpenings");
 	private static final BlightStrings blightStrings = 
-			CardCrawlGame.languagePack.getBlightString("FullOfOpenings");
+			CardCrawlGame.languagePack.getBlightString(ID);
 	public static final String NAME = blightStrings.NAME;
 	public static final String[] DESC = blightStrings.DESCRIPTION;
 
