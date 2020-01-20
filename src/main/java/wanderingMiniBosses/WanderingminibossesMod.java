@@ -243,7 +243,6 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
-        BaseMod.addRelic(new ThiefScarf2(), RelicType.SHARED);
         BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);
         BaseMod.addRelic(new LockLocket(), RelicType.SHARED);
     }
