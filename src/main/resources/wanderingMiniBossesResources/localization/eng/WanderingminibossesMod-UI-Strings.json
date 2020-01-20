@@ -3,5 +3,10 @@
     "TEXT": [
       "Your nemesis has appeared!"
     ]
+  },
+  "wanderingMiniBosses:OptionsMenu": {
+    "TEXT": [
+      "Spawn a wandering miniboss every run?"
+    ]
   }
 }
