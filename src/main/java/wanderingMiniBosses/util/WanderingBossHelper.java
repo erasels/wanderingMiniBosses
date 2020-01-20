@@ -10,6 +10,7 @@ import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
 import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
+import wanderingMiniBosses.monsters.timic.Timic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +25,14 @@ public class WanderingBossHelper {
     public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
 
     public static void populateMonsterMap() {
-        if(monsterMap.isEmpty()) {
+        if (monsterMap.isEmpty()) {
             monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
             monsterMap.put(GazeMonster.ID, GazeMonster::new);
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
             monsterMap.put(InkMan.ID, InkMan::new);
             monsterMap.put(BanditKing.ID, BanditKing::new);
             monsterMap.put(ThiefOfABillionGuards.ID, ThiefOfABillionGuards::new);
+            monsterMap.put(Timic.ID, Timic::new);
         }
     }
 
@@ -51,8 +53,8 @@ public class WanderingBossHelper {
     }
 
     public static AbstractMonster getRandomMonster() {
-        if(!monsterMap.isEmpty()) {
-            AbstractMonster tmp = ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size()-1)]).get();
+        if (!monsterMap.isEmpty()) {
+            AbstractMonster tmp = ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size() - 1)]).get();
             WanderingminibossesMod.logger.info("Nemesis for this run: " + tmp.name);
             return tmp;
         }

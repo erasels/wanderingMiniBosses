@@ -31,6 +31,15 @@
       ""
     ]
   },
+  "wanderingMiniBosses:Wraith": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Wraith",
+    "DIALOG": [
+      ""
+    ]
+  },
   "wanderingMiniBosses:InkMan": {
     "MOVES": [
       "Squick!",
@@ -74,6 +83,19 @@
       "Thief of...",
       "Thief of a Billion Guards",
       "Thief of a Billion Thiefs"
+  "wanderingMiniBosses:Timic": {
+    "MOVES": [
+      "the sock ruse was a DISTACTION",
+      "I'll open up for you, Ironchad-san~~",
+      "Kind of a funky time"
+    ],
+    "NAME": "Timic",
+    "DIALOG": [
+      "Can't eat the chips. Haven't drank enough water.",
+      "Jeez, nevermind then. Weirdo.",
+      "Can't cross that bridge - I'm too heavy!",
+      "I've lost my funny joke permit. No funny jokes today.",
+      "DIALOGUE."
     ]
   }
 }
