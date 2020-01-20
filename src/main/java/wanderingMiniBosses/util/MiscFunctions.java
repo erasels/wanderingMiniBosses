@@ -22,9 +22,21 @@ public class MiscFunctions {
     	fastLoggerLine(converted_message);
     }
     
+    public static void fastLoggerLine(Byte message) {
+    	String converted_message = message.toString();
+    	fastLoggerLine(converted_message);
+    }
+    
+	public static void fastLoggerLine(int message) {
+		String converted_message = message + "";
+		fastLoggerLine(converted_message);
+	}
+    
     public static int headsOrTails(Random random) {
 		return random.random(1);
 	}
+
+
 	
 	
 }
