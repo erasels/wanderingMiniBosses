@@ -8,9 +8,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import wanderingMiniBosses.WanderingminibossesMod;
+
 public class TooCautious extends AbstractBlight {
 
-	public static final String ID = "TooCautious";
+	public static final String ID = WanderingminibossesMod.makeID("TooCautious");
 	private static final BlightStrings blightStrings = 
 			CardCrawlGame.languagePack.getBlightString("TooCautious");
 	public static final String NAME = blightStrings.NAME;

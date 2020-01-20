@@ -8,9 +8,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import wanderingMiniBosses.WanderingminibossesMod;
+
 public class FullOfOpenings extends AbstractBlight {
 
-	public static final String ID = "FullOfOpenings";
+	public static final String ID = WanderingminibossesMod.makeID("FullOfOpenings");
 	private static final BlightStrings blightStrings = 
 			CardCrawlGame.languagePack.getBlightString("FullOfOpenings");
 	public static final String NAME = blightStrings.NAME;

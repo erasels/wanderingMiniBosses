@@ -1,5 +1,5 @@
 {
-	"FullOfOpenings": {
+	"wanderingMiniBosses:FullOfOpenings": {
 	    "NAME": "Full Of Openings",
 	    "DESCRIPTION": [
 	      "When you play an Attack card, lose #y",
@@ -7,7 +7,7 @@
 	    ]
 	},
 	
-	"TooCautious": {
+	"wanderingMiniBosses:TooCautious": {
 	    "NAME": "Too Cautious!",
 	    "DESCRIPTION": [
 	      "When you play a Skill card, lose #y",
@@ -15,7 +15,7 @@
 	    ]
 	},
 	
-	"NotAskedDonationsToTheBloodFund": {
+	"wanderingMiniBosses:NotAskedDonationsToTheBloodFund": {
 	    "NAME": "Not Asked Donations To The Blood Fund",
 	    "DESCRIPTION": [
 	      "When you play a Power card, take #y",

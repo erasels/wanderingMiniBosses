@@ -10,9 +10,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import wanderingMiniBosses.WanderingminibossesMod;
+
 public class NotAskedDonationsToTheBloodFund extends AbstractBlight {
 
-	public static final String ID = "NotAskedDonationsToTheBloodFund";
+	public static final String ID = WanderingminibossesMod.makeID("NotAskedDonationsToTheBloodFund");
 	private static final BlightStrings blightStrings = 
 			CardCrawlGame.languagePack.getBlightString("NotAskedDonationsToTheBloodFund");
 	public static final String NAME = blightStrings.NAME;
