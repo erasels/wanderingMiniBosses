@@ -23,6 +23,11 @@ public class FullOfOpenings extends AbstractBlight {
 		this.counter = 1;
 	}
 	
+	@Override
+	public void updateDescription() {
+		description = DESC[0] + this.counter + DESC[1];
+	}
+	
     public void stack() {
         ++this.counter;
         this.updateDescription();
@@ -33,6 +38,8 @@ public class FullOfOpenings extends AbstractBlight {
     public void onPlayCard(AbstractCard card, AbstractMonster m) {
     	if (card.type == CardType.ATTACK) {
     		AbstractDungeon.player.loseGold(this.counter);
+    		
+    		this.flash();
     	}
     	super.onPlayCard(card, m);
     }
