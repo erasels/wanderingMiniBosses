@@ -13,6 +13,14 @@
 	      "When you play a Skill card, lose #y",
 		  " Gold. This is removed by defeating you-know-which-Nemeses."
 	    ]
+	},
+	
+	"NotAskedDonationsToTheBloodFund": {
+	    "NAME": "Not Asked Donations To The Blood Fund",
+	    "DESCRIPTION": [
+	      "When you play a Power card, take #y",
+		  " blockable damage. This is removed by defeating you-know-which-Nemeses."
+	    ]
 	}
 	
 }
