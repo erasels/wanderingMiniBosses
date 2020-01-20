@@ -23,6 +23,7 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
 import wanderingMiniBosses.util.TextureLoader;
@@ -160,7 +161,7 @@ public class WanderingminibossesMod implements
         ModPanel settingsPanel = new ModPanel();
 
         // Create the on/off button:
-        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("This is the text which goes next to the checkbox.",
+        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("Placeholder setting, check back later!",
                 350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 enablePlaceholder, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
@@ -221,6 +222,30 @@ public class WanderingminibossesMod implements
             }
         });
 
+        BaseMod.addSaveField("NinjaRelicList", new CustomSavable<ArrayList<String>>() {
+            @Override
+            public ArrayList<String> onSave() {
+                return BanditKing.relicList;
+            }
+
+            @Override
+            public void onLoad(ArrayList<String> i) {
+                BanditKing.relicList = i;
+            }
+        });
+
+        BaseMod.addSaveField("NinjaStolenGold", new CustomSavable<Integer>() {
+            @Override
+            public Integer onSave() {
+                return BanditKing.myGold;
+            }
+
+            @Override
+            public void onLoad(Integer i) {
+                BanditKing.myGold = i;
+            }
+        });
+
         WanderingBossHelper.populateMonsterMap();
     }
 
@@ -229,6 +254,8 @@ public class WanderingminibossesMod implements
         if (!CardCrawlGame.loadingSave) {
             WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
             WanderingBossHelper.resetSpawnChance();
+            BanditKing.myGold = 0;
+            BanditKing.relicList.clear();
         }
     }
 
@@ -268,8 +295,8 @@ public class WanderingminibossesMod implements
 
         // BlightStrings
         BaseMod.loadCustomStringsFile(BlightStrings.class,
-        		getModID() + "Resources/localization/eng/WanderingminibossesMod-Blight-Strings.json");
-        
+                getModID() + "Resources/localization/eng/WanderingminibossesMod-Blight-Strings.json");
+
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Event-Strings.json");

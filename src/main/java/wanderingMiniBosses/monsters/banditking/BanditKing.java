@@ -35,8 +35,8 @@ public class BanditKing extends AbstractWanderingBoss {
 
     private int turnCounter = 0;
 
-    private static int myGold = 0;
-    private static ArrayList<String> relicList = new ArrayList<>();
+    public static int myGold = 0;
+    public static ArrayList<String> relicList = new ArrayList<>();
 
     public static String funnyNameThing() {
         if (MathUtils.randomBoolean()) {
