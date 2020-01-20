@@ -29,6 +29,7 @@ import com.megacrit.cardcrawl.vfx.RainingGoldEffect;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.blights.FullOfOpenings;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.InkPower;
 import wanderingMiniBosses.relics.Inkheart;
@@ -144,7 +145,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     @Override
     protected void populateMoves() {
         this.moves.put(ACT_1_GIVE_GOLD, new EnemyMoveInfo(ACT_1_GIVE_GOLD, Intent.MAGIC, -1, 0, false));
-        this.moves.put(ACT_1_STEAL_GOLD, new EnemyMoveInfo((ACT_1_STEAL_GOLD, Intent.ATTACK, 6, 1, false));
+        this.moves.put(ACT_1_STEAL_GOLD, new EnemyMoveInfo(ACT_1_STEAL_GOLD, Intent.ATTACK, 6, 1, false));
         this.moves.put(ACT_1_VULNERABLE_BOMB, new EnemyMoveInfo(ACT_1_VULNERABLE_BOMB, Intent.DEBUFF, 0, 1, false));
         this.moves.put(ACT_1_PRANK_THEFT, new EnemyMoveInfo(ACT_1_PRANK_THEFT, Intent.DEBUFF, 0, 1, false));
     }
@@ -184,7 +185,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     private void doPrankTheft() {
-    	
+    	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
+    			this.hb_h, this.hb_w, new FullOfOpenings());
     }
 
     private void playStealSfx() {
