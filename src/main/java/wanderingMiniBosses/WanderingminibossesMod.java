@@ -357,7 +357,7 @@ public class WanderingminibossesMod implements
     @Override
     public void receivePostUpdate() {
         if (AbstractDungeon.player != null) {
-            if (AbstractDungeon.player.hasRelic(ThiefScarf.ID))
+            if (WanderingBossHelper.getMonster().name.equals(BanditKing.ID) && WanderingBossHelper.getMonster().currentHealth < 1 && AbstractDungeon.player.hasRelic(ThiefScarf.ID))
                 ThiefScarf.wjhatefhefjeujf();
         }
     }
