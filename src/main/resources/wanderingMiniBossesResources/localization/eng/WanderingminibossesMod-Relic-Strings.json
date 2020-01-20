@@ -36,11 +36,11 @@
       "At the start of each combat, obtain #b2 random #yRelics for that combat only."
     ]
   },
-  "wanderingMiniBosses:ThiefScarf2": {
-    "NAME": "Scarf of the Ninja Bandit",
-    "FLAVOR": "You put it in your bag but now you can't find it.",
+  "wanderingMiniBosses:LockLocket": {
+    "NAME": "Lock Locket",
+    "FLAVOR": "With this, you're golden.",
     "DESCRIPTIONS": [
-      "At the start of each combat, obtain #b2 random #yRelics for that combat only."
+      "When you would die, if you have #yGold, lose #b100 #yGold and heal to #b1 HP."
     ]
   }
 }
