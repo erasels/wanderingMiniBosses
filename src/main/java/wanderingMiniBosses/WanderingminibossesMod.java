@@ -266,6 +266,10 @@ public class WanderingminibossesMod implements
         BaseMod.loadCustomStringsFile(RelicStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Relic-Strings.json");
 
+        // BlightStrings
+        BaseMod.loadCustomStringsFile(BlightStrings.class,
+        		getModID() + "Resources/localization/eng/WanderingminibossesMod-Blight-Strings.json");
+        
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Event-Strings.json");
