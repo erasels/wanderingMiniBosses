@@ -25,7 +25,7 @@ public class Timic extends AbstractWanderingBoss {
     private static final float HB_W = 265.0F;
     private static final float HB_H = 135.0F;
 
-    private static int MAX_HEALTH = 432;
+    private static int MAX_HEALTH = 450;
 
     private static final byte DISTACTION = 0;
     private static final byte FLEEATTEMPTONE = 1;
