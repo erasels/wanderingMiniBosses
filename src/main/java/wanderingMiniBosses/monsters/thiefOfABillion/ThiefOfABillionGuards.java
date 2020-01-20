@@ -40,8 +40,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
-    private static final float HB_W = 375.0F;
-    private static final float HB_H = 300.0F;
+    private static final float HB_W = 100.0F;
+    private static final float HB_H = 100.0F;
 
     private static int MAX_HEALTH_A0_UPPER_BOUND = 215;
     private static int MAX_HEALTH_A9_UPPER_BOUND = 219;
