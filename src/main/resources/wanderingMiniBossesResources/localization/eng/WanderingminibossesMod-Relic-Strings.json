@@ -47,7 +47,7 @@
     "NAME": "Master Thief's Presence",
     "FLAVOR": "\"YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU\" - The Ssssserpent",
     "DESCRIPTIONS": [
-      "At the start of each combat, apply #b3 #yVulnerable and #3 #yWeak to ALL enemies."
+      "At the start of each combat, apply #b3 #yVulnerable and #b3 #yWeak to ALL enemies."
     ]
   }
 }
