@@ -22,8 +22,8 @@ public class MasterThiefsPresence extends CustomRelic {
 
 	public static final String ID = WanderingminibossesMod.makeID("MasterThiefsPresence");
 
-    private static final Texture IMG = TextureLoader.getTexture(makeRelicPath("test2.png"));
-    private static final Texture OUTLINE = TextureLoader.getTexture(makeRelicOutlinePath("test2.png"));
+    private static final Texture IMG = TextureLoader.getTexture(makeRelicPath("test2-Presence.png"));
+    private static final Texture OUTLINE = TextureLoader.getTexture(makeRelicOutlinePath("test2-PresenceOutline.png"));
 
     public MasterThiefsPresence() {
         super(ID, IMG, OUTLINE, RelicTier.SPECIAL, LandingSound.FLAT);
@@ -39,8 +39,8 @@ public class MasterThiefsPresence extends CustomRelic {
     	super.atBattleStart();
         for (AbstractMonster mo : (AbstractDungeon.getCurrRoom()).monsters.monsters) {
             addToBot(new RelicAboveCreatureAction(mo, this));
-            addToBot(new ApplyPowerAction(mo, AbstractDungeon.player, new WeakPower(mo, 2, false)));
-            addToBot(new ApplyPowerAction(mo, AbstractDungeon.player, new VulnerablePower(mo, 2, false)));
+            addToBot(new ApplyPowerAction(mo, AbstractDungeon.player, new WeakPower(mo, 3, false)));
+            addToBot(new ApplyPowerAction(mo, AbstractDungeon.player, new VulnerablePower(mo, 3, false)));
         } 
     }
 
