@@ -243,6 +243,8 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
+        BaseMod.addRelic(new ThiefScarf2(), RelicType.SHARED);
+        BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);
         BaseMod.addRelic(new LockLocket(), RelicType.SHARED);
     }
 
@@ -265,6 +267,10 @@ public class WanderingminibossesMod implements
         BaseMod.loadCustomStringsFile(RelicStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Relic-Strings.json");
 
+        // BlightStrings
+        BaseMod.loadCustomStringsFile(BlightStrings.class,
+        		getModID() + "Resources/localization/eng/WanderingminibossesMod-Blight-Strings.json");
+        
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Event-Strings.json");
