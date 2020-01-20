@@ -9,12 +9,14 @@ import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
+import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.monsters.timic.Timic;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class WanderingBossHelper {
+
     private static final float BASE_CHANCE = 0.08F; //Is actually 15% because it gets incremented at the start of every fight
     private static final float INC_CHANCE = 0.07F;
     private static float spawnChance = BASE_CHANCE;
@@ -29,6 +31,7 @@ public class WanderingBossHelper {
             monsterMap.put(EternalPrincess.ID, EternalPrincess::new);
             monsterMap.put(InkMan.ID, InkMan::new);
             monsterMap.put(BanditKing.ID, BanditKing::new);
+            monsterMap.put(ThiefOfABillionGuards.ID, ThiefOfABillionGuards::new);
             monsterMap.put(Timic.ID, Timic::new);
         }
     }

@@ -1,0 +1,26 @@
+{
+	"wanderingMiniBosses:FullOfOpenings": {
+	    "NAME": "Full Of Openings",
+	    "DESCRIPTION": [
+	      "When you play an Attack card, lose #y",
+		  " Gold. This is removed by defeating you-know-which-Nemeses."
+	    ]
+	},
+	
+	"wanderingMiniBosses:TooCautious": {
+	    "NAME": "Too Cautious!",
+	    "DESCRIPTION": [
+	      "When you play a Skill card, lose #y",
+		  " Gold. This is removed by defeating you-know-which-Nemeses."
+	    ]
+	},
+	
+	"wanderingMiniBosses:NotAskedDonationsToTheBloodFund": {
+	    "NAME": "Not Asked Donations To The Blood Fund",
+	    "DESCRIPTION": [
+	      "When you play a Power card, take #y",
+		  " blockable damage. This is removed by defeating you-know-which-Nemeses."
+	    ]
+	}
+	
+}

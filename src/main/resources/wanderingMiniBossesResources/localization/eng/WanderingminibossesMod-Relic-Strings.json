@@ -42,5 +42,12 @@
     "DESCRIPTIONS": [
       "When you would die, if you have #yGold, lose #b100 #yGold and heal to #b1 HP."
     ]
+  },
+  "wanderingMiniBosses:MasterThiefsPresence": {
+    "NAME": "Master Thief's Presence",
+    "FLAVOR": "\"YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU\" - The Ssssserpent",
+    "DESCRIPTIONS": [
+      "At the start of each combat, apply #b3 #yVulnerable and #b3 #yWeak to ALL enemies."
+    ]
   }
 }
