@@ -245,6 +245,7 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf2(), RelicType.SHARED);
+        BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);
     }
 
     @Override
