@@ -82,7 +82,8 @@
     "NAME": "Attempting to Flee",
     "DESCRIPTIONS": [
       "Will escape on its turn. Deal #b",
-      " damage to it to stop it from fleeing."
+      " damage to it to stop it from fleeing.",
+      "Stunned from damage this turn."
     ]
   }
 }

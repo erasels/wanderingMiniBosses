@@ -19,7 +19,6 @@ import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.relics.ThiefScarf;
-import wanderingMiniBosses.relics.ThiefScarf2;
 import wanderingMiniBosses.vfx.general.StealRelicEffect;
 
 import java.util.ArrayList;
@@ -52,10 +51,7 @@ public class BanditKing extends AbstractWanderingBoss {
 
     public BanditKing(String name, String ID, int maxHealth) {
         super(name, ID, maxHealth, 0, 0, HB_W, HB_H, WanderingminibossesMod.makeMonsterPath("Timic.png"), -1200F, 0F);
-        if (MathUtils.randomBoolean())
-            rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf.ID).makeCopy()));
-        else
-            rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf2.ID).makeCopy()));
+        rewards.add(new RewardItem(RelicLibrary.getRelic(ThiefScarf.ID).makeCopy()));
     }
 
     @Override

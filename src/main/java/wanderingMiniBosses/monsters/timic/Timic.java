@@ -5,15 +5,17 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.powers.FrailPower;
 import com.megacrit.cardcrawl.powers.WeakPower;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.FilledWithCoinsPower;
 import wanderingMiniBosses.powers.InterruptMePower;
-import wanderingMiniBosses.powers.InterruptMePower2;
+import wanderingMiniBosses.relics.LockLocket;
 
 public class Timic extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("Timic");
@@ -27,13 +29,11 @@ public class Timic extends AbstractWanderingBoss {
 
     private static final byte DISTACTION = 0;
     private static final byte FLEEATTEMPTONE = 1;
-    private static final byte OOPSBUFF = 2;
-    private static final byte FLEEATTEMPTTWO = 3;
+    private static final byte FLEEATTEMPTTWO = 2;
 
     private int turnCounter = 0;
 
-    private int bruh1 = 0;
-    private int bruh2 = 0;
+    private int bruh1;
 
     public Timic() {
         this(NAME, ID, MAX_HEALTH);
@@ -41,7 +41,7 @@ public class Timic extends AbstractWanderingBoss {
 
     public Timic(String name, String ID, int maxHealth) {
         super(name, ID, maxHealth, 0, 0, HB_W, HB_H, WanderingminibossesMod.makeMonsterPath("Timic.png"), -444F, 0F);
-
+        rewards.add(new RewardItem(RelicLibrary.getRelic(LockLocket.ID).makeCopy()));
     }
 
     public void usePreBattleAction() {
@@ -54,13 +54,6 @@ public class Timic extends AbstractWanderingBoss {
         } else if (AbstractDungeon.actNum == 3) {
             bruh1 = 33;
         }
-        if (AbstractDungeon.actNum == 1) {
-            bruh2 = 20;
-        } else if (AbstractDungeon.actNum == 2) {
-            bruh2 = 33;
-        } else if (AbstractDungeon.actNum == 3) {
-            bruh2 = 40;
-        }
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new FilledWithCoinsPower(this), 1));
     }
 
@@ -68,7 +61,6 @@ public class Timic extends AbstractWanderingBoss {
     protected void populateMoves() {
         this.moves.put(DISTACTION, new EnemyMoveInfo(DISTACTION, Intent.STRONG_DEBUFF, -1, 0, false));
         this.moves.put(FLEEATTEMPTONE, new EnemyMoveInfo(FLEEATTEMPTONE, Intent.ESCAPE, -1, 0, false));
-        this.moves.put(OOPSBUFF, new EnemyMoveInfo(OOPSBUFF, Intent.BUFF, -1, 0, false));
         this.moves.put(FLEEATTEMPTTWO, new EnemyMoveInfo(FLEEATTEMPTTWO, Intent.ESCAPE, -1, 0, false));
     }
 
@@ -84,13 +76,9 @@ public class Timic extends AbstractWanderingBoss {
                 onEscape();
                 break;
             case 2:
-                addToBot(new ApplyPowerAction(this, this, new InterruptMePower2(this, bruh2), bruh2));
-                break;
-            case 3:
                 onEscape();
                 break;
         }
-
         ++turnCounter;
     }
 
