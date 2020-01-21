@@ -133,9 +133,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         gave_money = false;
         receiveAscensionBuffs();
         throwEntranceSmokeBombs();
-        byte debugging = defineFirstMove();
-        MiscFunctions.fastLoggerLine(debugging);
-        setMoveShortcut(debugging);
+        setFirstMoveShortcut();
         AbstractDungeon.actionManager.addToBottom(
         	new ApplyPowerAction(this, this, new ThieveryPower(this, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK))
         	);
@@ -172,37 +170,33 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     }
     
-    private byte defineFirstMove() {
-    	
-    	byte first_move;
+    private void setFirstMoveShortcut() {
     	
     	MiscFunctions.fastLoggerLine(AbstractDungeon.actNum);
     	switch (AbstractDungeon.actNum) {
     		case 1:
-    	    	first_move = ACT_1_STEAL_GOLD;
-    	    	return first_move;
+    	    	setMoveShortcut(ACT_1_STEAL_GOLD, ACT_1_STEAL_GOLD_NAME);
+    	    	return;
     		case 2:
-    	    	first_move = ACT_2_STEAL_GOLD;
-    	    	return first_move;
-    			
+    	    	setMoveShortcut(ACT_2_STEAL_GOLD, ACT_2_STEAL_GOLD_NAME);
+    			return;
     		case 3:
-    			first_move = 0;
     	    	if (AbstractDungeon.player.gold < 99){
     		    	/*int amount_of_keys = (Settings.hasEmeraldKey ? 1 : 0) +
     		    				(Settings.hasRubyKey ? 1 : 0) +
     		    				(Settings.hasSapphireKey ? 1 : 0);
     		    		
     		    	if (amount_of_keys >= 2) first_move = ACT_2_GIVE_GOLD;*/
-    	    		first_move = ACT_3_WEAK_BOMB;
+    	    		setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+        	    	return;
     	    	} else {
-    	    		first_move = ACT_3_WEAK_BOMB;
+    	    		setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+        	    	return;
     	    	}
-    	    	return first_move;
-    	
+    	    default:
+    	    	setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+    	    	return;
     	}
-    	
-    	return 0;
-    	
     }
     
     private void throwEntranceSmokeBombs() {
@@ -461,7 +455,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     protected void getMove(int num) {
     	if (AbstractDungeon.actNum == 1) {
     		if (turnCounter == 0) {
-                setMoveShortcut(defineFirstMove());
+                setFirstMoveShortcut();
             } else if ((turnCounter == 1) && (!gave_money)) {
                 setMoveShortcut(ACT_1_VULNERABLE_BOMB, ACT_1_VULNERABLE_BOMB_NAME);
             } else if ((turnCounter == 1) && (gave_money)) {
@@ -473,7 +467,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     	else if (AbstractDungeon.actNum == 2) {
     		if (turnCounter == 0) {
-                setMoveShortcut(defineFirstMove());
+                setFirstMoveShortcut();
             } else if ((turnCounter == 1) && (gave_money)) {
                 setMoveShortcut((byte)-128);
             } else if ((turnCounter == 1)) {
