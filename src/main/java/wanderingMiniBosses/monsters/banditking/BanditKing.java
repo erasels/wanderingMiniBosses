@@ -28,15 +28,15 @@ public class BanditKing extends AbstractWanderingBoss {
     private static final float HB_W = 160.0F;
     private static final float HB_H = 260.0F;
 
-    private static int MAX_HEALTH = 222;
+    private static int MAX_HEALTH = 256;
 
     private static final byte PUNCH = 0;
     private static final byte TAKEURSHIT = 1;
 
     private int turnCounter = 0;
 
-    private static int myGold = 0;
-    private static ArrayList<String> relicList = new ArrayList<>();
+    public static int myGold = 0;
+    public static ArrayList<String> relicList = new ArrayList<>();
 
     public static String funnyNameThing() {
         if (MathUtils.randomBoolean()) {
@@ -47,6 +47,7 @@ public class BanditKing extends AbstractWanderingBoss {
 
     public BanditKing() {
         this(funnyNameThing(), ID, MAX_HEALTH);
+        flipHorizontal = true;
     }
 
     public BanditKing(String name, String ID, int maxHealth) {
