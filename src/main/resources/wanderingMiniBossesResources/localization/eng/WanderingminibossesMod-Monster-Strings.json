@@ -31,6 +31,15 @@
       ""
     ]
   },
+  "wanderingMiniBosses:Wraith": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Wraith",
+    "DIALOG": [
+      ""
+    ]
+  },
   "wanderingMiniBosses:InkMan": {
     "MOVES": [
       "Squick!",
@@ -43,6 +52,51 @@
       "I can see you.",
       "MY EYE STARES DEEP...",
       "squick",
+      "DIALOGUE."
+    ]
+  },
+  "wanderingMiniBosses:BanditKing": {
+    "MOVES": [
+      "Puncha punch!",
+      "It's a me, Luigi!",
+      "gonna take ur sHIT BIJFIGJFKGFKG"
+    ],
+    "NAME": "Ninja Bandit",
+    "DIALOG": [
+      "Part ninja... part bandit!",
+      "You can't find me! Because I'm hidden!",
+      "Where my luigi stans at",
+      "not gonna lie doe kinda kinda a funky moment in da house doe funky funky clever and bruh doe where my babey gamers at hehe ur so babey gamer funky funky doe doe doe doe doe",
+      "DIALOGUE."
+    ]
+  },
+  "wanderingMiniBosses:ThiefOfABillionGuards": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Thief Of A Billion Guards",
+    "DIALOG": [
+      "Just a Thief",
+      "Thief of One Hundred Guards",
+      "Thief of Ten Thousand Guards",
+      "Thief of One Million Guards",
+      "Thief of...",
+      "Thief of a Billion Guards",
+      "Thief of a Billion Thiefs"
+    ]
+  },
+  "wanderingMiniBosses:Timic": {
+    "MOVES": [
+      "the sock ruse was a DISTACTION",
+      "I'll open up for you, Ironchad-san~~",
+      "Kind of a funky time"
+    ],
+    "NAME": "Timic",
+    "DIALOG": [
+      "Can't eat the chips. Haven't drank enough water.",
+      "Jeez, nevermind then. Weirdo.",
+      "Can't cross that bridge - I'm too heavy!",
+      "I've lost my funny joke permit. No funny jokes today.",
       "DIALOGUE."
     ]
   }

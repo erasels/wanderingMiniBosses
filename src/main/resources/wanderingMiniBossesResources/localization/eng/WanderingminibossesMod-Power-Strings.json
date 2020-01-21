@@ -31,7 +31,6 @@
       " more damage from enemy attacks. NL Caused by Status cards in your drawpile, discardpile or hand."
     ]
   },
-
   "wanderingMiniBosses:Blazing": {
     "NAME": "Blazing",
     "DESCRIPTIONS": [
@@ -71,6 +70,20 @@
       "The first card you draw each turn is scribbled upon.",
       "The first #b",
       " cards you draw each turn are scribbled upon."
+    ]
+  },
+  "wanderingMiniBosses:FilledWithCoinsPower": {
+    "NAME": "Filled with Coins",
+    "DESCRIPTIONS": [
+      "Whenever #yTimic loses HP, gain that much #yGold."
+    ]
+  },
+  "wanderingMiniBosses:InterruptMePower": {
+    "NAME": "Attempting to Flee",
+    "DESCRIPTIONS": [
+      "Will escape on its turn. Deal #b",
+      " damage to it to stop it from fleeing.",
+      "Stunned from damage this turn."
     ]
   }
 }

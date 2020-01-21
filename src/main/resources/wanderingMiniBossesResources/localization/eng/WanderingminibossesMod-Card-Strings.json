@@ -2,57 +2,5 @@
   "wanderingMiniBosses:BossBurn": {
     "NAME": "Burn",
     "DESCRIPTION": "When drawn, NL draw a card. NL You take !M! more damage. NL Exhaust."
-  },
-
-  "wanderingMiniBosses:DefaultCommonAttack": {
-    "NAME": "Strike",
-    "DESCRIPTION": "Deal !D! Damage. NL [#0000ff]This[] [#ff0000]Is[] [#ffff00]How[] [#88888]color[] [#ff00ff]works.[]"
-  },
-  "wanderingMiniBosses:DefaultCommonSkill": {
-    "NAME": "Defend",
-    "DESCRIPTION": "Gain !B! Block. NL thedefault:Multiword_Keyword."
-  },
-  "wanderingMiniBosses:DefaultCommonPower": {
-    "NAME": "Hold Place",
-    "DESCRIPTION": "Gain !M! thedefault:Keyword.",
-    "UPGRADE_DESCRIPTION": "Gain !M! thedefault:Keywords."
-  },
-  "wanderingMiniBosses:DefaultUncommonAttack": {
-    "NAME": "Big slap",
-    "DESCRIPTION": "Deal !D! Damage."
-  },
-  "wanderingMiniBosses:DefaultUncommonSkill": {
-    "NAME": "A Better Defend",
-    "DESCRIPTION": "Gain !B! Plated Armor. Affected by Dexterity."
-  },
-  "wanderingMiniBosses:DefaultUncommonPower": {
-    "NAME": "Weirdness",
-    "DESCRIPTION": "Gain X thedefault:Keywords.",
-    "UPGRADE_DESCRIPTION": "Gain X +1 thedefault:Keywords."
-  },
-  "wanderingMiniBosses:DefaultRareAttack": {
-    "NAME": "TOUCH",
-    "DESCRIPTION": "Deal !D! Damage."
-  },
-  "wanderingMiniBosses:DefaultRareSkill": {
-    "NAME": "For Each Loop x2",
-    "DESCRIPTION": "Apply !M! vulnerable to all enemies, 2 times.",
-    "UPGRADE_DESCRIPTION": "Apply !M! vulnerable to all enemies, 3 times."
-  },
-  "wanderingMiniBosses:DefaultRarePower": {
-    "NAME": "In-Progress Form",
-    "DESCRIPTION": "At the start of your turn, play a TOUCH."
-  },
-  "wanderingMiniBosses:DefaultAttackWithVariable": {
-    "NAME": "Special Strike",
-    "DESCRIPTION": "Deal !D! Damage [E] times. NL (Deal !wanderingMiniBosses:ENERGY_DAMAGE! damage total.)"
-  },
-  "wanderingMiniBosses:DefaultSecondMagicNumberSkill": {
-    "NAME": "Cool 2 Number Card",
-    "DESCRIPTION": "Apply !M! vulnerable and !wanderingMiniBosses:SecondMagic! poison to an enemy."
-  },
-  "wanderingMiniBosses:OrbSkill": {
-    "NAME": "Get Orb",
-    "DESCRIPTION": "Channel 1 Default Orb."
   }
 }

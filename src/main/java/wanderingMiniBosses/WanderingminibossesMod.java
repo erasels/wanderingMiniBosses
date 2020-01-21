@@ -23,14 +23,13 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
-import wanderingMiniBosses.relics.AbyssPearl;
-import wanderingMiniBosses.relics.Blackblade;
-import wanderingMiniBosses.relics.CarrionFlame;
-import wanderingMiniBosses.relics.Inkheart;
+import wanderingMiniBosses.relics.*;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -45,25 +44,25 @@ public class WanderingminibossesMod implements
         OnStartBattleSubscriber,
         StartGameSubscriber,
         PostInitializeSubscriber,
-        PostBattleSubscriber {
+        PostBattleSubscriber,
+        PostUpdateSubscriber {
     public static final Logger logger = LogManager.getLogger(WanderingminibossesMod.class.getName());
     private static String modID;
+    private static SpireConfig modConfig = null;
 
     public static Properties wanderingMiniBossesDefaultSettings = new Properties();
-    public static final String ENABLE_PLACEHOLDER_SETTINGS = "enablePlaceholder";
-    public static boolean enablePlaceholder = true;
 
     private static final String MODNAME = "Wandering Minibosses";
     private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
-    
+
     // =============== INPUT TEXTURE LOCATION =================
     public static final String BADGE_IMAGE = "wanderingMiniBossesResources/images/Badge.png";
 
     // =============== MAKE IMAGE PATHS =================
-    
+
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
@@ -72,19 +71,14 @@ public class WanderingminibossesMod implements
         return getModID() + "Resources/images/ui/" + resourcePath;
     }
 
-
     public static String makeRelicPath(String resourcePath) {
         return getModID() + "Resources/images/relics/" + resourcePath;
     }
-    
+
     public static String makeRelicOutlinePath(String resourcePath) {
         return getModID() + "Resources/images/relics/outline/" + resourcePath;
     }
-    
-    public static String makeOrbPath(String resourcePath) {
-        return getModID() + "Resources/orbs/" + resourcePath;
-    }
-    
+
     public static String makePowerPath(String resourcePath) {
         return getModID() + "Resources/images/powers/" + resourcePath;
     }
@@ -96,17 +90,17 @@ public class WanderingminibossesMod implements
     public static String makeMonsterPath(String resourcePath) {
         return getModID() + "Resources/images/monsters/" + resourcePath;
     }
-    
+
     // =============== /MAKE IMAGE PATHS/ =================
-    
+
     // =============== /INPUT TEXTURE LOCATION/ =================
-    
-    
+
+
     // =============== SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE =================
-    
+
     public WanderingminibossesMod() {
         BaseMod.subscribe(this);
-      
+
         setModID("wanderingMiniBosses");
         
         /*BaseMod.addColor(WanderingminibossesMod.Enums.COLOR_WB, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
@@ -115,23 +109,13 @@ public class WanderingminibossesMod implements
                 ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
                 ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);*/
 
-        wanderingMiniBossesDefaultSettings.setProperty(ENABLE_PLACEHOLDER_SETTINGS, "FALSE");
-        try {
-            SpireConfig config = new SpireConfig("wanderingMiniBossesMod", "wanderingMiniBossesConfig", wanderingMiniBossesDefaultSettings); // ...right here
-            // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
-            config.load(); // Load the setting and set the boolean to equal it
-            enablePlaceholder = config.getBool(ENABLE_PLACEHOLDER_SETTINGS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
     }
 
-    
+
     public static void setModID(String ID) {
         modID = ID;
     }
-    
+
     public static String getModID() {
         return modID;
     }
@@ -139,60 +123,64 @@ public class WanderingminibossesMod implements
     @SuppressWarnings("unused")
     public static void initialize() {
         WanderingminibossesMod defaultmod = new WanderingminibossesMod();
+
+        try {
+            Properties defaults = new Properties();
+            defaults.put("PermanentNemesis", Boolean.toString(false));
+            modConfig = new SpireConfig("WanderingMinibosses", "Config", defaults);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
-    // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
-    
-    
-    // =============== LOAD THE CHARACTER =================
-    
+
+    public static boolean permaNemesis() {
+        if (modConfig == null) {
+            return false;
+        }
+        return modConfig.getBool("PermanentNemesis");
+    }
+
     @Override
     public void receiveEditCharacters() {
         receiveEditPotions();
     }
-    
-    // =============== /LOAD THE CHARACTER/ =================
-    
-    
-    // =============== POST-INITIALIZE =================
-    
+
+
+
     @Override
     public void receivePostInitialize() {
         logger.info("Loading badge image and mod options");
-        
+        UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(makeID("OptionsMenu"));
+        String[] TEXT = UIStrings.TEXT;
+
         // Load the Mod Badge
         Texture badgeTexture = TextureLoader.getTexture(BADGE_IMAGE);
-        
+
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
-        
+
         // Create the on/off button:
-        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("This is the text which goes next to the checkbox.",
-                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
-                enablePlaceholder, // Boolean it uses
-                settingsPanel, // The mod panel in which this button will be in
-                (label) -> {}, // thing??????? idk
-                (button) -> { // The actual button:
-            
-            enablePlaceholder = button.enabled; // The boolean true/false will be whether the button is enabled or not
-            try {
-                // And based on that boolean, set the settings and save them
-                SpireConfig config = new SpireConfig("wanderingMiniBossesMod", "wanderingMiniBossesConfig", wanderingMiniBossesDefaultSettings);
-                config.setBool(ENABLE_PLACEHOLDER_SETTINGS, enablePlaceholder);
-                config.save();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        
-        settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
-        
+        int xPos = 350, yPos = 700;
+        ModLabeledToggleButton PNBtn = new ModLabeledToggleButton(TEXT[0], xPos, yPos, Settings.CREAM_COLOR, FontHelper.charDescFont, permaNemesis(), settingsPanel, l -> { },
+                button ->
+                {
+                    if (modConfig != null) {
+                        modConfig.setBool("PermanentNemesis", button.enabled);
+                        try {
+                            modConfig.save();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        settingsPanel.addUIElement(PNBtn); // Add the button to the settings panel. Button is a go.
+
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
         BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
             @Override
             public String onSave() {
-                return WanderingBossHelper.getMonster() != null?WanderingBossHelper.getMonster().id:"null";
+                return WanderingBossHelper.getMonster() != null ? WanderingBossHelper.getMonster().id : "null";
             }
 
             @Override
@@ -204,12 +192,12 @@ public class WanderingminibossesMod implements
         BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
             @Override
             public Integer onSave() {
-                return WanderingBossHelper.getMonster() != null?WanderingBossHelper.getMonster().currentHealth:-1;
+                return WanderingBossHelper.getMonster() != null ? WanderingBossHelper.getMonster().currentHealth : -1;
             }
 
             @Override
             public void onLoad(Integer i) {
-                if(WanderingBossHelper.getMonster() != null) {
+                if (WanderingBossHelper.getMonster() != null) {
                     WanderingBossHelper.getMonster().currentHealth = i;
                 }
             }
@@ -227,53 +215,98 @@ public class WanderingminibossesMod implements
             }
         });
 
+        BaseMod.addSaveField("WBMonsterSpawn", new CustomSavable<Boolean>() {
+            @Override
+            public Boolean onSave() {
+                return WanderingBossHelper.nemesisCheck();
+            }
+
+            @Override
+            public void onLoad(Boolean i) {
+                WanderingBossHelper.HAS_NEMESIS = i;
+            }
+        });
+
+        BaseMod.addSaveField("NinjaRelicList", new CustomSavable<ArrayList<String>>() {
+            @Override
+            public ArrayList<String> onSave() {
+                return BanditKing.relicList;
+            }
+
+            @Override
+            public void onLoad(ArrayList<String> i) {
+                BanditKing.relicList = i;
+            }
+        });
+
+        BaseMod.addSaveField("NinjaStolenGold", new CustomSavable<Integer>() {
+            @Override
+            public Integer onSave() {
+                return BanditKing.myGold;
+            }
+
+            @Override
+            public void onLoad(Integer i) {
+                BanditKing.myGold = i;
+            }
+        });
+
         WanderingBossHelper.populateMonsterMap();
     }
 
     @Override
     public void receiveStartGame() {
-        if(!CardCrawlGame.loadingSave) {
+        if (!CardCrawlGame.loadingSave) {
             WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
             WanderingBossHelper.resetSpawnChance();
+            BanditKing.myGold = 0;
+            BanditKing.relicList.clear();
+            WanderingBossHelper.nemesisDetermination();
         }
     }
-    
+
     public void receiveEditPotions() {
 
     }
-    
+
     @Override
     public void receiveEditRelics() {
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
-
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
+        BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
+        BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);
+        BaseMod.addRelic(new LockLocket(), RelicType.SHARED);
     }
-    
+
     @Override
     public void receiveEditCards() {
 
     }
-    
+
     @Override
     public void receiveEditStrings() {
         // CardStrings
         BaseMod.loadCustomStringsFile(CardStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Card-Strings.json");
-        
+
         // PowerStrings
         BaseMod.loadCustomStringsFile(PowerStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Power-Strings.json");
-        
+
         // RelicStrings
         BaseMod.loadCustomStringsFile(RelicStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Relic-Strings.json");
-        
+
+        // BlightStrings
+        BaseMod.loadCustomStringsFile(BlightStrings.class,
+                getModID() + "Resources/localization/eng/WanderingminibossesMod-Blight-Strings.json");
+
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Event-Strings.json");
-        
+
         // PotionStrings
         BaseMod.loadCustomStringsFile(PotionStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Potion-Strings.json");
@@ -286,13 +319,13 @@ public class WanderingminibossesMod implements
         BaseMod.loadCustomStringsFile(UIStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-UI-Strings.json");
     }
-    
+
     @Override
     public void receiveEditKeywords() {
         Gson gson = new Gson();
         String json = Gdx.files.internal(getModID() + "Resources/localization/eng/WanderingminibossesMod-Keyword-Strings.json").readString(String.valueOf(StandardCharsets.UTF_8));
         com.evacipated.cardcrawl.mod.stslib.Keyword[] keywords = gson.fromJson(json, com.evacipated.cardcrawl.mod.stslib.Keyword[].class);
-        
+
         if (keywords != null) {
             for (Keyword keyword : keywords) {
                 BaseMod.addKeyword(getModID().toLowerCase(), keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
@@ -306,10 +339,12 @@ public class WanderingminibossesMod implements
 
     @Override
     public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-        MaybeSpawnDudePatch.noEncounterThisFight();
-        if (WanderingBossHelper.isMonsterAlive() && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
-            if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(WanderingBossHelper.getSpawnChance())) {
-                MaybeSpawnDudePatch.resetTurnCounter();
+        if(WanderingBossHelper.nemesisCheck()) {
+            MaybeSpawnDudePatch.noEncounterThisFight();
+            if (WanderingBossHelper.isMonsterAlive() && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
+                if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(WanderingBossHelper.getSpawnChance())) {
+                    MaybeSpawnDudePatch.resetTurnCounter();
+                }
             }
         }
     }
@@ -317,5 +352,13 @@ public class WanderingminibossesMod implements
     @Override
     public void receivePostBattle(AbstractRoom abstractRoom) {
         inkedCardsList.clear();
+    }
+
+    @Override
+    public void receivePostUpdate() {
+        if (AbstractDungeon.player != null) {
+            if (WanderingBossHelper.getMonster().name.equals(BanditKing.ID) && WanderingBossHelper.getMonster().currentHealth < 1 && AbstractDungeon.player.hasRelic(ThiefScarf.ID))
+                ThiefScarf.wjhatefhefjeujf();
+        }
     }
 }
