@@ -17,7 +17,6 @@
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION, NOT YOURS GK, MINE AND DARKS-->
         <!--LEV change this later to the default, removing that folder-->
         <Steam.path>C:/Program Files (x86)/Jogos/Steam/SteamApps</Steam.path>
-
     </properties>
 
     <dependencies>

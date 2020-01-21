@@ -21,6 +21,10 @@ public class WanderingBossHelper {
     private static final float INC_CHANCE = 0.07F;
     private static float spawnChance = BASE_CHANCE;
 
+    private static final float NEMESIS_CHANCE = 0.4f;
+    public static boolean HAS_NEMESIS;
+
+
     private static AbstractMonster wanderingBoss;
     public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
 
@@ -79,5 +83,14 @@ public class WanderingBossHelper {
 
     public static boolean viableFloor() {
         return AbstractDungeon.floorNum > 1;
+    }
+
+    public static void nemesisDetermination() {
+        HAS_NEMESIS =  AbstractDungeon.monsterRng.randomBoolean(NEMESIS_CHANCE);
+        WanderingminibossesMod.logger.info("Will there be a Nemesis this run: " + nemesisCheck());
+    }
+
+    public static boolean nemesisCheck() {
+        return HAS_NEMESIS || WanderingminibossesMod.permaNemesis();
     }
 }

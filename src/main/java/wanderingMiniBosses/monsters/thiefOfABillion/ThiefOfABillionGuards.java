@@ -40,12 +40,10 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
-    private static final float HB_W = 375.0F;
-    private static final float HB_H = 300.0F;
-    
-    private static int MAX_HEALTH_A0_LOWER_BOUND = 209;
+    private static final float HB_W = 100.0F;
+    private static final float HB_H = 100.0F;
+
     private static int MAX_HEALTH_A0_UPPER_BOUND = 215;
-    private static int MAX_HEALTH_A9_LOWER_BOUND = 212;
     private static int MAX_HEALTH_A9_UPPER_BOUND = 219;
     
     private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
@@ -91,9 +89,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	super.die();
     	for (int i = AbstractDungeon.player.blights.size() - 1; i >= 0; i--) {
     		AbstractBlight blight = AbstractDungeon.player.blights.get(i);
-    		if ((blight.blightID == FullOfOpenings.ID) ||
-    			(blight.blightID == NotAskedDonationsToTheBloodFund.ID) ||
-    			(blight.blightID == TooCautious.ID)) {
+    		if ((blight.blightID.equals(FullOfOpenings.ID)) ||
+    			(blight.blightID.equals(NotAskedDonationsToTheBloodFund.ID)) ||
+    			(blight.blightID.equals(TooCautious.ID))) {
     			AbstractDungeon.player.blights.remove(i);
     		}
     	}
@@ -110,15 +108,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     private static int defineMaxHealth(int ascensionLevel) {
-    	int extra_amount;
-    	long seed = Settings.seed;
     	if (ascensionLevel < 9) {
-    		extra_amount = MAX_HEALTH_A0_UPPER_BOUND - MAX_HEALTH_A0_LOWER_BOUND;
-    		return MAX_HEALTH_A0_LOWER_BOUND + (int)(seed % (extra_amount + 1));
+			return MAX_HEALTH_A0_UPPER_BOUND;
     	}
     	else {
-    		extra_amount = MAX_HEALTH_A9_UPPER_BOUND - MAX_HEALTH_A9_LOWER_BOUND;
-    		return MAX_HEALTH_A9_LOWER_BOUND + (int)(seed % (extra_amount + 1));
+			return MAX_HEALTH_A9_UPPER_BOUND;
     	}
     }
     
@@ -205,11 +199,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     				new SmokeBombEffect(this.hb.cX, this.hb.cY)));
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
-    				new SmokeBombEffect(this.hb.cX - Settings.WIDTH/5,
+    				new SmokeBombEffect(this.hb.cX - Settings.WIDTH/5f,
     						this.hb.cY)));
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
-    				new SmokeBombEffect(this.hb.cX + Settings.WIDTH/5,
+    				new SmokeBombEffect(this.hb.cX + Settings.WIDTH/5f,
     						this.hb.cY)));
     }
     
@@ -453,7 +447,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     protected void getMove(int num) {
-
     	if (AbstractDungeon.actNum == 1) {
     		if (turnCounter == 0) {
                 setMoveShortcut(defineFirstMove());
