@@ -72,7 +72,13 @@
   },
   "wanderingMiniBosses:ThiefOfABillionGuards": {
     "MOVES": [
-      ""
+      "Charity",
+      "Purse Cut",
+      "Fear Gas",
+      "Signature Prank",
+      "Cold Gas",
+      "Anesthesic Gas",
+      "Stolen Whirlwind"
     ],
     "NAME": "Thief Of A Billion Guards",
     "DIALOG": [
