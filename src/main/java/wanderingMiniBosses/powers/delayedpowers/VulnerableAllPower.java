@@ -19,10 +19,10 @@ public class VulnerableAllPower extends AbstractDelayedPower {
     public void atEndOfRound() {
         super.atEndOfRound();
 
-        addToBot(new ApplyPowerAction(AbstractDungeon.player, this.owner, new VulnerablePower(AbstractDungeon.player, 1, false), 1));
+        addToBot(new ApplyPowerAction(AbstractDungeon.player, this.owner, new VulnerablePower(AbstractDungeon.player, amount, false), amount));
         for(final AbstractMonster mo : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if(mo != this.owner && !mo.isDeadOrEscaped()) {
-                addToBot(new ApplyPowerAction(mo, this.owner, new VulnerablePower(mo, 1, false), 1));
+                addToBot(new ApplyPowerAction(mo, this.owner, new VulnerablePower(mo, amount, false), amount));
             }
         }
     }

@@ -10,6 +10,11 @@ You only have one monster per run, it's decided at the start of the run.
 Monsters will stay about 3 turns.
 Health should be around act 2 boss range.
 
+## .Jars Needed
+
+Base game, BaseMod 5.17.0, ModTheSpire 3.15.0, StSLib 1.17.3.
+
+## Statistics
 Current odds of a wandering mini boss showing up in a room:
 15% at first per combat, goes up by 7% with every combat nonseen.
 
