@@ -21,6 +21,10 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     protected Map<Byte, EnemyMoveInfo> moves;
     protected int runTimer;
     protected ArrayList<RewardItem> rewards;
+    protected WanderingMonsterGroup.WanderingBossInfo monsterInfo;
+    public void setMonsterInfo(WanderingMonsterGroup.WanderingBossInfo monsterInfo) {
+        this.monsterInfo = monsterInfo;
+    }
 
     public AbstractWanderingBoss(String name, String id, int maxHealth, float hb_x, float hb_y, float hb_w, float hb_h, String imgUrl, float offsetX, float offsetY) {
         super(name, id, maxHealth, hb_x, hb_y, hb_w, hb_h, imgUrl, offsetX, offsetY);
@@ -114,7 +118,8 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     @Override
     public void damage(DamageInfo info) {
         super.damage(info);
-        WanderingBossHelper.getMonster().currentHealth = this.currentHealth;
+        this.monsterInfo.setCurrentHealth(this.currentHealth);
+        WanderingBossHelper.checkForRewardDispensal();
     }
 
     public void setMoveShortcut(byte next, String text) {
@@ -129,15 +134,5 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     public void die(boolean triggerRelics) {
         AbstractDungeon.getCurrRoom().rewards.addAll(rewards);
         super.die(triggerRelics);
-    }
-
-    public AbstractWanderingBoss createNewInstance() {
-        try{
-            AbstractWanderingBoss tmp = this.getClass().newInstance();
-            tmp.currentHealth = this.currentHealth;
-            return tmp;
-        }catch(InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Failed to generate new monster instance for monster: " + this.id);
-        }
     }
 }
