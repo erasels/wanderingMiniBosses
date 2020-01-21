@@ -54,18 +54,30 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final int STOLEN_WHIRLWIND_AMOUNT_OF_HITS = 6;
     
     private static final byte ACT_1_GIVE_GOLD = 0;
+    private static final String ACT_1_GIVE_GOLD_NAME = MOVES[0];
+    
     private static final byte ACT_1_STEAL_GOLD = 100;
+    private static final String ACT_1_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_1_VULNERABLE_BOMB = 1;
+    private static final String ACT_1_VULNERABLE_BOMB_NAME = MOVES[2];
     private static final byte ACT_1_PRANK_THEFT = 2;
+    private static final String ACT_1_PRANK_THEFT_NAME = MOVES[3];
     
     private static final byte ACT_2_GIVE_GOLD = 3;
+    private static final String ACT_2_GIVE_GOLD_NAME = MOVES[0];
     private static final byte ACT_2_STEAL_GOLD = 4;
+    private static final String ACT_2_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_2_FRAIL_BOMB = 5;
+    private static final String ACT_2_FRAIL_BOMB_NAME = MOVES[4];
     private static final byte ACT_2_PRANK_THEFT = 6;
+    private static final String ACT_2_PRANK_THEFT_NAME = MOVES[3];
     
     private static final byte ACT_3_WEAK_BOMB = 7;
+    private static final String ACT_3_WEAK_BOMB_NAME = MOVES[5];
     private static final byte ACT_3_STEAL_GOLD = 8;
+    private static final String ACT_3_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_3_STOLEN_WHIRLWIND = 9;
+    private static final String ACT_3_STOLEN_WHIRLWIND_NAME = MOVES[6];
     
     private static boolean gave_money = false;
 
@@ -451,11 +463,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     		if (turnCounter == 0) {
                 setMoveShortcut(defineFirstMove());
             } else if ((turnCounter == 1) && (!gave_money)) {
-                setMoveShortcut(ACT_1_VULNERABLE_BOMB);
+                setMoveShortcut(ACT_1_VULNERABLE_BOMB, ACT_1_VULNERABLE_BOMB_NAME);
             } else if ((turnCounter == 1) && (gave_money)) {
                 setMoveShortcut((byte)-128);
             } else {
-                setMoveShortcut(ACT_1_PRANK_THEFT);
+                setMoveShortcut(ACT_1_PRANK_THEFT, ACT_1_PRANK_THEFT_NAME);
             }
     	}
     	
@@ -465,18 +477,19 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             } else if ((turnCounter == 1) && (gave_money)) {
                 setMoveShortcut((byte)-128);
             } else if ((turnCounter == 1)) {
-            	setMoveShortcut(ACT_2_FRAIL_BOMB);
+            	setMoveShortcut(ACT_2_FRAIL_BOMB, ACT_2_FRAIL_BOMB_NAME);
             } else {
-                setMoveShortcut(ACT_2_PRANK_THEFT);
+                setMoveShortcut(ACT_2_PRANK_THEFT, ACT_2_PRANK_THEFT_NAME);
             }
     	}
     	else {
     		if (turnCounter == 0) {
-                setMoveShortcut(ACT_3_WEAK_BOMB);
+                setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
             } else if (turnCounter == 1) {
-                setMoveShortcut(ACT_3_STEAL_GOLD);
+                setMoveShortcut(ACT_3_STEAL_GOLD, ACT_3_STEAL_GOLD_NAME);
             } else {
-                setMoveShortcut(ACT_3_STOLEN_WHIRLWIND);
+                setMoveShortcut(ACT_3_STOLEN_WHIRLWIND,
+                		ACT_3_STOLEN_WHIRLWIND_NAME);
             }
     	}
     	
