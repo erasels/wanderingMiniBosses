@@ -77,3 +77,11 @@ $RECYCLE.BIN/
 
 # Spriter files
 *.autosave.scml
+.metadata/.lock
+.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.9.1.20180912-1601.xml
+.metadata/version.ini
+.metadata/.plugins/org.eclipse.jdt.core/index.db
+.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
+/.metadata/
+/bin/
