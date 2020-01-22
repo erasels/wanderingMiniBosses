@@ -24,8 +24,6 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
-import wanderingMiniBosses.monsters.inkman.InkMan;
-import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
 import wanderingMiniBosses.util.TextureLoader;
