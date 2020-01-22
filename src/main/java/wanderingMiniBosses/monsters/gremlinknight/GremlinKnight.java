@@ -1,6 +1,7 @@
 package wanderingMiniBosses.monsters.gremlinknight;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.evacipated.cardcrawl.modthespire.lib.SpireOverride;
@@ -17,13 +18,16 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.monsters.city.Champ;
-import com.megacrit.cardcrawl.powers.*;
+import com.megacrit.cardcrawl.powers.AngryPower;
+import com.megacrit.cardcrawl.powers.BarricadePower;
+import com.megacrit.cardcrawl.powers.FrailPower;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.actions.OneMoreKickAction;
 import wanderingMiniBosses.actions.RammingEntranceAction;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
-
-import java.util.ArrayList;
+import wanderingMiniBosses.powers.delayedpowers.VulnerableAllPower;
+import wanderingMiniBosses.powers.delayedpowers.WeakAllPower;
 
 public class GremlinKnight extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("GremlinKnight");
@@ -40,13 +44,13 @@ public class GremlinKnight extends AbstractWanderingBoss {
     private final int entranceThreshold = 3;
 
     public GremlinKnight() {
-        super(NAME, ID, 200, 0.0F, 10.0F, 230.0F, 230.0F, null, 0, -30);
+        super(NAME, ID, 200, 0.0F, 10.0F, 230.0F, 230.0F, null, -Settings.WIDTH, -30);
         this.isPlayer = true;
         this.drawX = -this.hb.width;
         this.flipHorizontal = true;
 
-        this.dialogX = this.hb.width / 2F;
-        this.dialogY = this.hb.height / 2F;
+        this.dialogX = this.hb.width / 4F;
+        this.dialogY = 0;
 
         this.loadAnimation(WanderingminibossesMod.makeMonsterPath("gremlinknight/skeleton.atlas"), WanderingminibossesMod.makeMonsterPath("gremlinknight/skeleton.json"), 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
@@ -55,10 +59,11 @@ public class GremlinKnight extends AbstractWanderingBoss {
 
     @Override
     protected void populateMoves() {
-        this.moves.put(STAB, new EnemyMoveInfo(STAB, Intent.ATTACK, 6 * AbstractDungeon.actNum, 0, false));
+        this.moves.put(STAB, new EnemyMoveInfo(STAB, Intent.ATTACK, 1 + 5 * AbstractDungeon.actNum, 0, false));
         this.moves.put(STABSTAB, new EnemyMoveInfo(STABSTAB, Intent.ATTACK, 3, 1 + AbstractDungeon.actNum, true));
         this.moves.put(BONK, new EnemyMoveInfo(BONK, Intent.ATTACK_DEBUFF, 3 + 2 * AbstractDungeon.actNum, 0, false));
         this.moves.put(TAUNT, new EnemyMoveInfo(TAUNT, Intent.DEBUFF, -1, 0, false));
+        this.healthBarUpdatedEvent();
     }
 
     @Override
@@ -101,14 +106,14 @@ public class GremlinKnight extends AbstractWanderingBoss {
             case BONK:
                 this.useFastAttackAnimation();
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AbstractGameAction.AttackEffect.BLUNT_LIGHT));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(this, 1, true), 1));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 1, true), 1));
                 break;
 
             case TAUNT:
-                AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_CHAMP_2A", 2F, true));
+                AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_CHAMP_2A", 0.4F, true));
                 AbstractDungeon.actionManager.addToBottom(new TalkAction(this, Champ.DIALOG[MathUtils.random(3)]));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, 2, true), 2));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true), 2));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new WeakAllPower(this, 2), 2));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new VulnerableAllPower(this, 2), 2));
                 break;
         }
     }
@@ -117,7 +122,7 @@ public class GremlinKnight extends AbstractWanderingBoss {
     public void onEscape() {
         super.onEscape();
         this.flipHorizontal = !this.flipHorizontal;
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[entranceThreshold + MathUtils.random(DIALOG.length - entranceThreshold - 1)]));
+        AbstractDungeon.actionManager.addToTop(new TalkAction(this, DIALOG[entranceThreshold + MathUtils.random(DIALOG.length - entranceThreshold - 1)]));
     }
 
     static {
@@ -135,10 +140,24 @@ public class GremlinKnight extends AbstractWanderingBoss {
         }
 
         if (this.escapeTimer < 0.0F) {
-            this.escaped = true;
-            if (AbstractDungeon.getMonsters().areMonstersDead() && !AbstractDungeon.getCurrRoom().isBattleOver && !AbstractDungeon.getCurrRoom().cannotLose) {
-                AbstractDungeon.getCurrRoom().endBattle();
+            if (this.escapeTimer > -10F && AbstractDungeon.monsterRng.randomBoolean(0.1F)) {
+                this.setMove((byte)0, Intent.NONE);
+                this.createIntent();
+                this.escapeTimer = 0.0F;
+                this.isEscaping = false;
+                this.escaped = false;
+                this.tint.color = Color.WHITE.cpy();
+                AbstractDungeon.actionManager.addToBottom(new OneMoreKickAction(AbstractDungeon.player, this));
+            } else {
+                this.escaped = true;
+                checkBattleEnd();
             }
+        }
+    }
+
+    public static void checkBattleEnd() {
+        if (AbstractDungeon.getMonsters().areMonstersDead() && !AbstractDungeon.getCurrRoom().isBattleOver && !AbstractDungeon.getCurrRoom().cannotLose) {
+            AbstractDungeon.getCurrRoom().endBattle();
         }
     }
 }
