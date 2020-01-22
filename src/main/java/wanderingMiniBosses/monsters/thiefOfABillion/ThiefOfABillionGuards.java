@@ -40,21 +40,23 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
+    public static final String[] MOVES = monsterstrings.MOVES;
     private static final float HB_W = 100.0F;
     private static final float HB_H = 100.0F;
 
     private static int MAX_HEALTH_A0_UPPER_BOUND = 215;
     private static int MAX_HEALTH_A9_UPPER_BOUND = 219;
     
-    private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
+    //private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
     private static final int AMOUNT_OF_GOLD_TO_GIVE = 150;
     
-    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK = 25;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3 = 25;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3 = 10;
     
     private static final int STOLEN_WHIRLWIND_AMOUNT_OF_HITS = 6;
     
     private static final byte ACT_1_GIVE_GOLD = 0;
-    private static final String ACT_1_GIVE_GOLD_NAME = MOVES[0];
+    //private static final String ACT_1_GIVE_GOLD_NAME = MOVES[0];
     
     private static final byte ACT_1_STEAL_GOLD = 100;
     private static final String ACT_1_STEAL_GOLD_NAME = MOVES[1];
@@ -64,7 +66,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final String ACT_1_PRANK_THEFT_NAME = MOVES[3];
     
     private static final byte ACT_2_GIVE_GOLD = 3;
-    private static final String ACT_2_GIVE_GOLD_NAME = MOVES[0];
+    //private static final String ACT_2_GIVE_GOLD_NAME = MOVES[0];
     private static final byte ACT_2_STEAL_GOLD = 4;
     private static final String ACT_2_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_2_FRAIL_BOMB = 5;
@@ -84,7 +86,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private int turnCounter = 0;
     
     public ThiefOfABillionGuards() {
-        this(defineThiefName(AbstractDungeon.ascensionLevel),
+    	this(defineThiefName(AbstractDungeon.ascensionLevel),
         		ID,
         		defineMaxHealth(AbstractDungeon.ascensionLevel));
     }
@@ -134,9 +136,20 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         receiveAscensionBuffs();
         throwEntranceSmokeBombs();
         setFirstMoveShortcut();
-        AbstractDungeon.actionManager.addToBottom(
-        	new ApplyPowerAction(this, this, new ThieveryPower(this, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK))
-        	);
+        if (AbstractDungeon.actNum < 3) {
+        	AbstractDungeon.actionManager.addToBottom(
+                	new ApplyPowerAction(this, this,
+                			new ThieveryPower(this,
+                					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3))
+                	);
+        } else {
+        	AbstractDungeon.actionManager.addToBottom(
+                	new ApplyPowerAction(this, this,
+                			new ThieveryPower(this,
+                					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3))
+                	);
+        }
+        
 
         CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
         CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
@@ -283,7 +296,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_1_PRANK_THEFT:
             	AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
@@ -305,16 +318,16 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_2_FRAIL_BOMB:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -346,7 +359,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_3_STOLEN_WHIRLWIND:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -354,7 +367,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	for (int i = 0; i < STOLEN_WHIRLWIND_AMOUNT_OF_HITS; i++) {
             	      AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_HEAVY"));
             	      AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new CleaveEffect(true), 0.15F));
-            	      AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            	      AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	    } 
             	break;
             default:
