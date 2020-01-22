@@ -21,6 +21,7 @@ import com.megacrit.cardcrawl.monsters.city.Champ;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.powers.FrailPower;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.actions.OneMoreKickAction;
@@ -28,6 +29,7 @@ import wanderingMiniBosses.actions.RammingEntranceAction;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.powers.delayedpowers.VulnerableAllPower;
 import wanderingMiniBosses.powers.delayedpowers.WeakAllPower;
+import wanderingMiniBosses.relics.OtherGremlinHorn;
 
 public class GremlinKnight extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("GremlinKnight");
@@ -55,6 +57,8 @@ public class GremlinKnight extends AbstractWanderingBoss {
         this.loadAnimation(WanderingminibossesMod.makeMonsterPath("gremlinknight/skeleton.atlas"), WanderingminibossesMod.makeMonsterPath("gremlinknight/skeleton.json"), 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
+
+        rewards.add(new RewardItem(new OtherGremlinHorn()));
     }
 
     @Override
