@@ -83,7 +83,13 @@
   },
   "wanderingMiniBosses:ThiefOfABillionGuards": {
     "MOVES": [
-      ""
+      "Charity",
+      "Purse Cut",
+      "Fear Gas",
+      "Signature Prank",
+      "Cold Gas",
+      "Anesthesic Gas",
+      "Stolen Whirlwind"
     ],
     "NAME": "Thief Of A Billion Guards",
     "DIALOG": [
@@ -93,7 +99,7 @@
       "Thief of One Million Guards",
       "Thief of...",
       "Thief of a Billion Guards",
-      "Thief of a Billion Thiefs"
+      "Thief of a Billion Thieves"
     ]
   },
   "wanderingMiniBosses:Timic": {

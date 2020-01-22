@@ -53,7 +53,7 @@ public class WanderingminibossesMod implements
     public static Properties wanderingMiniBossesDefaultSettings = new Properties();
 
     private static final String MODNAME = "Wandering Minibosses";
-    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd";
+    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Wordo, Levender";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();

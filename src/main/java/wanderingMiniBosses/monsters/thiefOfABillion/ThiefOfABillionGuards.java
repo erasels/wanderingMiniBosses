@@ -40,39 +40,53 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
+    public static final String[] MOVES = monsterstrings.MOVES;
     private static final float HB_W = 100.0F;
     private static final float HB_H = 100.0F;
 
     private static int MAX_HEALTH_A0_UPPER_BOUND = 215;
     private static int MAX_HEALTH_A9_UPPER_BOUND = 219;
     
-    private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
+    //private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
     private static final int AMOUNT_OF_GOLD_TO_GIVE = 150;
     
-    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK = 25;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3 = 25;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3 = 10;
     
     private static final int STOLEN_WHIRLWIND_AMOUNT_OF_HITS = 6;
     
     private static final byte ACT_1_GIVE_GOLD = 0;
+    //private static final String ACT_1_GIVE_GOLD_NAME = MOVES[0];
+    
     private static final byte ACT_1_STEAL_GOLD = 100;
+    private static final String ACT_1_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_1_VULNERABLE_BOMB = 1;
+    private static final String ACT_1_VULNERABLE_BOMB_NAME = MOVES[2];
     private static final byte ACT_1_PRANK_THEFT = 2;
+    private static final String ACT_1_PRANK_THEFT_NAME = MOVES[3];
     
     private static final byte ACT_2_GIVE_GOLD = 3;
+    //private static final String ACT_2_GIVE_GOLD_NAME = MOVES[0];
     private static final byte ACT_2_STEAL_GOLD = 4;
+    private static final String ACT_2_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_2_FRAIL_BOMB = 5;
+    private static final String ACT_2_FRAIL_BOMB_NAME = MOVES[4];
     private static final byte ACT_2_PRANK_THEFT = 6;
+    private static final String ACT_2_PRANK_THEFT_NAME = MOVES[3];
     
     private static final byte ACT_3_WEAK_BOMB = 7;
+    private static final String ACT_3_WEAK_BOMB_NAME = MOVES[5];
     private static final byte ACT_3_STEAL_GOLD = 8;
+    private static final String ACT_3_STEAL_GOLD_NAME = MOVES[1];
     private static final byte ACT_3_STOLEN_WHIRLWIND = 9;
+    private static final String ACT_3_STOLEN_WHIRLWIND_NAME = MOVES[6];
     
     private static boolean gave_money = false;
 
     private int turnCounter = 0;
     
     public ThiefOfABillionGuards() {
-        this(defineThiefName(AbstractDungeon.ascensionLevel),
+    	this(defineThiefName(AbstractDungeon.ascensionLevel),
         		ID,
         		defineMaxHealth(AbstractDungeon.ascensionLevel));
     }
@@ -121,12 +135,21 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         gave_money = false;
         receiveAscensionBuffs();
         throwEntranceSmokeBombs();
-        byte debugging = defineFirstMove();
-        MiscFunctions.fastLoggerLine(debugging);
-        setMoveShortcut(debugging);
-        AbstractDungeon.actionManager.addToBottom(
-        	new ApplyPowerAction(this, this, new ThieveryPower(this, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK))
-        	);
+        setFirstMoveShortcut();
+        if (AbstractDungeon.actNum < 3) {
+        	AbstractDungeon.actionManager.addToBottom(
+                	new ApplyPowerAction(this, this,
+                			new ThieveryPower(this,
+                					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3))
+                	);
+        } else {
+        	AbstractDungeon.actionManager.addToBottom(
+                	new ApplyPowerAction(this, this,
+                			new ThieveryPower(this,
+                					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3))
+                	);
+        }
+        
 
         CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
         CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
@@ -160,37 +183,33 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     }
     
-    private byte defineFirstMove() {
-    	
-    	byte first_move;
+    private void setFirstMoveShortcut() {
     	
     	MiscFunctions.fastLoggerLine(AbstractDungeon.actNum);
     	switch (AbstractDungeon.actNum) {
     		case 1:
-    	    	first_move = ACT_1_STEAL_GOLD;
-    	    	return first_move;
+    	    	setMoveShortcut(ACT_1_STEAL_GOLD, ACT_1_STEAL_GOLD_NAME);
+    	    	return;
     		case 2:
-    	    	first_move = ACT_2_STEAL_GOLD;
-    	    	return first_move;
-    			
+    	    	setMoveShortcut(ACT_2_STEAL_GOLD, ACT_2_STEAL_GOLD_NAME);
+    			return;
     		case 3:
-    			first_move = 0;
     	    	if (AbstractDungeon.player.gold < 99){
     		    	/*int amount_of_keys = (Settings.hasEmeraldKey ? 1 : 0) +
     		    				(Settings.hasRubyKey ? 1 : 0) +
     		    				(Settings.hasSapphireKey ? 1 : 0);
     		    		
     		    	if (amount_of_keys >= 2) first_move = ACT_2_GIVE_GOLD;*/
-    	    		first_move = ACT_3_WEAK_BOMB;
+    	    		setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+        	    	return;
     	    	} else {
-    	    		first_move = ACT_3_WEAK_BOMB;
+    	    		setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+        	    	return;
     	    	}
-    	    	return first_move;
-    	
+    	    default:
+    	    	setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
+    	    	return;
     	}
-    	
-    	return 0;
-    	
     }
     
     private void throwEntranceSmokeBombs() {
@@ -277,7 +296,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_1_PRANK_THEFT:
             	AbstractDungeon.actionManager.addToBottom(new AnimateHopAction(this));
@@ -299,16 +318,16 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_2_FRAIL_BOMB:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -340,7 +359,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	break;
             case ACT_3_STOLEN_WHIRLWIND:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
@@ -348,7 +367,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	for (int i = 0; i < STOLEN_WHIRLWIND_AMOUNT_OF_HITS; i++) {
             	      AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_HEAVY"));
             	      AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new CleaveEffect(true), 0.15F));
-            	      AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK));
+            	      AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
             	    } 
             	break;
             default:
@@ -449,34 +468,35 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     protected void getMove(int num) {
     	if (AbstractDungeon.actNum == 1) {
     		if (turnCounter == 0) {
-                setMoveShortcut(defineFirstMove());
+                setFirstMoveShortcut();
             } else if ((turnCounter == 1) && (!gave_money)) {
-                setMoveShortcut(ACT_1_VULNERABLE_BOMB);
+                setMoveShortcut(ACT_1_VULNERABLE_BOMB, ACT_1_VULNERABLE_BOMB_NAME);
             } else if ((turnCounter == 1) && (gave_money)) {
                 setMoveShortcut((byte)-128);
             } else {
-                setMoveShortcut(ACT_1_PRANK_THEFT);
+                setMoveShortcut(ACT_1_PRANK_THEFT, ACT_1_PRANK_THEFT_NAME);
             }
     	}
     	
     	else if (AbstractDungeon.actNum == 2) {
     		if (turnCounter == 0) {
-                setMoveShortcut(defineFirstMove());
+                setFirstMoveShortcut();
             } else if ((turnCounter == 1) && (gave_money)) {
                 setMoveShortcut((byte)-128);
             } else if ((turnCounter == 1)) {
-            	setMoveShortcut(ACT_2_FRAIL_BOMB);
+            	setMoveShortcut(ACT_2_FRAIL_BOMB, ACT_2_FRAIL_BOMB_NAME);
             } else {
-                setMoveShortcut(ACT_2_PRANK_THEFT);
+                setMoveShortcut(ACT_2_PRANK_THEFT, ACT_2_PRANK_THEFT_NAME);
             }
     	}
     	else {
     		if (turnCounter == 0) {
-                setMoveShortcut(ACT_3_WEAK_BOMB);
+                setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
             } else if (turnCounter == 1) {
-                setMoveShortcut(ACT_3_STEAL_GOLD);
+                setMoveShortcut(ACT_3_STEAL_GOLD, ACT_3_STEAL_GOLD_NAME);
             } else {
-                setMoveShortcut(ACT_3_STOLEN_WHIRLWIND);
+                setMoveShortcut(ACT_3_STOLEN_WHIRLWIND,
+                		ACT_3_STOLEN_WHIRLWIND_NAME);
             }
     	}
     	
