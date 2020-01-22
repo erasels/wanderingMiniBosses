@@ -31,6 +31,7 @@ public class WanderingMonsterGroup implements CustomSavable<ArrayList<WanderingM
     //Makes "this" take on the properties of the passed instance. This is to keep the reference in WanderingBossHelper constant.
     public void setParameters(WanderingMonsterGroup template) {
         rewardsForKillingAll = template.rewardsForKillingAll;
+        survivorsStillReturn = template.survivorsStillReturn;
         monsters = template.monsters;
         monsterInfo = new ArrayList<>();
         for(int i = 0; i < template.monsterInfo.size(); i++) {

@@ -1,6 +1,5 @@
 package wanderingMiniBosses.monsters;
 
-import basemod.BaseMod;
 import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
@@ -8,6 +7,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 import java.util.ArrayList;
@@ -62,6 +62,8 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     public void takeTurn() {
         if(this.nextMove == RUN) {
             onEscape();
+            this.monsterInfo.setCurrentHealth(this.currentHealth);
+            WanderingminibossesMod.logger.info(this.name + " escaping battle with " + this.currentHealth + " HP!");
         } else {
             DamageInfo info = null;
             int multiplier = 0;
@@ -74,7 +76,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
                 }
             } else {
                 info = new DamageInfo(this, 0, DamageInfo.DamageType.NORMAL);
-                BaseMod.logger.error(this.name + " MOVECODE " + this.nextMove + " NOT FOUND!");
+                WanderingminibossesMod.logger.error(this.name + " MOVECODE " + this.nextMove + " NOT FOUND!");
             }
             takeCustomTurn(info, multiplier);
         }

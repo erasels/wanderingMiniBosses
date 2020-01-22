@@ -28,7 +28,7 @@ public class WanderingBossHelper {
 
     private static WanderingMonsterGroup wanderingBoss = new WanderingMonsterGroup();
     public static WanderingMonsterMap monsterMap = new WanderingMonsterMap();
-    private static String currentMonsterID = null;
+    private static String currentMonsterID = "";
 
     public static void populateMonsterMap() {
         if (monsterMap.isEmpty()) {
