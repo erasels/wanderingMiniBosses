@@ -1,18 +1,20 @@
 package wanderingMiniBosses.util;
 
-import basemod.BaseMod;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.monsters.AbstractWanderingBoss;
+import wanderingMiniBosses.monsters.WanderingMonsterGroup;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
+import wanderingMiniBosses.monsters.gremlinknight.GremlinKnight;
 import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.monsters.timic.Timic;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class WanderingBossHelper {
@@ -25,8 +27,9 @@ public class WanderingBossHelper {
     public static boolean HAS_NEMESIS;
 
 
-    private static AbstractMonster wanderingBoss;
-    public static Map<String, BaseMod.GetMonster> monsterMap = new HashMap<>();
+    private static WanderingMonsterGroup wanderingBoss = new WanderingMonsterGroup();
+    public static WanderingMonsterMap monsterMap = new WanderingMonsterMap();
+    private static String currentMonsterID = "";
 
     public static void populateMonsterMap() {
         if (monsterMap.isEmpty()) {
@@ -37,30 +40,43 @@ public class WanderingBossHelper {
             monsterMap.put(BanditKing.ID, BanditKing::new);
             monsterMap.put(ThiefOfABillionGuards.ID, ThiefOfABillionGuards::new);
             monsterMap.put(Timic.ID, Timic::new);
+            monsterMap.put(GremlinKnight.ID, GremlinKnight::new);
         }
     }
 
-    public static AbstractMonster getMonster() {
+    public static WanderingMonsterGroup getMonster() {
         return wanderingBoss;
     }
 
-    public static void setMonster(AbstractMonster m) {
-        wanderingBoss = m;
+    public static void setMonster(WanderingMonsterGroup m) {
+        wanderingBoss.setParameters(m);
     }
 
     public static boolean isMonsterAlive() {
-        return wanderingBoss.currentHealth > 0;
+        return wanderingBoss.isAlive();
     }
 
-    public static AbstractMonster getMonsterFromID(String id) {
-        return monsterMap.get(id).get();
+    public static ArrayList<AbstractWanderingBoss> getMonsterFromID(String id) {
+        return monsterMap.get(id).getLivingMonsters();
+    }
+    public static void setCurrentMonsterID(String ID) {
+        currentMonsterID = ID;
+        if(monsterMap.containsKey(ID)) {
+            wanderingBoss.setParameters(monsterMap.get(ID));
+        }
+    }
+    public static String getCurrentMonsterID() {
+        return currentMonsterID;
     }
 
-    public static AbstractMonster getRandomMonster() {
+    public static WanderingMonsterGroup getRandomMonster() {
         if (!monsterMap.isEmpty()) {
-            AbstractMonster tmp = ((BaseMod.GetMonster) monsterMap.values().toArray()[AbstractDungeon.monsterRng.random(monsterMap.size() - 1)]).get();
-            WanderingminibossesMod.logger.info("Nemesis for this run: " + tmp.name);
-            return tmp;
+            int index = AbstractDungeon.monsterRng.random(monsterMap.size() - 1);
+            Object[] entryset = monsterMap.entrySet().toArray();
+            WanderingminibossesMod.logger.info(entryset[index]);
+            Map.Entry<String, WanderingMonsterGroup> entry = (Map.Entry<String, WanderingMonsterGroup>) entryset[index];
+            WanderingminibossesMod.logger.info("Nemesis for this run: " + (currentMonsterID = entry.getKey()));
+            return entry.getValue();
         }
         return null;
     }
@@ -82,7 +98,7 @@ public class WanderingBossHelper {
     }
 
     public static boolean viableFloor() {
-        return AbstractDungeon.floorNum > 1;
+        return Settings.isDebug || AbstractDungeon.floorNum > 1;
     }
 
     public static void nemesisDetermination() {
@@ -92,5 +108,12 @@ public class WanderingBossHelper {
 
     public static boolean nemesisCheck() {
         return HAS_NEMESIS || WanderingminibossesMod.permaNemesis();
+    }
+
+    //Dispense rewards if either all are dead or 1 is dead and the rest don't reappear when one dies.
+    public static void checkForRewardDispensal() {
+        if(!wanderingBoss.survivorsStillReturn || !isMonsterAlive()) {
+            wanderingBoss.dispenseReward();
+        }
     }
 }

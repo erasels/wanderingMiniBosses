@@ -53,7 +53,7 @@ public class WanderingminibossesMod implements
     public static Properties wanderingMiniBossesDefaultSettings = new Properties();
 
     private static final String MODNAME = "Wandering Minibosses";
-    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd";
+    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Wordo, Levender";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
@@ -177,29 +177,17 @@ public class WanderingminibossesMod implements
 
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
+        BaseMod.addSaveField(makeID("WBMonster"), WanderingBossHelper.getMonster());
+
         BaseMod.addSaveField("WBMonsterID", new CustomSavable<String>() {
             @Override
             public String onSave() {
-                return WanderingBossHelper.getMonster() != null ? WanderingBossHelper.getMonster().id : "null";
+                return WanderingBossHelper.getMonster() != null ? WanderingBossHelper.getCurrentMonsterID() : "null";
             }
 
             @Override
             public void onLoad(String i) {
-                WanderingBossHelper.setMonster(WanderingBossHelper.getMonsterFromID(i));
-            }
-        });
-
-        BaseMod.addSaveField("WBMonsterHP", new CustomSavable<Integer>() {
-            @Override
-            public Integer onSave() {
-                return WanderingBossHelper.getMonster() != null ? WanderingBossHelper.getMonster().currentHealth : -1;
-            }
-
-            @Override
-            public void onLoad(Integer i) {
-                if (WanderingBossHelper.getMonster() != null) {
-                    WanderingBossHelper.getMonster().currentHealth = i;
-                }
+                WanderingBossHelper.setCurrentMonsterID(i);
             }
         });
 
@@ -274,6 +262,7 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
+        BaseMod.addRelic(new OtherGremlinHorn(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
         BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);
@@ -357,7 +346,7 @@ public class WanderingminibossesMod implements
     @Override
     public void receivePostUpdate() {
         if (AbstractDungeon.player != null) {
-            if (WanderingBossHelper.getMonster() != null && WanderingBossHelper.getMonster().name.equals(BanditKing.ID) && WanderingBossHelper.getMonster().currentHealth < 1 && AbstractDungeon.player.hasRelic(ThiefScarf.ID))
+            if (WanderingBossHelper.getCurrentMonsterID().equals(BanditKing.ID) && !WanderingBossHelper.isMonsterAlive() && AbstractDungeon.player.hasRelic(ThiefScarf.ID))
                 ThiefScarf.wjhatefhefjeujf();
         }
     }

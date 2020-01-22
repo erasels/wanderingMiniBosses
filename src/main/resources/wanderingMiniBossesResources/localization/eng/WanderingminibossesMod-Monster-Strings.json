@@ -8,6 +8,17 @@
       ""
     ]
   },
+  "wanderingMiniBosses:GremlinKnight": {
+    "NAME": "The Gremlin Knight",
+    "DIALOG": [
+      "@HAVE@ @AT@ @THEE!@",
+      "@HERE@ @I@ @COOOOME!!!@",
+      "@ATTAAAAAAACK!!!@",
+      "I'm bored now.",
+      "See you later.",
+      "I'll. Be. @BACK!@"
+    ]
+  },
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
       "Inner Flame",
@@ -72,7 +83,13 @@
   },
   "wanderingMiniBosses:ThiefOfABillionGuards": {
     "MOVES": [
-      ""
+      "Charity",
+      "Purse Cut",
+      "Fear Gas",
+      "Signature Prank",
+      "Cold Gas",
+      "Anesthesic Gas",
+      "Stolen Whirlwind"
     ],
     "NAME": "Thief Of A Billion Guards",
     "DIALOG": [
@@ -82,7 +99,7 @@
       "Thief of One Million Guards",
       "Thief of...",
       "Thief of a Billion Guards",
-      "Thief of a Billion Thiefs"
+      "Thief of a Billion Thieves"
     ]
   },
   "wanderingMiniBosses:Timic": {
