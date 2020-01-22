@@ -8,6 +8,17 @@
       ""
     ]
   },
+  "wanderingMiniBosses:GremlinKnight": {
+    "NAME": "The Gremlin Knight",
+    "DIALOG": [
+      "@HAVE@ @AT@ @THEE!@",
+      "@HERE@ @I@ @COOOOME!!!@",
+      "@ATTAAAAAAACK!!!@",
+      "I'm bored now.",
+      "See you later.",
+      "I'll. Be. @BACK!@"
+    ]
+  },
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
       "Inner Flame",

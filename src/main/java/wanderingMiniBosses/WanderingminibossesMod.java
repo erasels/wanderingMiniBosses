@@ -274,6 +274,7 @@ public class WanderingminibossesMod implements
         BaseMod.addRelic(new CarrionFlame(), RelicType.SHARED);
         BaseMod.addRelic(new Blackblade(), RelicType.SHARED);
         BaseMod.addRelic(new AbyssPearl(), RelicType.SHARED);
+        BaseMod.addRelic(new OtherGremlinHorn(), RelicType.SHARED);
         BaseMod.addRelic(new Inkheart(), RelicType.SHARED);
         BaseMod.addRelic(new ThiefScarf(), RelicType.SHARED);
         BaseMod.addRelic(new MasterThiefsPresence(), RelicType.SHARED);

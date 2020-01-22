@@ -9,6 +9,7 @@ import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
+import wanderingMiniBosses.monsters.gremlinknight.GremlinKnight;
 import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.monsters.timic.Timic;
 
@@ -37,6 +38,7 @@ public class WanderingBossHelper {
             monsterMap.put(BanditKing.ID, BanditKing::new);
             monsterMap.put(ThiefOfABillionGuards.ID, ThiefOfABillionGuards::new);
             monsterMap.put(Timic.ID, Timic::new);
+            monsterMap.put(GremlinKnight.ID, GremlinKnight::new);
         }
     }
 

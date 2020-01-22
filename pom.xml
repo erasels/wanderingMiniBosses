@@ -15,8 +15,7 @@
         <SlayTheSpire.version>01-23-2019</SlayTheSpire.version>
         <ModTheSpire.version>3.8.0</ModTheSpire.version>
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION, NOT YOURS GK, MINE AND DARKS-->
-        <!--LEV change this later to the default, removing that folder-->
-        <Steam.path>C:/Program Files (x86)/Jogos/Steam/SteamApps</Steam.path>
+        <Steam.path>K:/Steam/steamapps</Steam.path>
     </properties>
 
     <dependencies>
