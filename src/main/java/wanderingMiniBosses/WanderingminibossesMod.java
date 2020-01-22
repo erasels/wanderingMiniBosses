@@ -24,6 +24,8 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
+import wanderingMiniBosses.monsters.inkman.InkMan;
+import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
 import wanderingMiniBosses.util.TextureLoader;
@@ -53,7 +55,7 @@ public class WanderingminibossesMod implements
     public static Properties wanderingMiniBossesDefaultSettings = new Properties();
 
     private static final String MODNAME = "Wandering Minibosses";
-    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Levender";
+    private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Wordo, Levender";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
