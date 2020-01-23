@@ -2,5 +2,10 @@
   "wanderingMiniBosses:BossBurn": {
     "NAME": "Burn",
     "DESCRIPTION": "When drawn, NL draw a card. NL You take !M! more damage. NL Exhaust."
+  },
+  "wanderingMiniBosses:FinaleOfPromise": {
+    "NAME": "Finale of Promise",
+    "DESCRIPTION": "Choose !M! cards in your discard pile that cost X or less and play copies of them. If X is 6 or more, play them both twice. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Choose !M! cards in your discard pile that cost X + 1 or less and play copies of them. If X + 1 is 6 or more, play them both twice. NL Exhaust."
   }
 }

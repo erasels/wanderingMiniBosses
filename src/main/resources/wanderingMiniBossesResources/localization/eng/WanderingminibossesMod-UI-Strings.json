@@ -8,5 +8,10 @@
     "TEXT": [
       "Spawn a wandering miniboss every run?"
     ]
+  },
+  "wanderingMiniBosses:FinaleOfPromiseAction": {
+    "TEXT": [
+      "Choose ", " cards to play."
+    ]
   }
 }
