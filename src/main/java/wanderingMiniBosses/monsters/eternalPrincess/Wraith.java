@@ -22,7 +22,7 @@ public class Wraith extends CustomMonster
     private static final byte ATTACK = 0;
     private static final byte CURSE = 1;
     private static final int DAMAGE = 4;
-    private static final int ACT_DAMAGE_BONUS = 2;
+    private static final int ACT_DAMAGE_BONUS = 1;
     private static final int DAMAGE_HITS = 2;
     private static final int CURSE_AMT = 1;
     private static final int HP_MAX = 100;

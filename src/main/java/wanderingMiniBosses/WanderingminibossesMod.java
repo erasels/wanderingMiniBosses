@@ -23,6 +23,7 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.cards.FinaleOfPromise;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
@@ -271,7 +272,7 @@ public class WanderingminibossesMod implements
 
     @Override
     public void receiveEditCards() {
-
+        BaseMod.addCard(new FinaleOfPromise());
     }
 
     @Override
