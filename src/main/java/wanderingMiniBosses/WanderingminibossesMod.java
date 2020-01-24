@@ -328,10 +328,10 @@ public class WanderingminibossesMod implements
     }
 
     @Override
-    public void receiveOnBattleStart(AbstractRoom abstractRoom) {
+    public void receiveOnBattleStart(AbstractRoom room) {
         if(WanderingBossHelper.nemesisCheck()) {
             MaybeSpawnDudePatch.noEncounterThisFight();
-            if (WanderingBossHelper.isMonsterAlive() && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite || AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss)) {
+            if (WanderingBossHelper.isMonsterAlive() && !(room instanceof MonsterRoomElite || room instanceof MonsterRoomBoss) && room.rewardAllowed) {
                 if (Settings.isDebug || AbstractDungeon.monsterRng.randomBoolean(WanderingBossHelper.getSpawnChance())) {
                     MaybeSpawnDudePatch.resetTurnCounter();
                 }
