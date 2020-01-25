@@ -1,16 +1,20 @@
 package wanderingMiniBosses.patches;
 
+import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.vfx.BorderLongFlashEffect;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.util.WanderingBossHelper;
+import wanderingMiniBosses.vfx.combat.AnnouncementEffect;
 
 @SpirePatch(
         clz = GameActionManager.class,
@@ -47,7 +51,11 @@ public class MaybeSpawnDudePatch {
                 logger.info("Spawning Dude");
                 turnCounter = -1;
                 WanderingBossHelper.resetSpawnChance();
-                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(((AbstractWanderingBoss)WanderingBossHelper.getMonster()).createNewInstance()));
+                for(final AbstractWanderingBoss awb : WanderingBossHelper.getMonster().getLivingMonsters()) {
+                    AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(awb));
+                }
+                AbstractDungeon.actionManager.addToBottom(new VFXAction(new BorderLongFlashEffect(Color.WHITE.cpy())));
+                AbstractDungeon.actionManager.addToBottom(new VFXAction(new AnnouncementEffect(Color.SALMON.cpy(), CustomSpawnMonsterAction.TEXT[0], 5.5f)));
             }
         }
 

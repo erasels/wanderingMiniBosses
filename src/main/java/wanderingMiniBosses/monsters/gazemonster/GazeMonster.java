@@ -90,7 +90,7 @@ public class GazeMonster extends AbstractRotatableBoss {
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new GazeThree(this)));
             }
         }
-        AbstractDungeon.actionManager.addToBottom(new VFXAction(new GaudyEntranceVFX(this), 1.5F));
+        AbstractDungeon.actionManager.addToTop(new VFXAction(new GaudyEntranceVFX(this), 1.5F));
         renderThis = true;
     }
 

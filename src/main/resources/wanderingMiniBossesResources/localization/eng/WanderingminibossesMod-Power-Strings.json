@@ -64,6 +64,18 @@
       "If you end your turn without playing an #yAttack, gain #b", " #ygold."
     ]
   },
+  "wanderingMiniBosses:DevastatePlayer": {
+    "NAME": "Devastation",
+    "DESCRIPTIONS": [
+      "At the end of your turn, take #b", " damage."
+    ]
+  },
+  "wanderingMiniBosses:DevastateEnemy": {
+    "NAME": "Devastation",
+    "DESCRIPTIONS": [
+      "At end of round, ALL other enemies #rdie."
+    ]
+  },
   "wanderingMiniBosses:InkPower": {
     "NAME": "Inked!",
     "DESCRIPTIONS": [
