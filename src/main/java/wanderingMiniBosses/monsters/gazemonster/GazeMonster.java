@@ -83,7 +83,6 @@ public class GazeMonster extends AbstractRotatableBoss {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-
         AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new GazeOne(this)));
         if(AbstractDungeon.actNum > 1) {
             AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new GazeTwo(this)));
@@ -91,7 +90,7 @@ public class GazeMonster extends AbstractRotatableBoss {
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new GazeThree(this)));
             }
         }
-        AbstractDungeon.actionManager.addToBottom(new VFXAction(new GaudyEntranceVFX(this), 1.5F));
+        AbstractDungeon.actionManager.addToTop(new VFXAction(new GaudyEntranceVFX(this), 1.5F));
         renderThis = true;
     }
 

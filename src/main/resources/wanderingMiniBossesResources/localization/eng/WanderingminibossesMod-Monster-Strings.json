@@ -8,6 +8,17 @@
       ""
     ]
   },
+  "wanderingMiniBosses:GremlinKnight": {
+    "NAME": "The Gremlin Knight",
+    "DIALOG": [
+      "@HAVE@ @AT@ @THEE!@",
+      "@HERE@ @I@ @COOOOME!!!@",
+      "@ATTAAAAAAACK!!!@",
+      "I'm bored now.",
+      "See you later.",
+      "I'll. Be. @BACK!@"
+    ]
+  },
   "wanderingMiniBosses:ImmortalFlame": {
     "MOVES": [
       "Inner Flame",
@@ -21,12 +32,21 @@
   },
   "wanderingMiniBosses:EternalPrincess": {
     "MOVES": [
-      "Finale of Glory",
       "Finale of Devastation",
-      "Finale of Promise",
-      "Finale of Eternity"
+      "Finale of Eternity",
+      "Finale of Glory",
+      "Finale of Promise"
     ],
     "NAME": "Eternal Princess",
+    "DIALOG": [
+      ""
+    ]
+  },
+  "wanderingMiniBosses:Wraith": {
+    "MOVES": [
+      ""
+    ],
+    "NAME": "Wraith",
     "DIALOG": [
       ""
     ]
@@ -58,6 +78,42 @@
       "You can't find me! Because I'm hidden!",
       "Where my luigi stans at",
       "not gonna lie doe kinda kinda a funky moment in da house doe funky funky clever and bruh doe where my babey gamers at hehe ur so babey gamer funky funky doe doe doe doe doe",
+      "DIALOGUE."
+    ]
+  },
+  "wanderingMiniBosses:ThiefOfABillionGuards": {
+    "MOVES": [
+      "Charity",
+      "Purse Cut",
+      "Fear Gas",
+      "Signature Prank",
+      "Cold Gas",
+      "Anesthesic Gas",
+      "Stolen Whirlwind"
+    ],
+    "NAME": "Thief Of A Billion Guards",
+    "DIALOG": [
+      "Just a Thief",
+      "Thief of One Hundred Guards",
+      "Thief of Ten Thousand Guards",
+      "Thief of One Million Guards",
+      "Thief of...",
+      "Thief of a Billion Guards",
+      "Thief of a Billion Thieves"
+    ]
+  },
+  "wanderingMiniBosses:Timic": {
+    "MOVES": [
+      "the sock ruse was a DISTACTION",
+      "I'll open up for you, Ironchad-san~~",
+      "Kind of a funky time"
+    ],
+    "NAME": "Timic",
+    "DIALOG": [
+      "Can't eat the chips. Haven't drank enough water.",
+      "Jeez, nevermind then. Weirdo.",
+      "Can't cross that bridge - I'm too heavy!",
+      "I've lost my funny joke permit. No funny jokes today.",
       "DIALOGUE."
     ]
   }

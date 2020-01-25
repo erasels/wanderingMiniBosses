@@ -31,7 +31,6 @@
       " more damage from enemy attacks. NL Caused by Status cards in your drawpile, discardpile or hand."
     ]
   },
-
   "wanderingMiniBosses:Blazing": {
     "NAME": "Blazing",
     "DESCRIPTIONS": [
@@ -65,12 +64,38 @@
       "If you end your turn without playing an #yAttack, gain #b", " #ygold."
     ]
   },
+  "wanderingMiniBosses:DevastatePlayer": {
+    "NAME": "Devastation",
+    "DESCRIPTIONS": [
+      "At the end of your turn, take #b", " damage."
+    ]
+  },
+  "wanderingMiniBosses:DevastateEnemy": {
+    "NAME": "Devastation",
+    "DESCRIPTIONS": [
+      "At end of round, ALL other enemies #rdie."
+    ]
+  },
   "wanderingMiniBosses:InkPower": {
     "NAME": "Inked!",
     "DESCRIPTIONS": [
       "The first card you draw each turn is scribbled upon.",
       "The first #b",
       " cards you draw each turn are scribbled upon."
+    ]
+  },
+  "wanderingMiniBosses:FilledWithCoinsPower": {
+    "NAME": "Filled with Coins",
+    "DESCRIPTIONS": [
+      "Whenever #yTimic loses HP, gain that much #yGold."
+    ]
+  },
+  "wanderingMiniBosses:InterruptMePower": {
+    "NAME": "Attempting to Flee",
+    "DESCRIPTIONS": [
+      "Will escape on its turn. Deal #b",
+      " damage to it to stop it from fleeing.",
+      "Stunned from damage this turn."
     ]
   }
 }

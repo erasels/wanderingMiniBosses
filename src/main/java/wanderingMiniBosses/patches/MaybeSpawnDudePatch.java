@@ -1,16 +1,20 @@
 package wanderingMiniBosses.patches;
 
+import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.vfx.BorderLongFlashEffect;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.util.WanderingBossHelper;
+import wanderingMiniBosses.vfx.combat.AnnouncementEffect;
 
 @SpirePatch(
         clz = GameActionManager.class,
@@ -24,7 +28,7 @@ public class MaybeSpawnDudePatch {
     private static int turnCounter;
 
     public static boolean spawningDudeThisFight() {
-        return turnCounter >= 0 && (WanderingBossHelper.viableFloor() || Settings.isDebug);
+        return turnCounter >= 0 && (WanderingBossHelper.viableFloor() || Settings.isDebug) && WanderingBossHelper.nemesisCheck();
     }
 
     public static void resetTurnCounter() {
@@ -39,15 +43,19 @@ public class MaybeSpawnDudePatch {
             locator = Locator.class
     )
     public static void Insert(GameActionManager __instance) {
-        logger.error("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
+        logger.info("-------------- Waiting on Dude Spawn? " + (spawningDudeThisFight() ? "Yes" : "No") + "! ---------------");
         if (spawningDudeThisFight()) {
             turnCounter++;
-            logger.error("TurnCount: " + turnCounter + ", Chance: " + (((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)));
+            logger.info("TurnCount: " + turnCounter + ", Chance: " + (((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1)));
             if (Settings.isDebug || (turnCounter >= MIN_TURNS && (turnCounter >= MAX_TURNS || AbstractDungeon.monsterRng.randomBoolean(((float) turnCounter - MIN_TURNS + 1) / (MAX_TURNS - MIN_TURNS + 1))))) {
-                logger.error("Spawning Dude");
+                logger.info("Spawning Dude");
                 turnCounter = -1;
                 WanderingBossHelper.resetSpawnChance();
-                AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(((AbstractWanderingBoss)WanderingBossHelper.getMonster()).createNewInstance()));
+                for(final AbstractWanderingBoss awb : WanderingBossHelper.getMonster().getLivingMonsters()) {
+                    AbstractDungeon.actionManager.addToBottom(new CustomSpawnMonsterAction(awb));
+                }
+                AbstractDungeon.actionManager.addToBottom(new VFXAction(new BorderLongFlashEffect(Color.WHITE.cpy())));
+                AbstractDungeon.actionManager.addToBottom(new VFXAction(new AnnouncementEffect(Color.SALMON.cpy(), CustomSpawnMonsterAction.TEXT[0], 5.5f)));
             }
         }
 

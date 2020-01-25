@@ -22,6 +22,13 @@
       " this turn. NL The second #rAttack you play inflicts #b"," #yVulnerable. NL The third #rAttack you play gains you #b"," #yBlock for each target hit."
     ]
   },
+  "wanderingMiniBosses:OtherGremlinHorn": {
+    "NAME": "The Other Gremlin Horn",
+    "FLAVOR": "\"Aaaaagghh!!\" - also Ranwid",
+    "DESCRIPTIONS": [
+      "The first time you apply #yWeak or #yVulnerable each turn, gain [E] and draw #b1 card."
+    ]
+  },
   "wanderingMiniBosses:Inkheart": {
     "NAME": "Inkheart",
     "FLAVOR": "The eye stares as you grasp its sticky surface.",
@@ -36,11 +43,18 @@
       "At the start of each combat, obtain #b2 random #yRelics for that combat only."
     ]
   },
-  "wanderingMiniBosses:ThiefScarf2": {
-    "NAME": "Scarf of the Ninja Bandit",
-    "FLAVOR": "You put it in your bag but now you can't find it.",
+  "wanderingMiniBosses:LockLocket": {
+    "NAME": "Lock Locket",
+    "FLAVOR": "With this, you're golden.",
     "DESCRIPTIONS": [
-      "At the start of each combat, obtain #b2 random #yRelics for that combat only."
+      "When you would die, if you have #yGold, lose #b100 #yGold and heal to #b1 HP."
+    ]
+  },
+  "wanderingMiniBosses:MasterThiefsPresence": {
+    "NAME": "Master Thief's Presence",
+    "FLAVOR": "\"YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU\" - The Ssssserpent",
+    "DESCRIPTIONS": [
+      "At the start of each combat, apply #b3 #yVulnerable and #b3 #yWeak to ALL enemies."
     ]
   }
 }
