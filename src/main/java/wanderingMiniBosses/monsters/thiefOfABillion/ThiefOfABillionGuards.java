@@ -349,8 +349,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new VFXAction(
-            				new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-            						AbstractDungeon.player.hb.cY)));
+            					new ColorSmokeBombEffect(AbstractDungeon.player.hb.cX,
+                						AbstractDungeon.player.hb.cY, Color.LIME)));
             	AbstractDungeon.actionManager.addToBottom(
             			new ApplyPowerAction(AbstractDungeon.player,
             					this,
