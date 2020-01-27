@@ -17,13 +17,7 @@ public class ColorSmokeBombEffect extends AbstractGameEffect
     private float y;
     private Color color;
     private boolean whiff_sound_played;
-    
-    public ColorSmokeBombEffect(final float x, final float y, final Color color,
-    		final float duration) {
-    	this(x, y, color);
-    	this.duration = duration;
-    }
-    
+
     public ColorSmokeBombEffect(final float x, final float y, final Color color) {
         this.x = x;
         this.y = y;
