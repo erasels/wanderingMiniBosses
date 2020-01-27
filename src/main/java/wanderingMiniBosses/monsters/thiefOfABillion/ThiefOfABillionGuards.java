@@ -1,6 +1,8 @@
 package wanderingMiniBosses.monsters.thiefOfABillion;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
+import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.animations.AnimateHopAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -9,6 +11,7 @@ import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -98,6 +101,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         rewards.add(new RewardItem(600, true));
         rewards.add(new RewardItem(new MasterThiefsPresence()));
         loadAnimation("images/monsters/theBottom/looter/skeleton.atlas", "images/monsters/theBottom/looter/skeleton.json", 2.0F);
+        
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        e.setTime(e.getEndTime() * MathUtils.random());
     }
     
     @Override
@@ -318,18 +324,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             case ACT_2_STEAL_GOLD:
             	playStealSfx();
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
+            	for (int i = 0; i < 4; i++) {
+            		addToBot(new WaitAction(0.3f));
+            		addToBot(new DamageAction(AbstractDungeon.player, info, 
+                		AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
+            	}
             	break;
             case ACT_2_FRAIL_BOMB:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
