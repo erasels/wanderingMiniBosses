@@ -409,7 +409,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private void giveFullOfOpenings() {    	
         if (AbstractDungeon.player.hasBlight(FullOfOpenings.ID)) {
         	AbstractDungeon.player.getBlight(FullOfOpenings.ID).stack();
-        	AbstractDungeon.player.getBlight(FullOfOpenings.ID).updateDescription();
         } else {
         	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
            			this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
@@ -420,7 +419,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private void giveTooCautious() {        	
         if (AbstractDungeon.player.hasBlight(TooCautious.ID)) {
         	AbstractDungeon.player.getBlight(TooCautious.ID).stack();
-        	AbstractDungeon.player.getBlight(TooCautious.ID).updateDescription();
         } else {
         	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
            			this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
@@ -474,7 +472,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     @Override
     public void onEscape() {
     	
-    	this.addToBot(new VFXAction(new SmokeBombEffect(this.hb.cX, this.hb.cY)));// 34
+    	throwRunSmokeBombs();
         super.onEscape();
     	
     }
