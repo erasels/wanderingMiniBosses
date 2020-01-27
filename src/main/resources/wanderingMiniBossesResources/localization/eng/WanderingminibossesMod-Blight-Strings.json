@@ -3,14 +3,14 @@
 	    "NAME": "Full Of Openings",
 	    "DESCRIPTION": [
 	      "When you play an Attack card, lose #y",
-		  " Gold. This is removed by defeating you-know-which-Nemeses."
+		  " Gold. This is removed by defeating you-know-which-Nemesis."
 	    ]
 	},
 	"wanderingMiniBosses:TooCautious": {
 	    "NAME": "Too Cautious!",
 	    "DESCRIPTION": [
 	      "When you play a Skill card, lose #y",
-		  " Gold. This is removed by defeating you-know-which-Nemeses."
+		  " Gold. This is removed by defeating you-know-which-Nemesis."
 	    ]
 	},
 	"wanderingMiniBosses:NotAskedDonationsToTheBloodFund": {
