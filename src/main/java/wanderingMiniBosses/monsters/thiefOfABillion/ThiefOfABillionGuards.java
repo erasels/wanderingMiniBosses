@@ -1,5 +1,6 @@
 package wanderingMiniBosses.monsters.thiefOfABillion;
 
+import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.animations.AnimateHopAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -33,6 +34,7 @@ import wanderingMiniBosses.blights.TooCautious;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.relics.MasterThiefsPresence;
 import wanderingMiniBosses.util.MiscFunctions;
+import wanderingMiniBosses.vfx.general.ColorSmokeBombEffect;
 
 public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 
@@ -306,8 +308,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new VFXAction(
-            				new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-            						AbstractDungeon.player.hb.cY)));
+            				new ColorSmokeBombEffect(AbstractDungeon.player.hb.cX,
+            						AbstractDungeon.player.hb.cY, Color.ROYAL)));
             	AbstractDungeon.actionManager.addToBottom(
             			new ApplyPowerAction(AbstractDungeon.player,
             					this,
