@@ -8,7 +8,8 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
-//heavily based on The-Evil-Pickle ReplayTheSpire's ColorSmokeBlur
+//Heavily (or at this point it's honestly the same and I forgot)
+//based on The-Evil-Pickle ReplayTheSpire's ColorSmokeBlur
 //original version can be found at
 //https://github.com/The-Evil-Pickle/Replay-the-Spire/blob/master/src/main/java/com/megacrit/cardcrawl/mod/replay/vfx/combat/ColorSmokeBlur.java
 public class ColorSmokeBlur extends AbstractGameEffect

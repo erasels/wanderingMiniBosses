@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 
 
-//Heavily based on The-Evil-Pickle ReplayTheSpire's ColorSmokeBombEffect
+//Heavily (or at this point it's honestly the same and I forgot)
+//based on The-Evil-Pickle ReplayTheSpire's ColorSmokeBombEffect
 //original version can be found at
 //https://github.com/The-Evil-Pickle/Replay-the-Spire/tree/master/src/main/java/com/megacrit/cardcrawl/mod/replay/vfx/combat
 public class ColorSmokeBombEffect extends AbstractGameEffect
