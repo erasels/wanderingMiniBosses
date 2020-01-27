@@ -1,5 +1,8 @@
 package wanderingMiniBosses.monsters.thiefOfABillion;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
+import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.animations.AnimateHopAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -8,6 +11,7 @@ import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -33,6 +37,7 @@ import wanderingMiniBosses.blights.TooCautious;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
 import wanderingMiniBosses.relics.MasterThiefsPresence;
 import wanderingMiniBosses.util.MiscFunctions;
+import wanderingMiniBosses.vfx.general.ColorSmokeBombEffect;
 
 public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 
@@ -95,7 +100,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         super(name, ID, maxHealth, 0, 0, HB_W, HB_H, "", -100F, 300F);
         rewards.add(new RewardItem(600, true));
         rewards.add(new RewardItem(new MasterThiefsPresence()));
-        loadAnimation("images/monsters/theBottom/looter/skeleton.atlas", "images/monsters/theBottom/looter/skeleton.json", 2.0F);
+        loadAnimation("images/monsters/theBottom/looter/skeleton.atlas",
+        		"images/monsters/theBottom/looter/skeleton.json", 2.0F);
+        
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        e.setTime(e.getEndTime() * MathUtils.random());
     }
     
     @Override
@@ -130,11 +139,12 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	}
     }
     
+    
+    
     public void usePreBattleAction() {
         super.usePreBattleAction();
         gave_money = false;
         receiveAscensionBuffs();
-        throwEntranceSmokeBombs();
         setFirstMoveShortcut();
         if (AbstractDungeon.actNum < 3) {
         	AbstractDungeon.actionManager.addToBottom(
@@ -212,20 +222,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	}
     }
     
-    private void throwEntranceSmokeBombs() {
-    	AbstractDungeon.actionManager.addToBottom(
-    			new VFXAction(
-    				new SmokeBombEffect(this.hb.cX, this.hb.cY)));
-    	AbstractDungeon.actionManager.addToBottom(
-    			new VFXAction(
-    				new SmokeBombEffect(this.hb.cX - Settings.WIDTH/5f,
-    						this.hb.cY)));
-    	AbstractDungeon.actionManager.addToBottom(
-    			new VFXAction(
-    				new SmokeBombEffect(this.hb.cX + Settings.WIDTH/5f,
-    						this.hb.cY)));
-    }
-    
     @Override
     protected void populateMoves() {
     	
@@ -272,13 +268,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
                 this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 6, 4, true));
         		
         	}
-    		
-    		
-    		
     	}
-    	
-    	
-        
     }
 
     public void takeCustomTurn(DamageInfo info, int amulti) {
@@ -306,8 +296,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new VFXAction(
-            				new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-            						AbstractDungeon.player.hb.cY)));
+            				new ColorSmokeBombEffect(AbstractDungeon.player.hb.cX,
+            						AbstractDungeon.player.hb.cY, Color.ROYAL)));
             	AbstractDungeon.actionManager.addToBottom(
             			new ApplyPowerAction(AbstractDungeon.player,
             					this,
@@ -316,25 +306,18 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             case ACT_2_STEAL_GOLD:
             	playStealSfx();
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	AbstractDungeon.actionManager.addToBottom(
-            			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
+            	for (int i = 0; i < 4; i++) {
+            		addToBot(new WaitAction(0.3f));
+            		addToBot(new DamageAction(AbstractDungeon.player, info, 
+                		AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
+            	}
             	break;
             case ACT_2_FRAIL_BOMB:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new VFXAction(
-            				new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-            						AbstractDungeon.player.hb.cY)));
+                				new ColorSmokeBombEffect(AbstractDungeon.player.hb.cX,
+                						AbstractDungeon.player.hb.cY, Color.BLUE)));
             	AbstractDungeon.actionManager.addToBottom(
             			new ApplyPowerAction(AbstractDungeon.player,
             					this,
@@ -347,8 +330,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new VFXAction(
-            				new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-            						AbstractDungeon.player.hb.cY)));
+            					new ColorSmokeBombEffect(AbstractDungeon.player.hb.cX,
+                						AbstractDungeon.player.hb.cY, Color.LIME)));
             	AbstractDungeon.actionManager.addToBottom(
             			new ApplyPowerAction(AbstractDungeon.player,
             					this,
@@ -373,8 +356,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             default:
             	break;
         }
-       
-        
+
         ++turnCounter;
     }
     
@@ -424,12 +406,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     }
     
-    private void giveFullOfOpenings() {
-    	AbstractDungeon.actionManager.addToBottom(
-        		new VFXAction(
-        			new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-        				AbstractDungeon.player.hb.cY)));
-        	
+    private void giveFullOfOpenings() {    	
         if (AbstractDungeon.player.hasBlight(FullOfOpenings.ID)) {
         	AbstractDungeon.player.getBlight(FullOfOpenings.ID).stack();
         } else {
@@ -439,12 +416,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         }
     }
     
-    private void giveTooCautious() {
-    	AbstractDungeon.actionManager.addToBottom(
-        		new VFXAction(
-        			new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-        				AbstractDungeon.player.hb.cY)));
-        	
+    private void giveTooCautious() {        	
         if (AbstractDungeon.player.hasBlight(TooCautious.ID)) {
         	AbstractDungeon.player.getBlight(TooCautious.ID).stack();
         } else {
@@ -455,14 +427,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
 
     private void giveNotAskedDonationsToTheBloodFund() {
-    	AbstractDungeon.actionManager.addToBottom(
-        	new VFXAction(
-        		new SmokeBombEffect(AbstractDungeon.player.hb.cX,
-        			AbstractDungeon.player.hb.cY)));
-    	
-        	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
-           			this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
-           			new TooCautious());
+        AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
+           		this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
+           		new TooCautious());
     }
     
     protected void getMove(int num) {
@@ -502,6 +469,30 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     }
     
-    
+    @Override
+    public void onEscape() {
+    	
+    	throwRunSmokeBombs();
+        super.onEscape();
+    	
+    }
+
+    private void throwRunSmokeBombs() {
+    	AbstractDungeon.actionManager.addToBottom(
+    			new VFXAction(
+    				new ColorSmokeBombEffect(this.hb.cX, this.hb.cY, Color.WHITE)));
+    	AbstractDungeon.actionManager.addToBottom(
+    			new VFXAction(
+    				new ColorSmokeBombEffect(this.hb.cX + Settings.WIDTH/5f + Settings.WIDTH/15f,
+    						this.hb.cY, Color.WHITE)));
+    	AbstractDungeon.actionManager.addToBottom(
+    			new VFXAction(
+    				new ColorSmokeBombEffect(this.hb.cX - Settings.WIDTH/5f,
+    						this.hb.cY, Color.WHITE)));
+    	AbstractDungeon.actionManager.addToBottom(
+    			new VFXAction(
+    				new ColorSmokeBombEffect(this.hb.cX + Settings.WIDTH/5f,
+    						this.hb.cY, Color.WHITE)));
+    }
 
 }
