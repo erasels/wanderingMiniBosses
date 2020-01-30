@@ -104,7 +104,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         loadAnimation("images/monsters/theBottom/looter/skeleton.atlas",
         		"images/monsters/theBottom/looter/skeleton.json", 2.0F);
         
+        this.skeleton.setColor(Color.RED);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        
         e.setTime(e.getEndTime() * MathUtils.random());
     }
     
