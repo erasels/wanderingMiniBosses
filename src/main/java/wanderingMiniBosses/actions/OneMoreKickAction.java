@@ -12,6 +12,7 @@ import wanderingMiniBosses.monsters.gremlinknight.GremlinKnight;
 public class OneMoreKickAction extends AbstractGameAction {
     private final float speed = 400F * Settings.scale;
     private boolean collided;
+    private boolean cannotLose;
 
     public OneMoreKickAction(AbstractCreature target, AbstractCreature source) {
         super();
@@ -19,6 +20,9 @@ public class OneMoreKickAction extends AbstractGameAction {
         this.source = source;
         this.collided = false;
         this.source.flipHorizontal = !this.source.flipHorizontal;
+
+        this.cannotLose = AbstractDungeon.getCurrRoom().cannotLose;
+        AbstractDungeon.getCurrRoom().cannotLose = true;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class OneMoreKickAction extends AbstractGameAction {
         } else {
             source.drawX -= speed * 5 * Gdx.graphics.getDeltaTime();
             if(source.drawX < -source.hb.width) {
+                AbstractDungeon.getCurrRoom().cannotLose = this.cannotLose;
                 AbstractDungeon.getCurrRoom().monsters.monsters.remove(source);
                 GremlinKnight.checkBattleEnd();
                 this.isDone = true;

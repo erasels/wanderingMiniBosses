@@ -111,6 +111,7 @@ public class UpdateAndTrackTopCard {
             if (c != null)
             {
                 glowCheck(c);
+                c.triggerOnGlowCheck();
             }
         }
     }
