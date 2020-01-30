@@ -349,11 +349,14 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_WHIRLWIND"));
             	for (int i = 0; i < STOLEN_WHIRLWIND_AMOUNT_OF_HITS; i++) {
-            	      /*AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_HEAVY"));
-            	      DamageAction dmg_action = new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3);
-            	      dmg_action.attackEffect = AttackEffect.NONE;
-            	      AbstractDungeon.actionManager.addToBottom(dmg_action);*/
-            	    } 
+            		addToBot(new SFXAction("ATTACK_HEAVY"));
+            		
+            		DamageAction dmg_action = new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3);
+            		dmg_action.attackEffect = AttackEffect.NONE;
+            	      
+            		addToBot(new VFXAction(this, new CleaveEffect(true), 0.15F));
+            		addToBot(dmg_action);
+            	} 
             	break;
             default:
             	break;
