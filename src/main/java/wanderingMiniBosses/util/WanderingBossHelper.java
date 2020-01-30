@@ -32,6 +32,7 @@ public class WanderingBossHelper {
     private static String currentMonsterID = "";
 
     public static void populateMonsterMap() {
+    	monsterMap.put(ThiefOfABillionGuards.ID, ThiefOfABillionGuards::new);
         if (monsterMap.isEmpty()) {
             monsterMap.put(ImmortalFlame.ID, ImmortalFlame::new);
             monsterMap.put(GazeMonster.ID, GazeMonster::new);
