@@ -87,6 +87,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final byte ACT_3_STOLEN_WHIRLWIND = 9;
     private static final String ACT_3_STOLEN_WHIRLWIND_NAME = MOVES[6];
     
+    private static final Color THIEF_TINT_COLOR = Color.GREEN;
+    
     private static boolean gave_money = false;
 
     private int turnCounter = 0;
@@ -104,10 +106,11 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         loadAnimation("images/monsters/theBottom/looter/skeleton.atlas",
         		"images/monsters/theBottom/looter/skeleton.json", 2.0F);
         
-        this.skeleton.setColor(Color.RED);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
         
         e.setTime(e.getEndTime() * MathUtils.random());
+
+        this.tint.color = THIEF_TINT_COLOR;
     }
     
     @Override
@@ -146,6 +149,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     
     public void usePreBattleAction() {
         super.usePreBattleAction();
+        this.tint.changeColor(THIEF_TINT_COLOR);
         gave_money = false;
         receiveAscensionBuffs();
         setFirstMoveShortcut();
@@ -198,7 +202,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     
     private void setFirstMoveShortcut() {
     	
-    	MiscFunctions.fastLoggerLine(AbstractDungeon.actNum);
     	switch (AbstractDungeon.actNum) {
     		case 1:
     	    	setMoveShortcut(ACT_1_STEAL_GOLD, ACT_1_STEAL_GOLD_NAME);
