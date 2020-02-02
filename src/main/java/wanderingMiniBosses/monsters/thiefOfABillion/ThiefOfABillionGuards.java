@@ -430,7 +430,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private void giveNotAskedDonationsToTheBloodFund() {
         AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
            		this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
-           		new TooCautious());
+           		new NotAskedDonationsToTheBloodFund());
     }
     
     protected void getMove(int num) {
