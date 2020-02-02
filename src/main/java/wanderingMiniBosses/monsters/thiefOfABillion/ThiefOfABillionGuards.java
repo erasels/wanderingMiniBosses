@@ -43,7 +43,8 @@ import wanderingMiniBosses.vfx.general.ColorSmokeBombEffect;
 public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 
 	public static final String ID = WanderingminibossesMod.makeID("ThiefOfABillionGuards");
-	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
+	private static final MonsterStrings monsterstrings =
+			CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
     public static final String[] MOVES = monsterstrings.MOVES;
@@ -116,6 +117,10 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     @Override
     public void die() {
     	super.die();
+    	RemoveThisThiefBlights();
+    }
+    
+    private void RemoveThisThiefBlights() {
     	for (int i = AbstractDungeon.player.blights.size() - 1; i >= 0; i--) {
     		AbstractBlight blight = AbstractDungeon.player.blights.get(i);
     		if ((blight.blightID.equals(FullOfOpenings.ID)) ||
@@ -137,15 +142,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     private static int defineMaxHealth(int ascensionLevel) {
-    	if (ascensionLevel < 9) {
-			return MAX_HEALTH_A0_UPPER_BOUND;
-    	}
-    	else {
-			return MAX_HEALTH_A9_UPPER_BOUND;
-    	}
+    	if (ascensionLevel < 9)	return MAX_HEALTH_A0_UPPER_BOUND;
+    	else return MAX_HEALTH_A9_UPPER_BOUND;
     }
-    
-    
     
     public void usePreBattleAction() {
         super.usePreBattleAction();
@@ -166,7 +165,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
                 					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3))
                 	);
         }
-        
 
         CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
         CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
@@ -380,16 +378,12 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     	switch (actNum) {
     		case 1:
-    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) {
-    				giveFullOfOpenings();
-    			} else {
-    				giveTooCautious();
-    			}
+    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) giveFullOfOpenings();
+    			else giveTooCautious();
     			break;
     		case 2:
-    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) {
-    				giveTooCautious();
-    			} else {
+    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) giveTooCautious();
+    			else {
     				if (!AbstractDungeon.player.hasBlight(NotAskedDonationsToTheBloodFund.ID)) {
         				giveNotAskedDonationsToTheBloodFund();
         			} else {
@@ -399,10 +393,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
                     						AbstractDungeon.player.hb.cY)));
                     	AbstractDungeon.actionManager.addToBottom(
                     			new ApplyPowerAction(AbstractDungeon.player,
-                    					this,
-                    					new FrailPower(AbstractDungeon.player, 2, true)));
+                    				this,
+                    				new FrailPower(AbstractDungeon.player, 2, true)));
         			}
-    				
     			}
     			break;
     		case 3:
@@ -412,8 +405,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     			giveFullOfOpenings();
     			break;
     	}
-    	
-    	
     }
     
     private void giveFullOfOpenings() {    	
