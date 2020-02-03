@@ -3,6 +3,7 @@ package wanderingMiniBosses.monsters.thiefOfABillion;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
+import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.animations.AnimateHopAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
@@ -42,7 +43,8 @@ import wanderingMiniBosses.vfx.general.ColorSmokeBombEffect;
 public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 
 	public static final String ID = WanderingminibossesMod.makeID("ThiefOfABillionGuards");
-	private static final MonsterStrings monsterstrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
+	private static final MonsterStrings monsterstrings =
+			CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static String NAME = monsterstrings.NAME;
     public static final String[] DIALOG = monsterstrings.DIALOG;
     public static final String[] MOVES = monsterstrings.MOVES;
@@ -86,6 +88,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final byte ACT_3_STOLEN_WHIRLWIND = 9;
     private static final String ACT_3_STOLEN_WHIRLWIND_NAME = MOVES[6];
     
+    private static final Color THIEF_TINT_COLOR = Color.GREEN;
+    
     private static boolean gave_money = false;
 
     private int turnCounter = 0;
@@ -104,12 +108,19 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         		"images/monsters/theBottom/looter/skeleton.json", 2.0F);
         
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        
         e.setTime(e.getEndTime() * MathUtils.random());
+
+        this.tint.color = THIEF_TINT_COLOR;
     }
     
     @Override
     public void die() {
     	super.die();
+    	RemoveThisThiefBlights();
+    }
+    
+    private void RemoveThisThiefBlights() {
     	for (int i = AbstractDungeon.player.blights.size() - 1; i >= 0; i--) {
     		AbstractBlight blight = AbstractDungeon.player.blights.get(i);
     		if ((blight.blightID.equals(FullOfOpenings.ID)) ||
@@ -131,18 +142,13 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     private static int defineMaxHealth(int ascensionLevel) {
-    	if (ascensionLevel < 9) {
-			return MAX_HEALTH_A0_UPPER_BOUND;
-    	}
-    	else {
-			return MAX_HEALTH_A9_UPPER_BOUND;
-    	}
+    	if (ascensionLevel < 9)	return MAX_HEALTH_A0_UPPER_BOUND;
+    	else return MAX_HEALTH_A9_UPPER_BOUND;
     }
-    
-    
     
     public void usePreBattleAction() {
         super.usePreBattleAction();
+        this.tint.changeColor(THIEF_TINT_COLOR);
         gave_money = false;
         receiveAscensionBuffs();
         setFirstMoveShortcut();
@@ -159,7 +165,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
                 					AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3))
                 	);
         }
-        
 
         CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
         CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
@@ -195,7 +200,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     
     private void setFirstMoveShortcut() {
     	
-    	MiscFunctions.fastLoggerLine(AbstractDungeon.actNum);
     	switch (AbstractDungeon.actNum) {
     		case 1:
     	    	setMoveShortcut(ACT_1_STEAL_GOLD, ACT_1_STEAL_GOLD_NAME);
@@ -342,16 +346,20 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(
             			new DamageAction(AbstractDungeon.player, 
-            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
+            					info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3));
             	break;
             case ACT_3_STOLEN_WHIRLWIND:
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
             	AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_WHIRLWIND"));
             	for (int i = 0; i < STOLEN_WHIRLWIND_AMOUNT_OF_HITS; i++) {
-            	      AbstractDungeon.actionManager.addToBottom(new SFXAction("ATTACK_HEAVY"));
-            	      AbstractDungeon.actionManager.addToBottom(new VFXAction(this, new CleaveEffect(true), 0.15F));
-            	      AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
-            	    } 
+            		addToBot(new SFXAction("ATTACK_HEAVY"));
+            		
+            		DamageAction dmg_action = new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3);
+            		dmg_action.attackEffect = AttackEffect.NONE;
+            	      
+            		addToBot(new VFXAction(this, new CleaveEffect(true), 0.15F));
+            		addToBot(dmg_action);
+            	} 
             	break;
             default:
             	break;
@@ -370,16 +378,12 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     	
     	switch (actNum) {
     		case 1:
-    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) {
-    				giveFullOfOpenings();
-    			} else {
-    				giveTooCautious();
-    			}
+    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) giveFullOfOpenings();
+    			else giveTooCautious();
     			break;
     		case 2:
-    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) {
-    				giveTooCautious();
-    			} else {
+    			if (MiscFunctions.headsOrTails(AbstractDungeon.relicRng) == 1) giveTooCautious();
+    			else {
     				if (!AbstractDungeon.player.hasBlight(NotAskedDonationsToTheBloodFund.ID)) {
         				giveNotAskedDonationsToTheBloodFund();
         			} else {
@@ -389,10 +393,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
                     						AbstractDungeon.player.hb.cY)));
                     	AbstractDungeon.actionManager.addToBottom(
                     			new ApplyPowerAction(AbstractDungeon.player,
-                    					this,
-                    					new FrailPower(AbstractDungeon.player, 2, true)));
+                    				this,
+                    				new FrailPower(AbstractDungeon.player, 2, true)));
         			}
-    				
     			}
     			break;
     		case 3:
@@ -402,8 +405,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     			giveFullOfOpenings();
     			break;
     	}
-    	
-    	
     }
     
     private void giveFullOfOpenings() {    	
@@ -429,7 +430,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private void giveNotAskedDonationsToTheBloodFund() {
         AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
            		this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
-           		new TooCautious());
+           		new NotAskedDonationsToTheBloodFund());
     }
     
     protected void getMove(int num) {
@@ -480,19 +481,19 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private void throwRunSmokeBombs() {
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
-    				new ColorSmokeBombEffect(this.hb.cX, this.hb.cY, Color.WHITE)));
+    				new ColorSmokeBombEffect(this.hb.cX, this.hb.cY, Color.LIME)));
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
     				new ColorSmokeBombEffect(this.hb.cX + Settings.WIDTH/5f + Settings.WIDTH/15f,
-    						this.hb.cY, Color.WHITE)));
+    						this.hb.cY, Color.LIME)));
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
     				new ColorSmokeBombEffect(this.hb.cX - Settings.WIDTH/5f,
-    						this.hb.cY, Color.WHITE)));
+    						this.hb.cY, Color.LIME)));
     	AbstractDungeon.actionManager.addToBottom(
     			new VFXAction(
     				new ColorSmokeBombEffect(this.hb.cX + Settings.WIDTH/5f,
-    						this.hb.cY, Color.WHITE)));
+    						this.hb.cY, Color.LIME)));
     }
 
 }
