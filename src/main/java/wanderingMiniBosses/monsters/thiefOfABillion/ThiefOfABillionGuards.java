@@ -75,7 +75,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final byte ACT_2_GIVE_GOLD = 3;
     //private static final String ACT_2_GIVE_GOLD_NAME = MOVES[0];
     private static final byte ACT_2_STEAL_GOLD = 4;
-    private static final String ACT_2_STEAL_GOLD_NAME = MOVES[1];
+    private static final String ACT_2_STEAL_GOLD_NAME = MOVES[7];
     private static final byte ACT_2_FRAIL_BOMB = 5;
     private static final String ACT_2_FRAIL_BOMB_NAME = MOVES[4];
     private static final byte ACT_2_PRANK_THEFT = 6;
