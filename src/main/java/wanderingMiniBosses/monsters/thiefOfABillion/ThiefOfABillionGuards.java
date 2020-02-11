@@ -95,7 +95,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private int turnCounter = 0;
     
     public ThiefOfABillionGuards() {
-    	this(defineThiefName(AbstractDungeon.ascensionLevel),
+    	this(DIALOG[0],
         		ID,
         		defineMaxHealth(AbstractDungeon.ascensionLevel));
     }
@@ -129,16 +129,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     			AbstractDungeon.player.blights.remove(i);
     		}
     	}
-    }
-    
-    private static String defineThiefName(int ascensionLevel) {
-    	if (ascensionLevel < 0) return DIALOG[0];
-    	else if (ascensionLevel < 9) return DIALOG[1];
-    	else if (ascensionLevel < 13) return DIALOG[2];
-    	else if (ascensionLevel < 16) return DIALOG[3];
-    	else if (ascensionLevel < 19) return DIALOG[4];
-    	else if (ascensionLevel < 21) return DIALOG[5];
-    	else return DIALOG[6];
     }
     
     private static int defineMaxHealth(int ascensionLevel) {
@@ -354,7 +344,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             	for (int i = 0; i < STOLEN_WHIRLWIND_AMOUNT_OF_HITS; i++) {
             		addToBot(new SFXAction("ATTACK_HEAVY"));
             		
-            		DamageAction dmg_action = new DamageAction(AbstractDungeon.player, info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3);
+            		DamageAction dmg_action = new DamageAction(AbstractDungeon.player,
+            				info, AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3);
             		dmg_action.attackEffect = AttackEffect.NONE;
             	      
             		addToBot(new VFXAction(this, new CleaveEffect(true), 0.15F));

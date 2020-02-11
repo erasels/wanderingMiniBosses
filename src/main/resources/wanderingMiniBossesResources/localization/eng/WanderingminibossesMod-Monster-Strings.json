@@ -93,13 +93,7 @@
     ],
     "NAME": "Thief Of A Billion Guards",
     "DIALOG": [
-      "Just a Thief",
-      "Thief of One Hundred Guards",
-      "Thief of Ten Thousand Guards",
-      "Thief of One Million Guards",
-      "Thief of...",
-      "Thief of a Billion Guards",
-      "Thief of a Billion Thieves"
+      "Thief of a Billion Guards"
     ]
   },
   "wanderingMiniBosses:Timic": {
