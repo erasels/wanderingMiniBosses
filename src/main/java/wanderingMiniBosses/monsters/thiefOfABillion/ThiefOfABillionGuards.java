@@ -233,22 +233,22 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     		if (AbstractDungeon.actNum == 1) {
         		
     	        this.moves.put(ACT_1_GIVE_GOLD, new EnemyMoveInfo(ACT_1_GIVE_GOLD, Intent.MAGIC, -1, 0, false));
-    	        this.moves.put(ACT_1_STEAL_GOLD, new EnemyMoveInfo(ACT_1_STEAL_GOLD, Intent.ATTACK, 6, 1, false));
+    	        this.moves.put(ACT_1_STEAL_GOLD, new EnemyMoveInfo(ACT_1_STEAL_GOLD, Intent.ATTACK, 0, 1, false));
     	        this.moves.put(ACT_1_VULNERABLE_BOMB, new EnemyMoveInfo(ACT_1_VULNERABLE_BOMB, Intent.DEBUFF, 0, 1, false));
     	        this.moves.put(ACT_1_PRANK_THEFT, new EnemyMoveInfo(ACT_1_PRANK_THEFT, Intent.DEBUFF, 0, 1, false));
         
         	} else if (AbstractDungeon.actNum == 2) {
            
         		this.moves.put(ACT_2_GIVE_GOLD, new EnemyMoveInfo(ACT_2_GIVE_GOLD, Intent.MAGIC, -1, 0, false));
-    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 3, 4, true));
+    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 0, 4, true));
     	        this.moves.put(ACT_2_FRAIL_BOMB, new EnemyMoveInfo(ACT_2_FRAIL_BOMB, Intent.DEBUFF, 0, 1, false));
     	        this.moves.put(ACT_2_PRANK_THEFT, new EnemyMoveInfo(ACT_1_PRANK_THEFT, Intent.DEBUFF, 0, 1, false));
             
         	} else if (AbstractDungeon.actNum >= 3){
         		
         		this.moves.put(ACT_3_WEAK_BOMB, new EnemyMoveInfo(ACT_3_WEAK_BOMB, Intent.DEBUFF, 0, 1, false));
-                this.moves.put(ACT_3_STEAL_GOLD, new EnemyMoveInfo(ACT_3_STEAL_GOLD, Intent.ATTACK, 3, 1, false));
-                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 4, 6, true));
+                this.moves.put(ACT_3_STEAL_GOLD, new EnemyMoveInfo(ACT_3_STEAL_GOLD, Intent.ATTACK, 0, 1, false));
+                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 0, 6, true));
         		
         	}
     	} else {
