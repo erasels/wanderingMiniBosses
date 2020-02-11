@@ -4,6 +4,7 @@ import basemod.BaseMod;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.abstracts.CustomSavable;
+import basemod.devcommands.ConsoleCommand;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -27,6 +28,7 @@ import wanderingMiniBosses.cards.FinaleOfPromise;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
+import wanderingMiniBosses.commands.SetNemesisCommand;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
@@ -241,6 +243,8 @@ public class WanderingminibossesMod implements
         });
 
         WanderingBossHelper.populateMonsterMap();
+
+        ConsoleCommand.addCommand("nemesis", SetNemesisCommand.class);
     }
 
     @Override

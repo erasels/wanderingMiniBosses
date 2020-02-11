@@ -28,6 +28,9 @@ public class OneMoreKickAction extends AbstractGameAction {
     @Override
     public void update() {
         if(!collided) {
+            if(AbstractDungeon.getCurrRoom().monsters == null) {
+                this.isDone = true;
+            }
             if(source.drawX < target.drawX - target.hb.width / 2) {
                 source.drawX += speed * 5 * Gdx.graphics.getDeltaTime();
             } else {

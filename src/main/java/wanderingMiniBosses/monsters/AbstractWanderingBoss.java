@@ -19,6 +19,7 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     public static final byte RUN = Byte.MIN_VALUE;
 
     protected Map<Byte, EnemyMoveInfo> moves;
+    private boolean damageInfoSet = false;
     protected int runTimer;
     protected ArrayList<RewardItem> rewards;
     protected WanderingMonsterGroup.WanderingBossInfo monsterInfo;
@@ -70,13 +71,17 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
             if(moves.containsKey(this.nextMove)) {
                 EnemyMoveInfo emi = moves.get(this.nextMove);
                 info = new DamageInfo(this, emi.baseDamage, DamageInfo.DamageType.NORMAL);
-                if(emi.baseDamage > -1) {
-                    info.applyPowers(this, AbstractDungeon.player);
-                    multiplier = emi.multiplier;
-                }
+                multiplier = emi.multiplier;
             } else {
                 info = new DamageInfo(this, 0, DamageInfo.DamageType.NORMAL);
                 WanderingminibossesMod.logger.error(this.name + " MOVECODE " + this.nextMove + " NOT FOUND!");
+            }
+            if(damageInfoSet) {
+                info = this.damage.get(0);
+                this.damage.remove(0);
+                damageInfoSet = false;
+            } else {
+                info.applyPowers(this, AbstractDungeon.player);
             }
             takeCustomTurn(info, multiplier);
         }
@@ -127,10 +132,19 @@ public abstract class AbstractWanderingBoss extends CustomMonster {
     public void setMoveShortcut(byte next, String text) {
         EnemyMoveInfo info = this.moves.get(next);
         this.setMove(text, next, info.intent, info.baseDamage, info.multiplier, info.isMultiDamage);
+        setDamageInfo(info.baseDamage);
     }
     public void setMoveShortcut(byte next) {
         EnemyMoveInfo info = this.moves.get(next);
         this.setMove(next, info.intent, info.baseDamage, info.multiplier, info.isMultiDamage);
+        setDamageInfo(info.baseDamage);
+    }
+    private void setDamageInfo(int baseDamage) {
+        if(!damageInfoSet) {
+            this.damage.add(0, new DamageInfo(this, 0, DamageInfo.DamageType.NORMAL));
+            damageInfoSet = true;
+        }
+        this.damage.get(0).base = baseDamage;
     }
 
     public void die(boolean triggerRelics) {

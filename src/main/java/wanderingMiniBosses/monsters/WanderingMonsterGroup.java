@@ -104,7 +104,7 @@ public class WanderingMonsterGroup implements CustomSavable<ArrayList<WanderingM
     }
 
 
-    class WanderingBossInfo {
+    public class WanderingBossInfo {
         private int currentHealth;
         private Map<String, Integer> magicNumbers;
 

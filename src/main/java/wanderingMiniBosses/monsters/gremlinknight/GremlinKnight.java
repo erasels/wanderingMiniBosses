@@ -10,17 +10,20 @@ import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.monsters.city.Champ;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.powers.FrailPower;
+import com.megacrit.cardcrawl.powers.SurroundedPower;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 import wanderingMiniBosses.WanderingminibossesMod;
@@ -129,6 +132,21 @@ public class GremlinKnight extends AbstractWanderingBoss {
         AbstractDungeon.actionManager.addToTop(new TalkAction(this, DIALOG[entranceThreshold + MathUtils.random(DIALOG.length - entranceThreshold - 1)]));
     }
 
+    private void removeSurrounded() {
+        boolean leftOfPlayer = false;
+        for(final AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (!m.isDead && !m.isDying) {
+                leftOfPlayer |= m.drawX < AbstractDungeon.player.drawX;
+                m.removeSurroundedPower();
+            }
+        }
+
+        if (!leftOfPlayer && AbstractDungeon.player.hasPower(SurroundedPower.POWER_ID)) {
+            AbstractDungeon.player.flipHorizontal = false;
+            AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(AbstractDungeon.player, AbstractDungeon.player, SurroundedPower.POWER_ID));
+        }
+    }
+
     static {
         monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
         NAME = monsterStrings.NAME;
@@ -144,6 +162,7 @@ public class GremlinKnight extends AbstractWanderingBoss {
         }
 
         if (this.escapeTimer < 0.0F) {
+            this.removeSurrounded();
             if (this.escapeTimer > -10F && AbstractDungeon.monsterRng.randomBoolean(0.1F)) {
                 this.setMove((byte)0, Intent.NONE);
                 this.createIntent();
