@@ -238,7 +238,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         		
         		this.moves.put(ACT_3_WEAK_BOMB, new EnemyMoveInfo(ACT_3_WEAK_BOMB, Intent.DEBUFF, 0, 1, false));
                 this.moves.put(ACT_3_STEAL_GOLD, new EnemyMoveInfo(ACT_3_STEAL_GOLD, Intent.ATTACK, 0, 1, false));
-                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 0, 6, true));
+                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 1, 6, true));
         		
         	}
     	} else {
@@ -259,7 +259,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         		
         		this.moves.put(ACT_3_WEAK_BOMB, new EnemyMoveInfo(ACT_3_WEAK_BOMB, Intent.DEBUFF, 0, 1, false));
                 this.moves.put(ACT_3_STEAL_GOLD, new EnemyMoveInfo(ACT_3_STEAL_GOLD, Intent.ATTACK, 3, 1, true));
-                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 6, 4, true));
+                this.moves.put(ACT_3_STOLEN_WHIRLWIND, new EnemyMoveInfo(ACT_3_STOLEN_WHIRLWIND, Intent.ATTACK, 3, 6, true));
         		
         	}
     	}
