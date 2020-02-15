@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.evacipated.cardcrawl.modthespire.lib.SpireOverride;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
@@ -50,7 +49,6 @@ public class GremlinKnight extends AbstractWanderingBoss {
 
     public GremlinKnight() {
         super(NAME, ID, 200, 0.0F, 10.0F, 230.0F, 230.0F, null, -Settings.WIDTH, -30);
-        this.isPlayer = true;
         this.drawX = -this.hb.width;
         this.flipHorizontal = true;
 
@@ -118,7 +116,7 @@ public class GremlinKnight extends AbstractWanderingBoss {
 
             case TAUNT:
                 AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_CHAMP_2A", 0.4F, true));
-                AbstractDungeon.actionManager.addToBottom(new TalkAction(this, Champ.DIALOG[MathUtils.random(3)]));
+                talk(Champ.DIALOG[MathUtils.random(3)]);
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new WeakAllPower(this, 2), 2));
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new VulnerableAllPower(this, 2), 2));
                 break;
@@ -129,7 +127,7 @@ public class GremlinKnight extends AbstractWanderingBoss {
     public void onEscape() {
         super.onEscape();
         this.flipHorizontal = !this.flipHorizontal;
-        AbstractDungeon.actionManager.addToTop(new TalkAction(this, DIALOG[entranceThreshold + MathUtils.random(DIALOG.length - entranceThreshold - 1)]));
+        talk(DIALOG[entranceThreshold + MathUtils.random(DIALOG.length - entranceThreshold - 1)]);
     }
 
     private void removeSurrounded() {
@@ -182,5 +180,16 @@ public class GremlinKnight extends AbstractWanderingBoss {
         if (AbstractDungeon.getMonsters().areMonstersDead() && !AbstractDungeon.getCurrRoom().isBattleOver && !AbstractDungeon.getCurrRoom().cannotLose) {
             AbstractDungeon.getCurrRoom().endBattle();
         }
+    }
+
+    private void talk(String msg) {
+        AbstractDungeon.effectList.add(new SpeechBubble(this.hb.cX + this.dialogX, this.hb.cY + this.dialogY, 2F, msg, true));
+    }
+
+    @Override
+    protected void updateFastAttackAnimation() {
+        this.isPlayer = !this.isPlayer;
+        super.updateFastAttackAnimation();
+        this.isPlayer = !this.isPlayer;
     }
 }
