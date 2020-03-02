@@ -120,7 +120,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
             case FINALE_OF_ETERNITY:
                 for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
                     AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
-                    if (m.isDead && !m.id.equals(ID)) {
+                    if (m.isDead && !m.escaped && !m.id.equals(ID)) {
                         Wraith wraith = new Wraith(0.0F, 0.0F, (int)(m.maxHealth * WRAITH_HP_PERCENT));
                         wraith.drawX = xPositions.get(i);
                         wraith.drawY = yPositions.get(i);
