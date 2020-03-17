@@ -8,9 +8,9 @@ import wanderingMiniBosses.monsters.WanderingMonsterGroup;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.monsters.eternalPrincess.EternalPrincess;
 import wanderingMiniBosses.monsters.gazemonster.GazeMonster;
+import wanderingMiniBosses.monsters.gremlinknight.GremlinKnight;
 import wanderingMiniBosses.monsters.immortalflame.ImmortalFlame;
 import wanderingMiniBosses.monsters.inkman.InkMan;
-import wanderingMiniBosses.monsters.gremlinknight.GremlinKnight;
 import wanderingMiniBosses.monsters.thiefOfABillion.ThiefOfABillionGuards;
 import wanderingMiniBosses.monsters.timic.Timic;
 
@@ -115,5 +115,12 @@ public class WanderingBossHelper {
         if(!wanderingBoss.survivorsStillReturn || !isMonsterAlive()) {
             wanderingBoss.dispenseReward();
         }
+    }
+
+    public static String getIdWithoutModId() {
+        return getIdWithoutModId(currentMonsterID);
+    }
+    public static String getIdWithoutModId(String id) {
+        return id.substring(id.indexOf(":") + 1);
     }
 }

@@ -7,7 +7,7 @@
     <artifactId>wanderingMiniBosses</artifactId>
     <name>Wandering Minibosses</name>
     <version>1.0.0</version>
-    <description>A anniversary project for the second yer of modding the spire. It adds a miniboss to some runs which continues to hound you through the run.</description>
+    <description>A anniversary project for the second year of modding the spire! It adds a miniboss to some runs which continues to hound you through the run. (Toggleable option to make it always appear at the mod options.)</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -15,7 +15,7 @@
         <SlayTheSpire.version>01-23-2019</SlayTheSpire.version>
         <ModTheSpire.version>3.8.0</ModTheSpire.version>
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION, NOT YOURS GK, MINE AND DARKS-->
-        <Steam.path>K:\Steam\steamapps</Steam.path>
+        <Steam.path>C:\Program Files (x86)\Steam\steamapps</Steam.path>
     </properties>
 
     <dependencies>

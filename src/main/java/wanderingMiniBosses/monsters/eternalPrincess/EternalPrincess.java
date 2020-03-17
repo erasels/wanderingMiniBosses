@@ -21,6 +21,8 @@ import wanderingMiniBosses.powers.eternalPrincessPowers.DevastateEnemy;
 import wanderingMiniBosses.powers.eternalPrincessPowers.DevastatePlayer;
 import wanderingMiniBosses.relics.Blackblade;
 
+import java.util.ArrayList;
+
 public class EternalPrincess extends AbstractWanderingBoss {
     public static final String ID = WanderingminibossesMod.makeID("EternalPrincess");
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -52,6 +54,9 @@ public class EternalPrincess extends AbstractWanderingBoss {
     private int devastateDamage;
     private int block;
     private int moveCounter = 0;
+
+    private ArrayList<Float> xPositions = new ArrayList<>();
+    private ArrayList<Float> yPositions = new ArrayList<>();
 
     public EternalPrincess() {
         this(0.0F, 0.0F);
@@ -93,6 +98,14 @@ public class EternalPrincess extends AbstractWanderingBoss {
             case FINALE_OF_DEVASTATION:
                 addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new DevastatePlayer(AbstractDungeon.player, devastateDamage), devastateDamage));
                 addToBot(new ApplyPowerAction(this, this, new DevastateEnemy(this)));
+                //Grabs the positions of the monsters at this point in time in case they leave later or something
+                xPositions.clear();
+                yPositions.clear();
+                for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
+                    AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
+                    xPositions.add(m.drawX);
+                    yPositions.add(m.drawY);
+                }
                 moveCounter++;
                 break;
 //            case FINALE_OF_PROMISE:
@@ -107,10 +120,10 @@ public class EternalPrincess extends AbstractWanderingBoss {
             case FINALE_OF_ETERNITY:
                 for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
                     AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
-                    if (m.isDead && !m.id.equals(ID)) {
+                    if (m.isDead && !m.escaped && !m.id.equals(ID)) {
                         Wraith wraith = new Wraith(0.0F, 0.0F, (int)(m.maxHealth * WRAITH_HP_PERCENT));
-                        wraith.drawX = m.drawX;
-                        wraith.drawY = m.drawY;
+                        wraith.drawX = xPositions.get(i);
+                        wraith.drawY = yPositions.get(i);
                         AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(wraith, false, i));
                     }
                 }
