@@ -301,10 +301,6 @@ public class WanderingminibossesMod implements
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Event-Strings.json");
 
-        // PotionStrings
-        BaseMod.loadCustomStringsFile(PotionStrings.class,
-                getModID() + "Resources/localization/eng/WanderingminibossesMod-Potion-Strings.json");
-
         // MonsterStrings
         BaseMod.loadCustomStringsFile(MonsterStrings.class,
                 getModID() + "Resources/localization/eng/WanderingminibossesMod-Monster-Strings.json");
