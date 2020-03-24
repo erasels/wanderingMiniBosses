@@ -24,6 +24,7 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.blights.FullOfOpenings;
 import wanderingMiniBosses.cards.FinaleOfPromise;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
@@ -239,6 +240,23 @@ public class WanderingminibossesMod implements
             @Override
             public void onLoad(Integer i) {
                 BanditKing.myGold = i;
+            }
+        });
+
+        BaseMod.addSaveField("WBThiefFullOfOpeningsData",
+                new CustomSavable<ArrayList<Integer>>() {
+            @Override
+            public ArrayList<Integer> onSave() {
+                ArrayList<Integer> list_of_static = new ArrayList<Integer>();
+                list_of_static.add(FullOfOpenings.AMOUNT_OF_GOLD_STOLEN);
+                list_of_static.add(FullOfOpenings.AMOUNT_OF_GOLD_LEFT_TO_LOSE);
+                return list_of_static;
+            }
+
+            @Override
+            public void onLoad(ArrayList<Integer> array_list) {
+                FullOfOpenings.AMOUNT_OF_GOLD_STOLEN = array_list.get(0);
+                FullOfOpenings.AMOUNT_OF_GOLD_LEFT_TO_LOSE = array_list.get(1);
             }
         });
 
