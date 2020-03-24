@@ -2,8 +2,10 @@
 	"wanderingMiniBosses:FullOfOpenings": {
 	    "NAME": "Full Of Openings",
 	    "DESCRIPTION": [
-	      "When you play an Attack card, lose #y",
-		  " Gold. This is removed by defeating the Thief Of A Billion Guards."
+	      "Each 10 Attacks you do, lose #y",
+		  " Gold. This is removed by defeating the Thief Of A Billion Guards or ",
+		  "if you lose more ",
+		  " Gold through it."
 	    ]
 	},
 	"wanderingMiniBosses:NotAskedDonationsToTheBloodFund": {
