@@ -32,7 +32,9 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 
 	
 	public FullOfOpenings() {
-		super(ID, NAME, DESC[0] + AMOUNT_OF_GOLD_STOLEN + DESC[1], "ancient.png", false);
+		super(ID, NAME, DESC[0] + AMOUNT_OF_GOLD_STOLEN + DESC[1] +
+				DESC[2] + AMOUNT_OF_GOLD_LEFT_TO_LOSE + DESC[3],
+				"ancient.png", false);
 		this.counter = 0;
 	}
 
@@ -54,7 +56,9 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 	
 	@Override
 	public void updateDescription() {
-		description = DESC[0] + this.counter + DESC[1];
+		description =
+				DESC[0] + AMOUNT_OF_GOLD_STOLEN + DESC[1] +
+				DESC[2] + AMOUNT_OF_GOLD_LEFT_TO_LOSE + DESC[3];
 	}
 	
     public void stack() {
@@ -69,6 +73,7 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 			AbstractDungeon.player.loseGold(AMOUNT_OF_GOLD_STOLEN);
 			AMOUNT_OF_GOLD_LEFT_TO_LOSE -= AMOUNT_OF_GOLD_STOLEN;
 
+			this.updateDescription();
 			this.flash();
 		}
 		super.onPlayCard(card, m);
