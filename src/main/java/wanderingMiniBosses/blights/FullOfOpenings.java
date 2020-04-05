@@ -50,7 +50,6 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 	{
 		AMOUNT_OF_GOLD_STOLEN = static_values.get(0);
 		AMOUNT_OF_GOLD_LEFT_TO_LOSE = static_values.get(1);
-		//updateTips();
 	}
 
 	public void updateTips(){
@@ -72,6 +71,11 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
         this.updateTips();
         this.flash();
     }
+
+	@Override
+    public void atBattleStart(){
+		updateTips();
+	}
 	
     @Override
     public void onPlayCard(AbstractCard card, AbstractMonster m) {
