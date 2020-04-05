@@ -80,12 +80,15 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
     @Override
     public void onPlayCard(AbstractCard card, AbstractMonster m) {
 		if (card.type == CardType.ATTACK) {
-			AbstractDungeon.player.loseGold(AMOUNT_OF_GOLD_STOLEN);
-			AMOUNT_OF_GOLD_LEFT_TO_LOSE -= AMOUNT_OF_GOLD_STOLEN;
-			this.updateTips();
-			this.flash();
+			counter += 1;
+			if (counter >= 10){
+				AbstractDungeon.player.loseGold(AMOUNT_OF_GOLD_STOLEN);
+				AMOUNT_OF_GOLD_LEFT_TO_LOSE -= AMOUNT_OF_GOLD_STOLEN;
+				this.updateTips();
+				this.flash();
+				counter = 0;
+			}
 		}
-		//super.onPlayCard(card, m);
 
 		if (AMOUNT_OF_GOLD_LEFT_TO_LOSE <= 0) {
 			for (int i = AbstractDungeon.player.blights.size() - 1; i >= 0; i--) {
