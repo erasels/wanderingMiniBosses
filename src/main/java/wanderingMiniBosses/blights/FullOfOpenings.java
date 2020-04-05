@@ -1,18 +1,16 @@
 package wanderingMiniBosses.blights;
 
-import basemod.BaseMod;
 import basemod.abstracts.CustomSavable;
-import basemod.abstracts.CustomSavableRaw;
-import com.google.gson.JsonElement;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.util.MiscFunctions;
 
 import java.util.ArrayList;
 
@@ -52,8 +50,16 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 	{
 		AMOUNT_OF_GOLD_STOLEN = static_values.get(0);
 		AMOUNT_OF_GOLD_LEFT_TO_LOSE = static_values.get(1);
+		//updateTips();
 	}
-	
+
+	public void updateTips(){
+		updateDescription();
+		tips.clear();
+		this.tips.add(new PowerTip(this.name, this.description));
+		this.initializeTips();
+	}
+
 	@Override
 	public void updateDescription() {
 		description =
@@ -63,7 +69,7 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 	
     public void stack() {
         AMOUNT_OF_GOLD_STOLEN += 5;
-        this.updateDescription();
+        this.updateTips();
         this.flash();
     }
 	
@@ -72,11 +78,10 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 		if (card.type == CardType.ATTACK) {
 			AbstractDungeon.player.loseGold(AMOUNT_OF_GOLD_STOLEN);
 			AMOUNT_OF_GOLD_LEFT_TO_LOSE -= AMOUNT_OF_GOLD_STOLEN;
-
-			this.updateDescription();
+			this.updateTips();
 			this.flash();
 		}
-		super.onPlayCard(card, m);
+		//super.onPlayCard(card, m);
 
 		if (AMOUNT_OF_GOLD_LEFT_TO_LOSE <= 0) {
 			for (int i = AbstractDungeon.player.blights.size() - 1; i >= 0; i--) {
