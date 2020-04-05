@@ -3,8 +3,8 @@
 	    "NAME": "Full Of Openings",
 	    "DESCRIPTION": [
 	      "Each 10 Attacks you do, lose #y",
-		  " Gold. This is removed by defeating the Thief Of A Billion Guards or ",
-		  "if you lose more ",
+		  " Gold. This is removed by defeating the #rThief #rOf #rA #rBillion #rGuards or ",
+		  "if you lose more #y",
 		  " Gold through it."
 	    ]
 	},
