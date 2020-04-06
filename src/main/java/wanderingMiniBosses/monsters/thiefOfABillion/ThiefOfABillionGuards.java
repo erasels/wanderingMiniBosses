@@ -158,7 +158,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
 
         CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
         CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
-        CardCrawlGame.sound.playA("VO_LOOTER_1C", 1.0F);
+        CardCrawlGame.sound.playA("VO_LOOTER_1C", 0.0F);
     }
     
     private void receiveAscensionBuffs() {
@@ -199,11 +199,6 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     			return;
     		case 3:
     	    	if (AbstractDungeon.player.gold < 99){
-    		    	/*int amount_of_keys = (Settings.hasEmeraldKey ? 1 : 0) +
-    		    				(Settings.hasRubyKey ? 1 : 0) +
-    		    				(Settings.hasSapphireKey ? 1 : 0);
-    		    		
-    		    	if (amount_of_keys >= 2) first_move = ACT_2_GIVE_GOLD;*/
     	    		setMoveShortcut(ACT_3_WEAK_BOMB, ACT_3_WEAK_BOMB_NAME);
         	    	return;
     	    	} else {
@@ -360,9 +355,9 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     private void playStealSfx() {
-        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1A", 1f));
-        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1B", 1f));
-        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1C", 1f));
+        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1A", 0f));
+        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1B", 0f));
+        AbstractDungeon.actionManager.addToBottom(new SFXAction("VO_LOOTER_1C", 0f));
     }
     
     private void doPrankTheft(int actNum) {
