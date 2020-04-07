@@ -1,8 +1,6 @@
 package wanderingMiniBosses.blights;
 
 import basemod.abstracts.CustomSavable;
-import basemod.devcommands.blight.BlightRemove;
-import com.badlogic.gdx.scenes.scene2d.actions.AddAction;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -13,7 +11,6 @@ import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.actions.RemoveSpecificBlightAction;
-import wanderingMiniBosses.util.MiscFunctions;
 
 import java.util.ArrayList;
 
@@ -41,6 +38,8 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 				DESC[2] + AMOUNT_OF_GOLD_LEFT_TO_LOSE + DESC[3],
 				"ancient.png", false);
 		this.counter = 0;
+		AMOUNT_OF_GOLD_STOLEN = INITIAL_AMOUNT_OF_GOLD_STOLEN;
+		AMOUNT_OF_GOLD_LEFT_TO_LOSE = INITIAL_AMOUNT_OF_GOLD_LEFT_TO_LOSE;
 	}
 
 	@Override
@@ -88,7 +87,7 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
     public void onPlayCard(AbstractCard card, AbstractMonster m) {
 		if (card.type == CardType.ATTACK) {
 			counter += 1;
-			if (counter >= 2){
+			if (counter >= 10){
 				AbstractDungeon.player.loseGold(AMOUNT_OF_GOLD_STOLEN);
 				AMOUNT_OF_GOLD_LEFT_TO_LOSE -= AMOUNT_OF_GOLD_STOLEN;
 				this.updateTips();
