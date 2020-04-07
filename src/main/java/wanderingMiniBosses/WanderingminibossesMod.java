@@ -30,6 +30,7 @@ import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
 import wanderingMiniBosses.commands.SetNemesisCommand;
+import wanderingMiniBosses.util.MiscFunctions;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
@@ -255,6 +256,7 @@ public class WanderingminibossesMod implements
 
             @Override
             public void onLoad(ArrayList<Integer> array_list) {
+                MiscFunctions.fastLoggerLine("Here");
                 FullOfOpenings.AMOUNT_OF_GOLD_STOLEN = array_list.get(0);
                 FullOfOpenings.AMOUNT_OF_GOLD_LEFT_TO_LOSE = array_list.get(1);
             }
