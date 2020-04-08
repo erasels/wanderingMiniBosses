@@ -24,9 +24,11 @@
 	},
 	"wanderingMiniBosses:TooCautious": {
 	    "NAME": "Too Cautious!",
-	    "DESCRIPTION": [
-	      "When you play a Skill card, lose #y",
-		  " Gold. This is removed by defeating the Thief Of A Billion Guards."
-	    ]
+		"DESCRIPTION": [
+			"Each 10 Skills you do, lose #y",
+			" Gold. This is removed by defeating the #rThief #rOf #rA #rBillion #rGuards or ",
+			"if you lose more #y",
+			" Gold through it."
+		]
 	}
 }
