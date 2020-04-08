@@ -102,7 +102,6 @@ public class FullOfOpenings extends AbstractBlight implements CustomSavable<Arra
 		}
 
 		if (AMOUNT_OF_GOLD_LEFT_TO_LOSE <= 0) {
-
 			AbstractDungeon.actionManager.addToBottom(
 					new RemoveSpecificBlightAction(this));
 		}
