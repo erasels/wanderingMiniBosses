@@ -262,7 +262,7 @@ public class WanderingminibossesMod implements
             }
         });
 
-        BaseMod.addSaveField("WBThiefFullOfOpeningsData",
+        BaseMod.addSaveField("WBThiefTooCautiousData",
                 new CustomSavable<ArrayList<Integer>>() {
             @Override
             public ArrayList<Integer> onSave() {
