@@ -57,8 +57,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     //private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
     private static final int AMOUNT_OF_GOLD_TO_GIVE = 150;
     
-    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3 = 25;
-    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3 = 10;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3 = 20;
+    private static final int AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_3 = 15;
     
     private static final int STOLEN_WHIRLWIND_AMOUNT_OF_HITS = 6;
     
@@ -225,7 +225,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         	} else if (AbstractDungeon.actNum == 2) {
            
         		this.moves.put(ACT_2_GIVE_GOLD, new EnemyMoveInfo(ACT_2_GIVE_GOLD, Intent.MAGIC, -1, 0, false));
-    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 0, 4, true));
+    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 0, 3, true));
     	        this.moves.put(ACT_2_FRAIL_BOMB, new EnemyMoveInfo(ACT_2_FRAIL_BOMB, Intent.DEBUFF, 0, 1, false));
     	        this.moves.put(ACT_2_PRANK_THEFT, new EnemyMoveInfo(ACT_1_PRANK_THEFT, Intent.DEBUFF, 0, 1, false));
             
@@ -246,7 +246,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
         	} else if (AbstractDungeon.actNum == 2) {
            
         		this.moves.put(ACT_2_GIVE_GOLD, new EnemyMoveInfo(ACT_2_GIVE_GOLD, Intent.MAGIC, -1, 0, false));
-    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 3, 4, true));
+    	        this.moves.put(ACT_2_STEAL_GOLD, new EnemyMoveInfo(ACT_2_STEAL_GOLD, Intent.ATTACK, 3, 3, true));
     	        this.moves.put(ACT_2_FRAIL_BOMB, new EnemyMoveInfo(ACT_2_FRAIL_BOMB, Intent.DEBUFF, 0, 1, false));
     	        this.moves.put(ACT_2_PRANK_THEFT, new EnemyMoveInfo(ACT_1_PRANK_THEFT, Intent.DEBUFF, 0, 1, false));
             
@@ -295,7 +295,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
             case ACT_2_STEAL_GOLD:
             	playStealSfx();
             	AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-            	for (int i = 0; i < 4; i++) {
+            	for (int i = 0; i < 3; i++) {
             		addToBot(new WaitAction(0.3f));
             		addToBot(new DamageAction(AbstractDungeon.player, info, 
                 		AMOUNT_OF_GOLD_TO_STEAL_PER_ATTACK_ACT_NOT_3));
