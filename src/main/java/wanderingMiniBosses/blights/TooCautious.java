@@ -34,7 +34,8 @@ public class TooCautious extends AbstractBlight implements CustomSavable<ArrayLi
 	
 	public TooCautious() {
 		super(ID, NAME, DESC[0] + AMOUNT_OF_GOLD_STOLEN + DESC[1] +
-				DESC[2] + AMOUNT_OF_GOLD_LEFT_TO_LOSE + DESC[3], "accursed.png", false);
+				DESC[2] + AMOUNT_OF_GOLD_LEFT_TO_LOSE + DESC[3],
+				"accursed.png", false);
 		this.counter = 0;
 		AMOUNT_OF_GOLD_STOLEN = INITIAL_AMOUNT_OF_GOLD_STOLEN;
 		AMOUNT_OF_GOLD_LEFT_TO_LOSE = INITIAL_AMOUNT_OF_GOLD_LEFT_TO_LOSE;
