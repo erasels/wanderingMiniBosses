@@ -392,30 +392,35 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     			break;
     	}
     }
-    
-    private void giveFullOfOpenings() {    	
+
+
+
+    private void giveFullOfOpenings() {
         if (AbstractDungeon.player.hasBlight(FullOfOpenings.ID)) {
         	AbstractDungeon.player.getBlight(FullOfOpenings.ID).stack();
         } else {
         	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
-           			this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
+					AbstractDungeon.player.drawX,
+					AbstractDungeon.player.drawY,
            			new FullOfOpenings());
         }
     }
     
-    private void giveTooCautious() {        	
+    private void giveTooCautious() {
         if (AbstractDungeon.player.hasBlight(TooCautious.ID)) {
         	AbstractDungeon.player.getBlight(TooCautious.ID).stack();
         } else {
         	AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
-           			this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
+					AbstractDungeon.player.drawX,
+					AbstractDungeon.player.drawY,
            			new TooCautious());
         }
     }
 
     private void giveNotAskedDonationsToTheBloodFund() {
         AbstractDungeon.currMapNode.room.spawnBlightAndObtain(
-           		this.hb_h + this.hb_y/2, this.hb_w + this.hb_x/2,
+				AbstractDungeon.player.drawX,
+				AbstractDungeon.player.drawY,
            		new NotAskedDonationsToTheBloodFund());
     }
     
