@@ -6,6 +6,7 @@ import static wanderingMiniBosses.WanderingminibossesMod.makeRelicPath;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
@@ -28,7 +29,13 @@ public class MasterThiefsPresence extends CustomRelic {
     
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] + DESCRIPTIONS[1];
+    }
+
+    @Override
+    public void onEquip() {
+        CardCrawlGame.sound.play("GOLD_GAIN");
+        AbstractDungeon.player.gainGold(1000);
     }
 
     @Override
