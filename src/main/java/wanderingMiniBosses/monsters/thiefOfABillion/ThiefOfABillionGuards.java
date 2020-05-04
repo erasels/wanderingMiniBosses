@@ -101,7 +101,7 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     }
     
     public ThiefOfABillionGuards(String name, String ID, int maxHealth) {
-        super(name, ID, maxHealth, 0, 0, HB_W, HB_H, "", -100F, 300F);
+        super(name, ID, maxHealth, 0, 0, HB_W, HB_H, "", -100F, 400F);
         rewards.add(new RewardItem(new MasterThiefsPresence()));
         loadAnimation("images/monsters/theBottom/looter/skeleton.atlas",
         		"images/monsters/theBottom/looter/skeleton.json", 2.0F);
@@ -116,6 +116,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     @Override
     public void die() {
     	super.die();
+		CardCrawlGame.sound.playA("VO_MUGGER_2A", 0.4F);
+		CardCrawlGame.sound.playA("VO_MUGGER_2B", 0.4F);
     	RemoveThisThiefBlights();
     }
     
