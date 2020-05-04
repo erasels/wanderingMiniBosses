@@ -35,7 +35,7 @@ public class MasterThiefsPresence extends CustomRelic {
     @Override
     public void onEquip() {
         CardCrawlGame.sound.play("GOLD_GAIN");
-        AbstractDungeon.player.gainGold(1000);
+        AbstractDungeon.player.gainGold(800);
     }
 
     @Override
