@@ -51,8 +51,8 @@ public class ThiefOfABillionGuards extends AbstractWanderingBoss {
     private static final float HB_W = 100.0F;
     private static final float HB_H = 100.0F;
 
-    private static int MAX_HEALTH_A0_UPPER_BOUND = 215;
-    private static int MAX_HEALTH_A9_UPPER_BOUND = 219;
+    private static int MAX_HEALTH_A0_UPPER_BOUND = 235;
+    private static int MAX_HEALTH_A9_UPPER_BOUND = 239;
     
     //private static final int MAXIMUM_AMOUNT_OF_GOLD_TO_START_GIVING = 49;
     private static final int AMOUNT_OF_GOLD_TO_GIVE = 150;
