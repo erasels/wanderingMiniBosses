@@ -19,7 +19,8 @@ import java.util.Map;
 
 public class WanderingBossHelper {
 
-    private static final float BASE_CHANCE = 0.08F; //Is actually 15% because it gets incremented at the start of every fight
+    private static final float BASE_CHANCE = 0.08F; //Is actually 15% because it gets incremented at the start of 
+    // every fight
     private static final float INC_CHANCE = 0.07F;
     private static float spawnChance = BASE_CHANCE;
 
