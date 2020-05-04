@@ -39,6 +39,15 @@ public class MasterThiefsPresence extends CustomRelic {
     }
 
     @Override
+    public void onUnequip(){
+        CardCrawlGame.sound.playA("VO_LOOTER_1A", 0.2F);
+        CardCrawlGame.sound.playA("VO_LOOTER_1B", 0.5F);
+        CardCrawlGame.sound.playA("VO_LOOTER_1C", 0.0F);
+        AbstractDungeon.player.loseGold(800);
+        CardCrawlGame.sound.play("GOLD_JINGLE");
+    }
+
+    @Override
     public void atBattleStart() {
     	super.atBattleStart();
         for (AbstractMonster mo : (AbstractDungeon.getCurrRoom()).monsters.monsters) {
