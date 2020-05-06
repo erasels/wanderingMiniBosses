@@ -52,9 +52,10 @@
   },
   "wanderingMiniBosses:MasterThiefsPresence": {
     "NAME": "Master Thief's Presence",
-    "FLAVOR": "\"YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU\" - The Ssssserpent",
+    "FLAVOR": "From someone who took the Ssssserpent's lessons too much into their heart.",
     "DESCRIPTIONS": [
-      "At the start of each combat, apply #b3 #yVulnerable and #b3 #yWeak to ALL enemies."
+      "At the start of each combat, apply #b3 #yVulnerable and #b3 #yWeak to ALL enemies. ",
+      "Upon pickup, gain #b800 #yGold, for what that's worth at this point."
     ]
   }
 }
