@@ -6,7 +6,7 @@
     <groupId>UpdateBodyText</groupId>
     <artifactId>wanderingMiniBosses</artifactId>
     <name>Wandering Minibosses</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>A anniversary project for the second year of modding the spire! It adds a miniboss to some runs which continues to hound you through the run. (Toggleable option to make it always appear at the mod options.)</description>
 
     <properties>

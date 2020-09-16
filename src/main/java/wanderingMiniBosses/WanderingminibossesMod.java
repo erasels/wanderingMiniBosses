@@ -1,8 +1,6 @@
 package wanderingMiniBosses;
 
-import basemod.BaseMod;
-import basemod.ModLabeledToggleButton;
-import basemod.ModPanel;
+import basemod.*;
 import basemod.abstracts.CustomSavable;
 import basemod.devcommands.ConsoleCommand;
 import basemod.helpers.RelicType;
@@ -27,17 +25,18 @@ import org.apache.logging.log4j.Logger;
 import wanderingMiniBosses.blights.FullOfOpenings;
 import wanderingMiniBosses.blights.TooCautious;
 import wanderingMiniBosses.cards.FinaleOfPromise;
+import wanderingMiniBosses.commands.SetNemesisCommand;
+import wanderingMiniBosses.monsters.WanderingMonsterGroup;
 import wanderingMiniBosses.monsters.banditking.BanditKing;
 import wanderingMiniBosses.patches.MaybeSpawnDudePatch;
 import wanderingMiniBosses.relics.*;
-import wanderingMiniBosses.commands.SetNemesisCommand;
-import wanderingMiniBosses.util.MiscFunctions;
 import wanderingMiniBosses.util.TextureLoader;
 import wanderingMiniBosses.util.WanderingBossHelper;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
 
 @SpireInitializer
@@ -280,18 +279,52 @@ public class WanderingminibossesMod implements
         });
 
         WanderingBossHelper.populateMonsterMap();
+        Properties p = (Properties) ReflectionHacks.getPrivate(modConfig, SpireConfig.class, "properties");
+        for(final Map.Entry<Object, Object> entry : p.entrySet()) {
+            String key = entry.getKey().toString();
+            if(key.startsWith("WPEncounterAvailable:")) {
+                System.out.println(key);
+                WanderingBossHelper.monsterMap.get(key.substring(key.indexOf(":") + 1)).canSpawn = Boolean.parseBoolean(entry.getValue().toString());
+            }
+        }
 
         ConsoleCommand.addCommand("nemesis", SetNemesisCommand.class);
+
+
+        //Ability to turn off nemeses
+        yPos -= 150F;
+        settingsPanel.addUIElement(new ModLabel(TEXT[1], xPos, yPos, settingsPanel, (label) -> {}));
+        xPos += 50F;
+        for(final String encounterID : WanderingBossHelper.monsterMap.keySet()) {
+            yPos -= 40F;
+            settingsPanel.addUIElement(new ModLabeledToggleButton(
+                    encounterID.substring(encounterID.indexOf(":") + 1),
+                    xPos, yPos, Settings.CREAM_COLOR,
+                    FontHelper.charDescFont, WanderingBossHelper.monsterMap.get(encounterID).canSpawn, settingsPanel,
+                    label -> {},
+                    button -> {
+                        WanderingBossHelper.monsterMap.get(encounterID).canSpawn = button.enabled;
+                        modConfig.setBool("WPEncounterAvailable:" + encounterID, button.enabled);
+                        try {
+                            modConfig.save();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }));
+        }
     }
 
     @Override
     public void receiveStartGame() {
         if (!CardCrawlGame.loadingSave) {
-            WanderingBossHelper.setMonster(WanderingBossHelper.getRandomMonster());
-            WanderingBossHelper.resetSpawnChance();
-            BanditKing.myGold = 0;
-            BanditKing.relicList.clear();
-            WanderingBossHelper.nemesisDetermination();
+            WanderingMonsterGroup wmg = WanderingBossHelper.getRandomMonster();
+            if(wmg != null) {
+                WanderingBossHelper.setMonster(wmg);
+                WanderingBossHelper.resetSpawnChance();
+                BanditKing.myGold = 0;
+                BanditKing.relicList.clear();
+                WanderingBossHelper.nemesisDetermination();
+            }
         }
     }
 
