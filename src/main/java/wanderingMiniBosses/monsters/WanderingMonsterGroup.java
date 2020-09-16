@@ -68,7 +68,7 @@ public class WanderingMonsterGroup implements CustomSavable<ArrayList<WanderingM
 
     //Iterates through the monster Hps and checks whether the group can still show up based on their behaviour.
     public boolean isAlive() {
-        boolean alive = !survivorsStillReturn;
+        boolean alive = !monsterInfo.isEmpty() && !survivorsStillReturn;
         for(final WanderingBossInfo mo : monsterInfo) {
             if(survivorsStillReturn) {
                 if (mo.currentHealth > 0) {
@@ -100,7 +100,11 @@ public class WanderingMonsterGroup implements CustomSavable<ArrayList<WanderingM
 
     @Override
     public void onLoad(ArrayList<WanderingBossInfo> monsters) {
-        this.monsterInfo = monsters;
+        if(monsters != null) {
+            this.monsterInfo = monsters;
+        } else {
+            this.monsterInfo = new ArrayList<>();
+        }
     }
 
 

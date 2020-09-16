@@ -2,23 +2,33 @@
 	"wanderingMiniBosses:FullOfOpenings": {
 	    "NAME": "Full Of Openings",
 	    "DESCRIPTION": [
-	      "When you play an Attack card, lose #y",
-		  " Gold. This is removed by defeating you-know-which-Nemesis."
-	    ]
-	},
-	"wanderingMiniBosses:TooCautious": {
-	    "NAME": "Too Cautious!",
-	    "DESCRIPTION": [
-	      "When you play a Skill card, lose #y",
-		  " Gold. This is removed by defeating you-know-which-Nemesis."
+	      "Each 10 Attacks you do, lose #y",
+		  " Gold. This is removed by defeating the #rThief #rOf #rA #rBillion #rGuards or ",
+		  "if you lose more #y",
+		  " Gold through it."
 	    ]
 	},
 	"wanderingMiniBosses:NotAskedDonationsToTheBloodFund": {
 	    "NAME": "Not Asked Blood Donations",
 	    "DESCRIPTION": [
 	      "When you play a Power card, take #y",
-		  " blockable damage. This is removed by defeating you-know-which-Nemesis."
+		  " damage. This is removed by defeating the Thief Of A Billion Guards."
 	    ]
+	},
+	"wanderingMiniBosses:TrapsAtThePotionSlots": {
+	    "NAME": "Traps At The Potion Slots",
+	    "DESCRIPTION": [
+	      "When you use a potion, lose #y",
+		  " HP. This is removed by defeating the Thief Of A Billion Guards."
+	    ]
+	},
+	"wanderingMiniBosses:TooCautious": {
+	    "NAME": "Too Cautious!",
+		"DESCRIPTION": [
+			"Each 10 Skills you do, lose #y",
+			" Gold. This is removed by defeating the #rThief #rOf #rA #rBillion #rGuards or ",
+			"if you lose more #y",
+			" Gold through it."
+		]
 	}
-	
 }
