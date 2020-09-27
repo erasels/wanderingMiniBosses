@@ -11,6 +11,7 @@ public class WanderingMonsterGroup implements CustomSavable<ArrayList<WanderingM
     protected RewardItem[] rewardsForKillingAll;
     public ArrayList<WanderingBossInfo> monsterInfo;
     public ArrayList<BaseMod.GetMonster> monsters;
+    public boolean canSpawn = true;
 
     //If this is false, the monstergroup counts as dead for future encounters as soon as 1 enemy from it dies.
     public boolean survivorsStillReturn;

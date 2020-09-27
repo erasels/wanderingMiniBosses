@@ -72,12 +72,19 @@ public class WanderingBossHelper {
 
     public static WanderingMonsterGroup getRandomMonster() {
         if (!monsterMap.isEmpty()) {
-            int index = AbstractDungeon.monsterRng.random(monsterMap.size() - 1);
-            Object[] entryset = monsterMap.entrySet().toArray();
-            WanderingminibossesMod.logger.info(entryset[index]);
-            Map.Entry<String, WanderingMonsterGroup> entry = (Map.Entry<String, WanderingMonsterGroup>) entryset[index];
-            WanderingminibossesMod.logger.info("Nemesis for this run: " + (currentMonsterID = entry.getKey()));
-            return entry.getValue();
+            ArrayList<String> possibilities = new ArrayList<>();
+            for(final Map.Entry<String, WanderingMonsterGroup> entry : monsterMap.entrySet()) {
+                if(entry.getValue().canSpawn) {
+                    possibilities.add(entry.getKey());
+                }
+            }
+            if(!possibilities.isEmpty()) {
+                int index = AbstractDungeon.monsterRng.random(possibilities.size() - 1);
+                WanderingminibossesMod.logger.info("Nemesis for this run: " + (currentMonsterID = possibilities.get(index)));
+                return monsterMap.get(possibilities.get(index));
+            } else {
+                return null;
+            }
         }
         return null;
     }

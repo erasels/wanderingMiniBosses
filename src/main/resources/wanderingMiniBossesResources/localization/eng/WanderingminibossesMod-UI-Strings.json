@@ -6,7 +6,8 @@
   },
   "wanderingMiniBosses:OptionsMenu": {
     "TEXT": [
-      "Spawn a wandering miniboss every run?"
+      "Spawn a wandering miniboss every run?",
+      "Minibosses that can appear:"
     ]
   },
   "wanderingMiniBosses:FinaleOfPromiseAction": {
