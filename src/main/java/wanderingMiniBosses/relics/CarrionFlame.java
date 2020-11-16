@@ -25,6 +25,8 @@ public class CarrionFlame extends CustomRelic {
     private static final Texture IMG = TextureLoader.getTexture(makeRelicPath("CarrionFlame.png"));
     private static final Texture OUTLINE = TextureLoader.getTexture(makeRelicOutlinePath("CarrionFlame.png"));
 
+    private int timesTriggeredThisTurn;
+
     public CarrionFlame() {
         super(ID, IMG, OUTLINE, RelicTier.SPECIAL, LandingSound.MAGICAL);
     }
@@ -32,13 +34,18 @@ public class CarrionFlame extends CustomRelic {
     @Override
     public void onMonsterDeath(AbstractMonster m) {
         if (m.currentHealth == 0) { //idk gremlin horn does it so I will too
-            if (!AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
-                AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(m, this));
+            if (!AbstractDungeon.getMonsters().areMonstersBasicallyDead() && timesTriggeredThisTurn < 10) {
+                addToBot(new RelicAboveCreatureAction(m, this));
                 addToBot(new VFXAction(new ShockWaveEffect(m.hb.cX, m.hb.cY, Color.ORANGE, ShockWaveEffect.ShockWaveType.CHAOTIC)));
-                AbstractDungeon.actionManager.addToTop(new SpawnTolerantDamageAllEnemiesAction(AbstractDungeon.player, MathUtils.floor((float)m.maxHealth*HPCONVERSION), true, false, DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.FIRE, false));
+                addToBot(new SpawnTolerantDamageAllEnemiesAction(AbstractDungeon.player, MathUtils.floor((float)m.maxHealth*HPCONVERSION), true, false, DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.FIRE, false));
                 this.flash();
             }
         }
+    }
+
+    @Override
+    public void atTurnStart() {
+        timesTriggeredThisTurn = 0;
     }
 
     // Description
