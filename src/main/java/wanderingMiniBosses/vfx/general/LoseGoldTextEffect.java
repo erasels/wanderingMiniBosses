@@ -77,7 +77,7 @@ public class LoseGoldTextEffect extends AbstractGameEffect {
 
     public void render(SpriteBatch sb) {
         if (!this.isDone) {
-            FontHelper.renderFontCentered(sb, FontHelper.applyPowerFont, "- " + Integer.toString(this.gold) + TEXT[0], this.x, this.y, this.color);
+            FontHelper.renderFontCentered(sb, FontHelper.panelNameFont, "- " + Integer.toString(this.gold) + TEXT[0], this.x, this.y, this.color);
         }
 
     }
