@@ -58,6 +58,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
 
     private ArrayList<Float> xPositions = new ArrayList<>();
     private ArrayList<Float> yPositions = new ArrayList<>();
+    private ArrayList<AbstractMonster> monsterList = new ArrayList<>();
 
     public EternalPrincess() {
         this(0.0F, 0.0F);
@@ -106,6 +107,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
                     AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
                     xPositions.add(m.drawX);
                     yPositions.add(m.drawY);
+                    monsterList.add(m);
                 }
                 moveCounter++;
                 break;
@@ -119,8 +121,8 @@ public class EternalPrincess extends AbstractWanderingBoss {
 //                moveCounter++;
 //                break;
             case FINALE_OF_ETERNITY:
-                for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
-                    AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
+                for (int i = 0; i < monsterList.size(); i++) {
+                    AbstractMonster m = monsterList.get(i);
                     if (m.isDead && !m.escaped && !m.id.equals(ID)) {
                         Wraith wraith = new Wraith(0.0F, 0.0F, (int)(NumberUtils.min(m.maxHealth, 500) * WRAITH_HP_PERCENT));
                         wraith.drawX = xPositions.get(i);
