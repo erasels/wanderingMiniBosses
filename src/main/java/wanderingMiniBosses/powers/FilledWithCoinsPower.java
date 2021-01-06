@@ -41,7 +41,7 @@ public class FilledWithCoinsPower extends AbstractPower implements CloneablePowe
 
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        if (info.owner == AbstractDungeon.player && damageAmount > 0 && info.type != DamageInfo.DamageType.HP_LOSS && info.type != DamageInfo.DamageType.THORNS) {
+        if (info.owner == AbstractDungeon.player && damageAmount > 0) {
             if (!AbstractDungeon.player.hasRelic(Ectoplasm.ID))
                 for (int i = 0; i < damageAmount; ++i) {// 117
                     AbstractDungeon.effectList.add(new GainPennyEffect(this.owner, this.owner.hb.cX, this.owner.hb.cY, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, true));// 121

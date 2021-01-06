@@ -175,10 +175,12 @@ public class UpdateAndTrackTopCard {
 
     public static void glowCheck(AbstractCard c)
     {
-        if (c.canUse(AbstractDungeon.player, null) && !AbstractDungeon.isScreenUp) {
-            c.beginGlowing();
-        } else {
-            c.stopGlowing();
+        if(c != null) {
+            if (c.canUse(AbstractDungeon.player, null) && !AbstractDungeon.isScreenUp) {
+                c.beginGlowing();
+            } else {
+                c.stopGlowing();
+            }
         }
     }
     public static void partialReset(AbstractCard c)

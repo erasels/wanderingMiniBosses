@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.EnemyMoveInfo;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import org.apache.commons.lang3.math.NumberUtils;
 import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.cards.FinaleOfPromise;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
@@ -121,7 +122,7 @@ public class EternalPrincess extends AbstractWanderingBoss {
                 for (int i = 0; i < AbstractDungeon.getCurrRoom().monsters.monsters.size(); i++) {
                     AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.monsters.get(i);
                     if (m.isDead && !m.escaped && !m.id.equals(ID)) {
-                        Wraith wraith = new Wraith(0.0F, 0.0F, (int)(m.maxHealth * WRAITH_HP_PERCENT));
+                        Wraith wraith = new Wraith(0.0F, 0.0F, (int)(NumberUtils.min(m.maxHealth, 500) * WRAITH_HP_PERCENT));
                         wraith.drawX = xPositions.get(i);
                         wraith.drawY = yPositions.get(i);
                         AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(wraith, false, i));
