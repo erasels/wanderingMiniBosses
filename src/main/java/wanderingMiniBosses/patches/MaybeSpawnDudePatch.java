@@ -11,8 +11,10 @@ import com.megacrit.cardcrawl.vfx.BorderLongFlashEffect;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wanderingMiniBosses.WanderingminibossesMod;
 import wanderingMiniBosses.actions.CustomSpawnMonsterAction;
 import wanderingMiniBosses.monsters.AbstractWanderingBoss;
+import wanderingMiniBosses.util.BattleTowersDependencyHelper;
 import wanderingMiniBosses.util.WanderingBossHelper;
 import wanderingMiniBosses.vfx.combat.AnnouncementEffect;
 
@@ -28,7 +30,8 @@ public class MaybeSpawnDudePatch {
     private static int turnCounter;
 
     public static boolean spawningDudeThisFight() {
-        return turnCounter >= 0 && (WanderingBossHelper.viableFloor() || Settings.isDebug) && WanderingBossHelper.nemesisCheck();
+        return turnCounter >= 0 && WanderingBossHelper.viableFloor() && WanderingBossHelper.nemesisCheck()
+                && (!WanderingminibossesMod.hasBT || !BattleTowersDependencyHelper.isBT());
     }
 
     public static void resetTurnCounter() {
