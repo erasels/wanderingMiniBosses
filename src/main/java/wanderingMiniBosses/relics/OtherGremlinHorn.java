@@ -48,6 +48,7 @@ public class OtherGremlinHorn extends CustomRelic implements OnAnyPowerAppliedRe
             flash();
             AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(1));
             AbstractDungeon.actionManager.addToBottom(new DrawCardAction(1));
+            triggered = true;
         }
 
         return true;
