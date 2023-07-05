@@ -10,8 +10,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import java.util.Iterator;
-
 public class FinaleOfPromiseAction extends AbstractGameAction {
     public static final String[] TEXT;
     private AbstractPlayer player;
@@ -64,12 +62,9 @@ public class FinaleOfPromiseAction extends AbstractGameAction {
             }
         } else {
             if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
-                Iterator var1 = AbstractDungeon.gridSelectScreen.selectedCards.iterator();
 
-                while(var1.hasNext()) {
-                    AbstractCard c = (AbstractCard)var1.next();
-
-                    for(int i = 0; i < this.playAmt; ++i) {
+                for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
+                    for (int i = 0; i < this.playAmt; ++i) {
                         AbstractCard tmp = c.makeStatEquivalentCopy();
                         tmp.purgeOnUse = true;
                         this.addToBot(new NewQueueCardAction(tmp, true, false, true));
