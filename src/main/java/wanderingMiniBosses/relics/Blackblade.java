@@ -2,13 +2,13 @@ package wanderingMiniBosses.relics;
 
 import basemod.abstracts.CustomRelic;
 import com.badlogic.gdx.graphics.Texture;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.LoseStrengthPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import wanderingMiniBosses.WanderingminibossesMod;
+import wanderingMiniBosses.util.MiscFunctions;
 import wanderingMiniBosses.util.TextureLoader;
 
 import static wanderingMiniBosses.WanderingminibossesMod.makeRelicOutlinePath;
@@ -27,8 +27,8 @@ public class Blackblade extends CustomRelic {
     }
 
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, STRENGTH), STRENGTH));
-        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new LoseStrengthPower(AbstractDungeon.player, STRENGTH), STRENGTH));
+        MiscFunctions.applyToSelf(new StrengthPower(AbstractDungeon.player, STRENGTH));
+        MiscFunctions.applyToSelf(new LoseStrengthPower(AbstractDungeon.player, STRENGTH));
     }
 
     // Description

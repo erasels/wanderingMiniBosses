@@ -6,7 +6,7 @@
     <groupId>UpdateBodyText</groupId>
     <artifactId>wanderingMiniBosses</artifactId>
     <name>Wandering Minibosses</name>
-    <version>1.1.1</version>
+    <version>1.1.4</version>
     <description>A anniversary project for the second year of modding the spire! It adds a miniboss to some runs which continues to hound you through the run. (Toggleable option to make it always appear at the mod options.)</description>
 
     <properties>
@@ -15,7 +15,7 @@
         <SlayTheSpire.version>01-23-2019</SlayTheSpire.version>
         <ModTheSpire.version>3.8.0</ModTheSpire.version>
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION, NOT YOURS GK, MINE AND DARKS-->
-        <Steam.path>C:\Program Files (x86)\Steam\steamapps</Steam.path>
+        <Steam.path>E:/SteamLibrary/steamapps</Steam.path>
     </properties>
 
     <dependencies>
@@ -50,6 +50,13 @@
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/1609158507/StSLib.jar</systemPath>
             <!--<systemPath>${basedir}/../lib/StSLib.jar</systemPath>-->
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl.mod</groupId>
+            <artifactId>battleTowers</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/2724117330/BattleTowers.jar</systemPath>
         </dependency>
     </dependencies>
 

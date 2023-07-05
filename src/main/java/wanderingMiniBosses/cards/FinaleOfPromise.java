@@ -1,6 +1,7 @@
 package wanderingMiniBosses.cards;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -24,9 +25,8 @@ public class FinaleOfPromise extends CustomCard {
     public static final AbstractCard.CardColor COLOR = AbstractCard.CardColor.COLORLESS;
 
     private static final int COST = -1;
-    private static final int PLAY_AMOUNT = 1;
     private static final int NUM_CARDS = 2;
-    private static final int X_THRESHOLD = 6;
+    private static final int HP_LOSS = 3;
 
     public FinaleOfPromise() {
         super(ID, languagePack.getCardStrings(ID).NAME, IMG, COST, languagePack.getCardStrings(ID).DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
@@ -50,12 +50,8 @@ public class FinaleOfPromise extends CustomCard {
             effect++;
         }
 
-        int playAmount = PLAY_AMOUNT;
-        if (effect >= X_THRESHOLD) {
-            playAmount++;
-        }
-
-        AbstractDungeon.actionManager.addToBottom(new FinaleOfPromiseAction(playAmount, effect, magicNumber));
+        addToBot(new LoseHPAction(p, p, HP_LOSS));
+        AbstractDungeon.actionManager.addToBottom(new FinaleOfPromiseAction(1, effect, magicNumber));
 
         if (!this.freeToPlayOnce) {
             p.energy.use(EnergyPanel.totalCount);

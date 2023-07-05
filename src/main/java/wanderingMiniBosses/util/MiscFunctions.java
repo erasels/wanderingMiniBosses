@@ -1,5 +1,9 @@
 package wanderingMiniBosses.util;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import wanderingMiniBosses.WanderingminibossesMod;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +40,12 @@ public class MiscFunctions {
 		return random.random(1);
 	}
 
+	public static void atb(AbstractGameAction action) {
+		AbstractDungeon.actionManager.addToBottom(action);
+	}
 
-	
+	public static void applyToSelf(AbstractPower po) {
+		atb(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, po, po.amount));
+	}
 	
 }

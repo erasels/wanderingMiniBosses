@@ -8,6 +8,7 @@ import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
@@ -60,6 +61,8 @@ public class WanderingminibossesMod implements
     private static final String MODNAME = "Wandering Minibosses";
     private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Wordo, Levender";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
+
+    public static final boolean hasBT = Loader.isModLoaded("battleTowers");
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
 
