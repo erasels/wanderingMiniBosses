@@ -62,7 +62,7 @@ public class WanderingminibossesMod implements
     private static final String AUTHOR = "erasels, raz, Darkglade, Vex'd, Wordo, Levender";
     private static final String DESCRIPTION = "Mod The Spire second anniversary mod. Adds wandering mini-bosses encountered multiple times over a run.";
 
-    public static final boolean hasBT = Loader.isModLoaded("battleTowers");
+    public static final boolean hasBT = Loader.isModLoaded("BattleTowers");
 
     public static ArrayList<AbstractCard> inkedCardsList = new ArrayList<>();
 
